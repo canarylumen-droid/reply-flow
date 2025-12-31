@@ -13,8 +13,8 @@ const SimpleSetup = () => {
         <section id="process" className='py-20 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white'>
             <div className='max-w-7xl mx-auto'>
                 <div className='text-center mb-16'>
-                    <h2 className='text-3xl md:text-4xl font-bold mb-4'>How We Work</h2>
-                    <p className='text-gray-500'>We handle the tech. You handle the deals.</p>
+                    <h2 className='text-3xl md:text-4xl font-bold mb-4'>How We Work Together</h2>
+                    <p className='text-gray-500'>We build it. We train it. We manage it. You close deals.</p>
                 </div>
 
                 <div className='relative'>
@@ -43,7 +43,7 @@ const SimpleSetup = () => {
 
                 <div className='text-center mt-12 pt-12 border-t border-gray-200 dark:border-zinc-800'>
                     <p className='text-xl italic font-medium text-gray-800 dark:text-gray-200'>
-                        "Your only job: show up and close."
+                        "We handle the tech. You handle the handshake."
                     </p>
                 </div>
             </div>

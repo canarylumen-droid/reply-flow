@@ -6,23 +6,23 @@ const Intelligence = () => {
 
     const features = [
         {
-            title: "Smart Timing",
-            desc: "Knows exactly when each lead is most likely to reply based on their activity.",
+            title: "We Study Your Leads",
+            desc: "Our team analyzes when each of your leads is most active and responsive, then schedules outreach for maximum engagement.",
             icon: ClockIcon,
         },
         {
-            title: "Memory + Context",
-            desc: "Never forgets a conversation. Stores every detail so it never asks twice.",
+            title: "We Remember Everything",
+            desc: "Every conversation, every question, every objection is tracked. We never ask your leads the same question twice.",
             icon: BrainIcon,
         },
         {
-            title: "Intent Scoring",
-            desc: "Ranks leads by purchasing signals. You talk to the hottest leads first.",
+            title: "We Prioritize Your Pipeline",
+            desc: "We score every lead based on buying signals and alert you immediately when someone's ready to close.",
             icon: ZapIcon,
         },
         {
-            title: "Objection Handling",
-            desc: "Detects hesitation and responds with proven counters like your best closer.",
+            title: "We Handle Objections",
+            desc: "When leads hesitate, we respond instantly with proven counters and case studies—just like your best closer would.",
             icon: CheckIcon,
         }
     ]
@@ -36,7 +36,7 @@ const Intelligence = () => {
                         whileInView={{ opacity: 1 }}
                         className='text-primary font-medium tracking-widest uppercase text-sm mb-4'
                     >
-                        Authority & Precision
+                        Full-Service Management
                     </motion.p>
                     <motion.h2
                         initial={{ opacity: 0, y: 10 }}
@@ -44,8 +44,8 @@ const Intelligence = () => {
                         transition={{ delay: 0.1 }}
                         className='text-4xl md:text-6xl font-bold mb-6'
                     >
-                        This Isn't Automation. <br className="hidden md:block" />
-                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600'>It's Intelligence.</span>
+                        We Don't Sell You Software. <br className="hidden md:block" />
+                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600'>We Run It For You.</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0 }}
@@ -53,7 +53,7 @@ const Intelligence = () => {
                         transition={{ delay: 0.2 }}
                         className='text-gray-500 max-w-3xl mx-auto text-xl leading-relaxed'
                     >
-                        Our AI doesn't just send messages. It analyzes behavior patterns, predicts intent, and adapts its strategy in real-time. Teams typically see <span className='font-bold text-gray-900 dark:text-white'>3× higher response rates</span> and <span className='font-bold text-gray-900 dark:text-white'>2× faster deal cycles</span>.
+                        Our team builds, trains, and manages your entire AI sales operation. You just show up to close the deals we book. Clients typically see <span className='font-bold text-gray-900 dark:text-white'>3× more qualified meetings</span> and <span className='font-bold text-gray-900 dark:text-white'>2× faster sales cycles</span>.
                     </motion.p>
                 </div>
 
@@ -79,12 +79,12 @@ const Intelligence = () => {
 
                             {/* Example Use Case */}
                             <div className='bg-white dark:bg-black p-4 rounded-xl border border-gray-200 dark:border-white/5 mt-4'>
-                                <div className='text-xs font-bold text-primary uppercase tracking-wider mb-2'>Real Example</div>
+                                <div className='text-xs font-bold text-primary uppercase tracking-wider mb-2'>Client Example</div>
                                 <p className='text-sm text-gray-600 dark:text-gray-400 italic'>
-                                    {index === 0 && "John opens emails at 2:30 PM every Tuesday. The AI waits until 2:25 PM to send his follow-up for maximum engagement."}
-                                    {index === 1 && "Lead asks 'Do you work with real estate?' AI instantly recalls they mentioned property investment 3 weeks ago and personalizes the response."}
-                                    {index === 2 && "Sarah visited pricing 3x, downloaded a case study, and asked about ROI. AI scores her 94% and alerts your team immediately."}
-                                    {index === 3 && "Lead says 'Too expensive.' AI detects price objection and automatically sends ROI calculator + payment plan options within seconds."}
+                                    {index === 0 && "We noticed John always engages with emails on Tuesday afternoons. We scheduled his follow-up for 2:25 PM and he booked a call within 10 minutes."}
+                                    {index === 1 && "When a lead asked 'Do you work with real estate?', we instantly pulled up their initial inquiry about property investment from 3 weeks ago and personalized our response."}
+                                    {index === 2 && "Sarah visited your pricing page 3 times and downloaded a case study. We scored her 94% hot and sent you an immediate Slack alert. You closed her the same day."}
+                                    {index === 3 && "Lead said 'Too expensive.' Within 30 seconds, we sent them your ROI calculator, a payment plan, and a case study from their industry. They booked a call to discuss."}
                                 </p>
                             </div>
                         </motion.div>
@@ -98,25 +98,25 @@ const Intelligence = () => {
                     viewport={{ once: true }}
                     className='bg-gradient-to-br from-gray-50 to-white dark:from-zinc-900 dark:to-black p-8 rounded-3xl border border-gray-200 dark:border-white/5'
                 >
-                    <h3 className='text-2xl font-bold mb-8 text-center'>How We Compare</h3>
+                    <h3 className='text-2xl font-bold mb-8 text-center'>What You Get vs. What Others Offer</h3>
                     <div className='overflow-x-auto'>
                         <table className='w-full'>
                             <thead>
                                 <tr className='border-b border-gray-200 dark:border-white/10'>
-                                    <th className='text-left py-4 px-4 font-bold text-gray-900 dark:text-white'>Feature</th>
-                                    <th className='text-center py-4 px-4 font-bold text-gray-500'>Basic Chatbots</th>
-                                    <th className='text-center py-4 px-4 font-bold text-gray-500'>Email Automation</th>
+                                    <th className='text-left py-4 px-4 font-bold text-gray-900 dark:text-white'>Service</th>
+                                    <th className='text-center py-4 px-4 font-bold text-gray-500'>DIY Chatbots</th>
+                                    <th className='text-center py-4 px-4 font-bold text-gray-500'>Email Tools</th>
                                     <th className='text-center py-4 px-4 font-bold text-primary'>Reply Flow</th>
                                 </tr>
                             </thead>
                             <tbody className='text-sm'>
                                 {[
-                                    { feature: '24/7 Response', basic: true, email: false, us: true },
-                                    { feature: 'Behavioral Analysis', basic: false, email: false, us: true },
-                                    { feature: 'Intent Prediction', basic: false, email: false, us: true },
+                                    { feature: 'We Build It For You', basic: false, email: false, us: true },
+                                    { feature: 'We Train It On Your Data', basic: false, email: false, us: true },
+                                    { feature: 'We Manage It Daily', basic: false, email: false, us: true },
                                     { feature: 'Multi-Channel (Email, SMS, IG)', basic: false, email: true, us: true },
-                                    { feature: 'Objection Handling', basic: false, email: false, us: true },
-                                    { feature: 'Calendar Booking', basic: false, email: false, us: true },
+                                    { feature: 'We Handle Objections', basic: false, email: false, us: true },
+                                    { feature: 'We Book Calls Directly', basic: false, email: false, us: true },
                                 ].map((row, i) => (
                                     <tr key={i} className='border-b border-gray-100 dark:border-white/5'>
                                         <td className='py-4 px-4 font-medium'>{row.feature}</td>
@@ -134,6 +134,9 @@ const Intelligence = () => {
                             </tbody>
                         </table>
                     </div>
+                    <p className='text-center text-sm text-gray-500 mt-6 italic'>
+                        You don't lift a finger. We handle everything from setup to optimization.
+                    </p>
                 </motion.div>
             </div>
         </section>
