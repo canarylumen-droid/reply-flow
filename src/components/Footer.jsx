@@ -12,7 +12,7 @@ const Footer = ({ theme }) => {
       className="bg-gray-50 dark:bg-black pt-20 pb-10 px-4 sm:px-12 lg:px-24 border-t border-gray-200 dark:border-white/10"
     >
       {/* Footer Top */}
-      <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
+      <div className="flex flex-col md:flex-row justify-between gap-12 mb-16 items-start">
         <motion.div
           className="space-y-4 max-w-sm"
         >
@@ -24,8 +24,9 @@ const Footer = ({ theme }) => {
           </div>
 
           <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-            AI sales intelligence powered by <strong className="text-gray-800 dark:text-gray-200">Audnix</strong>.
-            We turn cold traffic into booked calls with zero friction.
+            Premier AI Sales Infrastructure for High-Ticket Agencies.
+            <br />
+            Powered by <strong className="text-gray-800 dark:text-gray-200">Audnix Intelligence</strong>.
           </p>
 
           <a href="mailto:info@replyflow.pro" className="inline-block text-primary font-semibold hover:underline">
@@ -33,28 +34,16 @@ const Footer = ({ theme }) => {
           </a>
 
           <div className="flex gap-4 pt-4">
-            <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded dark:bg-green-900/30 dark:text-green-400 font-medium">SOC2 Compliant</span>
-            <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded dark:bg-blue-900/30 dark:text-blue-400 font-medium">GDPR Ready</span>
+            <span className="text-xs px-3 py-1 bg-zinc-100 text-zinc-600 rounded-full dark:bg-white/5 dark:text-zinc-400 border border-zinc-200 dark:border-white/5 font-medium">SOC2 Compliant</span>
+            <span className="text-xs px-3 py-1 bg-zinc-100 text-zinc-600 rounded-full dark:bg-white/5 dark:text-zinc-400 border border-zinc-200 dark:border-white/5 font-medium">Enterprise Grade</span>
           </div>
         </motion.div>
 
-        <div className="flex gap-16 text-sm">
-          <div>
-            <h4 className="font-bold mb-4 dark:text-white">Product</h4>
-            <ul className="space-y-3 text-gray-500 dark:text-gray-400">
-              <li><a href="#roi" className="hover:text-primary">DOI Calculator</a></li>
-              <li><a href="#pricing" className="hover:text-primary">Pricing</a></li>
-              <li><a href="#book" className="hover:text-primary">Book Demo</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold mb-4 dark:text-white">Legal</h4>
-            <ul className="space-y-3 text-gray-500 dark:text-gray-400">
-              <li><a href="#" className="hover:text-primary">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-primary">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-primary">Data Deletion</a></li>
-            </ul>
-          </div>
+        {/* Minimal Right Side */}
+        <div className="flex flex-col items-start md:items-end gap-4 text-sm text-gray-500">
+          <a onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })} className="cursor-pointer hover:text-white transition-colors">Start Your Application</a>
+          <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+          <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
         </div>
       </div>
 

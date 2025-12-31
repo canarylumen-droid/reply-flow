@@ -16,8 +16,9 @@ const RoiCalculator = () => {
     // Calculations
     const monthlyRevenue = leads * (closeRate / 100) * offerPrice
     const lostLeads = leads * (1 - (closeRate / 100))
-    const potentialLostRevenue = lostLeads * 0.2 * offerPrice // Assume we could recover 20% of lost leads
-    const recoveredRevenue = potentialLostRevenue;
+    // Improving conversion by 20% relative, or recovering 20% of lost?
+    // Let's say we recover 20% of leads that didn't buy.
+    const recoveredRevenue = lostLeads * 0.2 * offerPrice
 
     const formatCurrency = (val) => {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val)
@@ -31,8 +32,8 @@ const RoiCalculator = () => {
 
             <div className='max-w-7xl mx-auto relative z-10'>
                 <div className='text-center mb-12'>
-                    <h2 className='text-3xl md:text-5xl font-bold mb-4'>The Cost of Slowness</h2>
-                    <p className='text-gray-400'>See how much revenue you're leaving on the table right now.</p>
+                    <h2 className='text-3xl md:text-5xl font-bold mb-4'>Projected Revenue Lift</h2>
+                    <p className='text-gray-400'>Estimate the financial impact of installing an AI Sales Department.</p>
                 </div>
 
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-black/40 backdrop-blur-md rounded-3xl p-8 border border-white/10'>
@@ -40,7 +41,7 @@ const RoiCalculator = () => {
                     {/* Controls */}
                     <div className='space-y-8'>
                         <div>
-                            <label className='block text-sm font-medium text-gray-400 mb-2'>Monthly Leads</label>
+                            <label className='block text-sm font-medium text-gray-400 mb-2'>Monthly Inbound Leads</label>
                             <input
                                 type="range"
                                 min="10" max="1000" step="10"
@@ -52,7 +53,7 @@ const RoiCalculator = () => {
                         </div>
 
                         <div>
-                            <label className='block text-sm font-medium text-gray-400 mb-2'>Offer Price ($)</label>
+                            <label className='block text-sm font-medium text-gray-400 mb-2'>Average Deal Value ($)</label>
                             <input
                                 type="range"
                                 min="500" max="20000" step="500"
@@ -64,7 +65,7 @@ const RoiCalculator = () => {
                         </div>
 
                         <div>
-                            <label className='block text-sm font-medium text-gray-400 mb-2'>Current Close Rate (%)</label>
+                            <label className='block text-sm font-medium text-gray-400 mb-2'>Current Team Conversion (%)</label>
                             <input
                                 type="range"
                                 min="1" max="50" step="1"
@@ -77,27 +78,27 @@ const RoiCalculator = () => {
                     </div>
 
                     {/* Results */}
-                    <div className='bg-zinc-900 rounded-2xl p-8 border border-red-500/30 text-center relative overflow-hidden'>
-                        <div className='absolute top-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500 left-0' />
+                    <div className='bg-zinc-900 rounded-2xl p-8 border border-green-500/30 text-center relative overflow-hidden'>
+                        <div className='absolute top-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500 left-0' />
 
-                        <p className='text-sm text-gray-400 uppercase tracking-widest mb-2'>Potential Revenue Vanishing</p>
+                        <p className='text-sm text-gray-400 uppercase tracking-widest mb-2'>New Net Revenue Opportunity</p>
                         <motion.div
-                            key={potentialLostRevenue}
+                            key={recoveredRevenue}
                             initial={{ scale: 0.9, opacity: 0.8 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className='text-5xl sm:text-6xl font-black text-white mb-4'
+                            className='text-5xl sm:text-6xl font-black text-green-400 mb-4'
                         >
-                            {formatCurrency(potentialLostRevenue)}
+                            + {formatCurrency(recoveredRevenue)}
                         </motion.div>
-                        <p className='text-red-400 text-sm mb-8 font-medium'>Each Month</p>
+                        <p className='text-gray-500 text-sm mb-8 font-medium'>Per Month / Added to Top Line</p>
 
                         <div className='pt-6 border-t border-white/10'>
-                            <p className='text-sm text-gray-400 mb-2'>With Reply Flow recovered (est 20%)</p>
-                            <div className='text-3xl font-bold text-green-400'>+ {formatCurrency(recoveredRevenue)}</div>
+                            <p className='text-sm text-gray-400 mb-2'>Annual Breakdown</p>
+                            <div className='text-3xl font-bold text-white'>{formatCurrency(recoveredRevenue * 12)}</div>
                         </div>
 
-                        <button className='mt-8 w-full py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors'>
-                            Recover This Revenue
+                        <button onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })} className='mt-8 w-full py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors shadow-lg'>
+                            Generate This Revenue
                         </button>
                     </div>
 
