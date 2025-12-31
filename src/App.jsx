@@ -3,8 +3,9 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import TrustedBy from './components/TrustedBy'
 import WhyLosingMoney from './components/WhyLosingMoney'
+import ComparisonTable from './components/ComparisonTable'
 import Intelligence from './components/Intelligence'
-import BrandPdfSection from './components/BrandPdfSection'
+import Infrastructure from './components/Infrastructure'
 import AutomationFeatures from './components/AutomationFeatures'
 import Testimonials from './components/Testimonials'
 import SimpleSetup from './components/SimpleSetup'
@@ -80,8 +81,9 @@ const App = () => {
         <Hero />
         <TrustedBy />
         <WhyLosingMoney />
+        <ComparisonTable />
         <Intelligence />
-        <BrandPdfSection />
+        <Infrastructure />
         <AutomationFeatures />
         <Testimonials />
         <SimpleSetup />

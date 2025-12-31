@@ -25,7 +25,7 @@ const Hero = () => {
         >
           <div className='flex items-center gap-2 text-primary font-semibold tracking-wide uppercase text-xs sm:text-sm'>
             <BrainIcon className="w-5 h-5" />
-            <span>Powered by Audnix Intelligence</span>
+            <span>Premier Outcome-Driven Agency</span>
           </div>
 
           <h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight'>

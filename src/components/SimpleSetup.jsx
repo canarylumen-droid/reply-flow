@@ -3,18 +3,18 @@ import { motion } from "framer-motion"
 
 const SimpleSetup = () => {
     const steps = [
-        { num: '01', title: 'Leak Extraction Audit', desc: 'We deep-dive into your existing funnel to identify exactly where leads are going cold.' },
-        { num: '02', title: 'Intelligence Build', desc: 'We train our custom AI on your top sales calls and successful closing scripts.' },
-        { num: '03', title: 'Deep Integration', desc: 'We connect the system directly into your CRM, existing workflows, and ad channels.' },
-        { num: '04', title: 'Managed Growth', desc: 'Our team monitors, optimizes, and scales your sales operation daily for maximum ROI.' }
+        { num: '01', title: 'Intelligence Gathering', desc: 'We deep-dive into your existing funnel to identify exactly where leads are going cold and what makes them buy.' },
+        { num: '02', title: 'Infrastucture Build', desc: 'We build the custom AI engines and train them on your top sales calls and winning scripts.' },
+        { num: '03', title: 'Seamless Integration', desc: 'We connect the machine directly into your CRM, existing workflows, and multi-channel ad accounts.' },
+        { num: '04', title: 'Managed Scalability', desc: 'Our team monitors, optimizes, and scales your sales operation daily. You just show up to the calls.' }
     ]
 
     return (
-        <section id="process" className='py-20 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white'>
+        <section id="process" className='py-32 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white'>
             <div className='max-w-7xl mx-auto'>
-                <div className='text-center mb-16'>
-                    <h2 className='text-3xl md:text-4xl font-bold mb-4'>How We Work Together</h2>
-                    <p className='text-gray-500'>We build it. We train it. We manage it. You close deals.</p>
+                <div className='text-center mb-24'>
+                    <h2 className='text-4xl md:text-5xl font-black mb-6 tracking-tight'>How We Scale Your Revenue</h2>
+                    <p className='text-xl text-gray-500 max-w-2xl mx-auto'>You don't lift a finger. We handle everything from the initial build-out to daily performance optimization.</p>
                 </div>
 
                 <div className='relative'>

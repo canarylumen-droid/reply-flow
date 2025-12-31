@@ -20,7 +20,7 @@ export const TiltCard = ({ children, className }) => {
     );
 
     const handleMouseMove = (e) => {
-        const rect = e.target.getBoundingClientRect();
+        const rect = e.currentTarget.getBoundingClientRect();
 
         const width = rect.width;
         const height = rect.height;

@@ -25,8 +25,6 @@ const Footer = ({ theme }) => {
 
           <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
             Premier AI Sales Infrastructure for High-Ticket Agencies.
-            <br />
-            Powered by <strong className="text-gray-800 dark:text-gray-200">Audnix Intelligence</strong>.
           </p>
 
           <a href="mailto:info@replyflow.pro" className="inline-block text-primary font-semibold hover:underline">
@@ -51,7 +49,7 @@ const Footer = ({ theme }) => {
 
       {/* footer bottom */}
       <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-4">
-        <p>© 2026 Reply Flow (Audnix AI). All rights reserved.</p>
+        <p>© 2026 Reply Flow. All rights reserved.</p>
         <p>info@replyflow.pro</p>
       </div>
     </motion.div>
