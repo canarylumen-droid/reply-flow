@@ -13,7 +13,7 @@ const BrandPdfSection = () => {
                         viewport={{ once: true }}
                         className='inline-block px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 text-primary text-xs font-bold uppercase tracking-widest mb-6'
                     >
-                        Differentiation
+                        Onboarding
                     </motion.div>
                     <motion.h2
                         initial={{ opacity: 0, y: 10 }}
@@ -22,8 +22,8 @@ const BrandPdfSection = () => {
                         viewport={{ once: true }}
                         className='text-3xl md:text-5xl font-bold dark:text-white mb-6'
                     >
-                        Upload Your Brand PDF <br />
-                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500'>→ AI Learns Your Voice</span>
+                        We Train Our AI <br />
+                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500'>→ To Master Your Voice</span>
                     </motion.h2>
                 </div>
 
@@ -38,7 +38,7 @@ const BrandPdfSection = () => {
                     >
                         <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-scan' />
 
-                        <h3 className='text-lg font-bold mb-6 text-gray-400 uppercase tracking-widest'>What The AI Extracts</h3>
+                        <h3 className='text-lg font-bold mb-6 text-gray-400 uppercase tracking-widest'>What Our AI Closer Extracts</h3>
 
                         <div className='space-y-4'>
                             {['Value Proposition', 'Client Testimonials', 'Key Metrics', 'Positioning Statement', 'Tone & Forbidden Words'].map((item, i) => (
