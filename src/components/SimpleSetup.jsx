@@ -28,7 +28,6 @@ const SimpleSetup = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.2 }}
-                                viewport={{ once: true }}
                                 className='relative z-10 flex flex-col items-center text-center'
                             >
                                 <div className='w-14 h-14 rounded-full bg-white dark:bg-black border-2 border-primary flex items-center justify-center text-xl font-bold mb-4 shadow-lg'>

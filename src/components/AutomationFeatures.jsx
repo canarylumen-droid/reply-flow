@@ -34,7 +34,6 @@ const AutomationFeatures = () => {
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ delay: i * 0.1 }}
-                                    viewport={{ once: true }}
                                     className='relative'
                                 >
                                     <div className={`absolute -left-[51px] top-1 w-5 h-5 rounded-full border-4 border-white dark:border-black ${i === 0 ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]' : 'bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.4)]'}`} />

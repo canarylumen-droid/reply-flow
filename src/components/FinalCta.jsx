@@ -14,7 +14,6 @@ const FinalCta = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
                 >
                     <h2 className='text-5xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter'>
                         Stop Letting Potential <br />

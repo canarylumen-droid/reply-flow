@@ -48,7 +48,6 @@ const Intelligence = () => {
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ delay: i * 0.1 }}
-                                    viewport={{ once: true }}
                                     className='flex gap-6 p-6 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-white/5 hover:shadow-lg transition-all'
                                 >
                                     <div className='text-3xl'>{point.icon}</div>
@@ -66,7 +65,6 @@ const Intelligence = () => {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
                             className='relative bg-white dark:bg-black p-10 rounded-[40px] border border-green-500/20 shadow-2xl overflow-hidden'
                         >
                             <div className='flex items-center gap-2 mb-8'>

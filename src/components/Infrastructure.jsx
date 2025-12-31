@@ -43,7 +43,6 @@ const Infrastructure = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.1 }}
-                                    viewport={{ once: true }}
                                     className='p-6 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-white/5 hover:border-blue-500/30 transition-all duration-300'
                                 >
                                     <h4 className='font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2'>
@@ -60,7 +59,6 @@ const Infrastructure = () => {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
                         className='relative'
                     >
                         <div className='absolute -inset-4 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 blur-3xl opacity-30 pointer-events-none' />

@@ -10,7 +10,6 @@ const WhyLosingMoney = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
                     className='text-center mb-20'
                 >
                     <div className='inline-block px-4 py-2 rounded-full border border-red-500/30 bg-red-500/5 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-widest mb-6'>
@@ -30,7 +29,6 @@ const WhyLosingMoney = () => {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            viewport={{ once: true }}
                             className='bg-white dark:bg-black p-6 rounded-2xl border border-gray-200 dark:border-white/5'
                         >
                             <div className='text-4xl font-black text-red-500 mb-2'>5 min</div>
@@ -40,7 +38,6 @@ const WhyLosingMoney = () => {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            viewport={{ once: true }}
                             className='bg-white dark:bg-black p-6 rounded-2xl border border-gray-200 dark:border-white/5'
                         >
                             <div className='text-4xl font-black text-orange-500 mb-2'>1 hour</div>
@@ -50,7 +47,6 @@ const WhyLosingMoney = () => {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 }}
-                            viewport={{ once: true }}
                             className='bg-white dark:bg-black p-6 rounded-2xl border border-gray-200 dark:border-white/5'
                         >
                             <div className='text-4xl font-black text-yellow-500 mb-2'>78%</div>
@@ -63,7 +59,6 @@ const WhyLosingMoney = () => {
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
                     className='mb-24 relative'
                 >
                     <div className='absolute inset-0 bg-primary/5 dark:bg-primary/5 rounded-[40px] blur-3xl pointer-events-none' />
@@ -94,7 +89,6 @@ const WhyLosingMoney = () => {
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: i * 0.15 }}
-                                        viewport={{ once: true }}
                                         className='flex flex-col items-center group'
                                     >
                                         <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${step.color} ${step.glow} shadow-[0_0_20px_rgba(0,0,0,0.1)] group-hover:shadow-[0_0_40px_rgba(0,0,0,0.2)] transition-all duration-500 flex flex-col items-center justify-center text-white relative z-10 border-4 border-white dark:border-black transform group-hover:scale-110`}>
@@ -129,7 +123,6 @@ const WhyLosingMoney = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
                     className='mb-20 text-center max-w-4xl mx-auto'
                 >
                     <div className='bg-gradient-to-r from-blue-600 to-purple-600 p-8 rounded-3xl text-white'>
@@ -149,7 +142,6 @@ const WhyLosingMoney = () => {
                     <TiltCard
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
                         className='relative group rounded-3xl bg-white dark:bg-black p-10 border border-red-500/20 shadow-2xl overflow-hidden text-center'
                     >
 
@@ -175,7 +167,6 @@ const WhyLosingMoney = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.1 }}
-                                    viewport={{ once: true }}
                                     className='flex flex-col items-center group/item'
                                 >
                                     <div className='w-12 h-12 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center mb-4 group-hover/item:bg-red-500/10 transition-all duration-300'>
@@ -202,7 +193,6 @@ const WhyLosingMoney = () => {
                     <TiltCard
                         initial={{ opacity: 0, x: 20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                         className='relative group rounded-3xl bg-white dark:bg-black p-10 border border-green-500/20 shadow-2xl overflow-hidden text-center'
                     >
@@ -229,7 +219,6 @@ const WhyLosingMoney = () => {
                                     initial={{ opacity: 0, y: 10 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ delay: i * 0.1 + 0.2 }}
-                                    viewport={{ once: true }}
                                     className='flex flex-col items-center group/item'
                                 >
                                     <div className='w-12 h-12 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center mb-4 group-hover/item:bg-green-500/10 transition-all duration-300'>
