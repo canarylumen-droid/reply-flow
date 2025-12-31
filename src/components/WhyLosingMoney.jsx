@@ -271,6 +271,7 @@ const WhyLosingMoney = () => {
                         </TiltCard>
                     </div>
                 </div>
+            </div>
         </section>
     )
 }
