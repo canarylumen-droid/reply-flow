@@ -14,7 +14,10 @@ const TrustedBy = () => {
   ]
 
   return (
-    <section className='py-12 bg-white dark:bg-black border-b border-gray-100 dark:border-white/5 overflow-hidden'>
+    <section className='py-16 bg-white dark:bg-black border-b border-gray-100 dark:border-white/5 overflow-hidden'>
+      <div className='max-w-7xl mx-auto px-6 mb-8 text-center'>
+        <p className='text-xs font-bold tracking-[0.2em] text-gray-400 uppercase'>Partnering with Industry Leaders</p>
+      </div>
       <div className='flex items-center gap-12 sm:gap-24 overflow-hidden relative'>
 
         {/* Gradient Masks */}
@@ -23,12 +26,12 @@ const TrustedBy = () => {
 
         {/* Marquee Animation */}
         <motion.div
-          className='flex gap-12 sm:gap-24 whitespace-nowrap'
+          className='flex gap-16 sm:gap-32 whitespace-nowrap'
           animate={{ x: [0, -1000] }}
-          transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 50, ease: "linear" }}
         >
           {[...brands, ...brands, ...brands].map((brand, index) => (
-            <div key={index} className='text-xl sm:text-2xl font-bold text-gray-300 dark:text-zinc-800 uppercase tracking-widest hover:text-gray-900 dark:hover:text-white transition-colors cursor-default'>
+            <div key={index} className='text-xl sm:text-2xl font-semibold text-gray-400 dark:text-zinc-600 hover:text-gray-900 dark:hover:text-white transition-colors cursor-default tracking-tight'>
               {brand}
             </div>
           ))}
