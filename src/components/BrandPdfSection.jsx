@@ -22,9 +22,12 @@ const BrandPdfSection = () => {
                         viewport={{ once: true }}
                         className='text-3xl md:text-5xl font-bold dark:text-white mb-6'
                     >
-                        We Train Our AI <br />
-                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500'>→ To Master Your Voice</span>
+                        We Study Your Business <br />
+                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500'>→ Then Train The System</span>
                     </motion.h2>
+                    <p className='text-gray-500 max-w-2xl mx-auto'>
+                        We don't hand you a template. We analyze how YOU sell, then build a custom system that sounds exactly like you.
+                    </p>
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-center'>
@@ -38,10 +41,10 @@ const BrandPdfSection = () => {
                     >
                         <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-50 animate-scan' />
 
-                        <h3 className='text-lg font-bold mb-6 text-gray-400 uppercase tracking-widest'>What Our AI Closer Extracts</h3>
+                        <h3 className='text-lg font-bold mb-6 text-gray-400 uppercase tracking-widest'>What We Learn From You</h3>
 
                         <div className='space-y-4'>
-                            {['Value Proposition', 'Client Testimonials', 'Key Metrics', 'Positioning Statement', 'Tone & Forbidden Words'].map((item, i) => (
+                            {['Your Unique Value Prop', 'Your Best Client Wins', 'Your Pricing & Packages', 'How You Handle Objections', 'Words You Never Use'].map((item, i) => (
                                 <div key={i} className='flex items-center gap-4 bg-white dark:bg-black p-4 rounded-xl shadow-sm border border-gray-100 dark:border-white/5'>
                                     <div className='w-2 h-2 rounded-full bg-blue-500' />
                                     <span className='font-medium dark:text-gray-200'>{item}</span>
@@ -57,7 +60,7 @@ const BrandPdfSection = () => {
                         viewport={{ once: true }}
                         className='space-y-8'
                     >
-                        <h3 className='text-2xl font-bold dark:text-white'>The Result:</h3>
+                        <h3 className='text-2xl font-bold dark:text-white'>What You Get:</h3>
 
                         <div className='space-y-6'>
                             <div className='flex gap-4'>
@@ -65,8 +68,8 @@ const BrandPdfSection = () => {
                                     <BrainIcon className="w-6 h-6" />
                                 </div>
                                 <div>
-                                    <h4 className='text-lg font-bold dark:text-white mb-1'>Hyper-Personalized Replies</h4>
-                                    <p className='text-gray-500 dark:text-gray-400'>It references your specific case studies when answering questions.</p>
+                                    <h4 className='text-lg font-bold dark:text-white mb-1'>Messages That Sound Like You</h4>
+                                    <p className='text-gray-500 dark:text-gray-400'>We reference YOUR case studies. YOUR results. YOUR way of explaining things. Leads can't tell it's not you.</p>
                                 </div>
                             </div>
 
@@ -76,14 +79,14 @@ const BrandPdfSection = () => {
                                 </div>
                                 <div>
                                     <h4 className='text-lg font-bold dark:text-white mb-1'>Consistent Brand Voice</h4>
-                                    <p className='text-gray-500 dark:text-gray-400'>Whether you're "professional corporate" or "casual startup", the AI matches you perfectly.</p>
+                                    <p className='text-gray-500 dark:text-gray-400'>Whether you're "professional corporate" or "casual startup", we match your tone perfectly. Every single time.</p>
                                 </div>
                             </div>
                         </div>
 
                         <div className='pt-6 border-t border-gray-200 dark:border-white/10'>
                             <p className='text-xl italic font-serif text-gray-800 dark:text-gray-200'>
-                                "Messages that sound like <span className='text-primary'>you</span> — not a bot."
+                                "Leads think they're talking to <span className='text-primary'>you</span> — not a bot."
                             </p>
                         </div>
                     </motion.div>
