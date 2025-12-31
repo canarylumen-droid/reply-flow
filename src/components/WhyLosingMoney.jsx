@@ -159,14 +159,12 @@ const WhyLosingMoney = () => {
                         viewport={{ once: true }}
                         className='relative group rounded-3xl bg-white dark:bg-black p-10 border border-red-500/20 shadow-2xl overflow-hidden text-center'
                     >
-                        {/* Top Accent Line (Centered) */}
-                        <div className='absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-red-500 rounded-b-full z-10' />
+
 
                         <div className='flex flex-col items-center mb-10'>
                             <div className='w-20 h-20 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20 shadow-lg shadow-red-500/5 transition-transform group-hover:scale-110 duration-500'>
                                 <XIcon className='w-10 h-10 text-red-500' />
                             </div>
-                            <h3 className='text-3xl font-black text-gray-900 dark:text-white mb-3 tracking-tight'>Doing It Yourself</h3>
                             <div className='inline-block px-4 py-1.5 rounded-full bg-red-500/5 border border-red-500/10 text-red-600 dark:text-red-400 text-xs font-black uppercase tracking-widest'>
                                 The Failure Loop
                             </div>
@@ -215,14 +213,12 @@ const WhyLosingMoney = () => {
                         transition={{ delay: 0.2 }}
                         className='relative group rounded-3xl bg-white dark:bg-black p-10 border border-green-500/20 shadow-2xl overflow-hidden text-center'
                     >
-                        {/* Top Accent Line (Centered) */}
-                        <div className='absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-green-500 rounded-b-full z-10' />
+
 
                         <div className='flex flex-col items-center mb-10'>
                             <div className='w-20 h-20 rounded-2xl bg-green-500/10 flex items-center justify-center mb-6 border border-green-500/20 shadow-lg shadow-green-500/5 transition-transform group-hover:scale-110 duration-500'>
                                 <CheckIcon className='w-10 h-10 text-green-500' />
                             </div>
-                            <h3 className='text-3xl font-black text-gray-900 dark:text-white mb-3 tracking-tight'>The Agency Way</h3>
                             <div className='inline-block px-4 py-1.5 rounded-full bg-green-500/5 border border-green-500/10 text-green-600 dark:text-green-400 text-xs font-black uppercase tracking-widest'>
                                 Done-For-You Dominance
                             </div>
