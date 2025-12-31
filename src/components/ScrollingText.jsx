@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionTemplate } from 'framer-motion'
 
 const ScrollingText = () => {
     const containerRef = useRef(null)
@@ -9,11 +9,17 @@ const ScrollingText = () => {
     })
 
     // Text movement and effects
-    const xLeft = useTransform(scrollYProgress, [0, 1], [0, -500])
-    const xRight = useTransform(scrollYProgress, [0, 1], [0, 500])
-    const opacity = useTransform(scrollYProgress, [0, 0.5, 0.8, 1], [0, 1, 0.8, 0])
-    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 1.2])
-    const blur = useTransform(scrollYProgress, [0, 0.8, 1], [0, 0, 20])
+    const xLeft = useTransform(scrollYProgress, [0, 1], [0, -800])
+    const xRight = useTransform(scrollYProgress, [0, 1], [0, 800])
+
+    // Symmetric opacity: Fades in, stays, fades out. Reverses perfectly on scroll up.
+    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
+
+    // Symmetric scale: Grows slightly while visible
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 1.1])
+
+    const blurValue = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [10, 0, 0, 10])
+    const blur = useMotionTemplate`blur(${blurValue}px)`
 
     return (
         <section
@@ -21,7 +27,7 @@ const ScrollingText = () => {
             className='py-40 bg-white dark:bg-black overflow-hidden relative min-h-[60vh] flex flex-col justify-center'
         >
             <motion.div
-                style={{ opacity, scale, filter: `blur(${blur}px)` }}
+                style={{ opacity, scale, filter: blur }}
                 className='relative z-10 flex flex-col items-center select-none'
             >
                 <motion.h2

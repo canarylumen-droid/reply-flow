@@ -37,43 +37,8 @@ const App = () => {
     localStorage.setItem('theme', theme)
   }, [theme])
 
-  const dotRef = useRef(null)
-  const outlineRef = useRef(null)
-
-  // Refs for custom cursor position tracking 
-  const mouse = useRef({ x: 0, y: 0 })
-  const position = useRef({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const w = window.innerWidth;
-    if (w < 768) return; // Disable custom cursor on mobile for performance
-
-    const handelMouseMove = (e) => {
-      mouse.current.x = e.clientX
-      mouse.current.y = e.clientY
-    }
-
-    document.addEventListener('mousemove', handelMouseMove)
-
-    const animate = () => {
-      position.current.x += (mouse.current.x - position.current.x) * 0.15
-      position.current.y += (mouse.current.y - position.current.y) * 0.15
-
-      if (dotRef.current && outlineRef.current) {
-        dotRef.current.style.transform = `translate3D(${mouse.current.x}px, ${mouse.current.y}px, 0) translate(-50%, -50%)`
-        outlineRef.current.style.transform = `translate3D(${position.current.x}px, ${position.current.y}px, 0) translate(-50%, -50%)`
-      }
-      requestAnimationFrame(animate)
-    }
-    animate()
-
-    return () => {
-      document.removeEventListener('mousemove', handelMouseMove)
-    }
-  }, [])
-
   return (
-    <div className="relative bg-white dark:bg-black transition-colors min-h-screen cursor-none">
+    <div className="relative bg-white dark:bg-black transition-colors min-h-screen">
       <ScrollProgress />
       <Toaster />
       <Navbar theme={theme} setTheme={setTheme} />
@@ -88,7 +53,6 @@ const App = () => {
         <AutomationFeatures />
         <Testimonials />
         <SimpleSetup />
-        {/* <Team /> */}
         <div id="roi">
           <RoiCalculator />
         </div>
@@ -104,20 +68,6 @@ const App = () => {
       </main>
 
       <Footer theme={theme} />
-
-      {/* Custom Premium Cursor */}
-      {/* Ring: Large, transparent with border, slight blur */}
-      <div
-        ref={outlineRef}
-        className="fixed top-0 left-0 h-12 w-12 rounded-full border border-gray-400 dark:border-white/30 pointer-events-none z-[9999] hidden md:block mix-blend-difference backdrop-blur-[1px]"
-        style={{ transition: 'transform 0.1s ease-out' }}
-      />
-
-      {/* Dot: Solid white, blending difference to invert colors */}
-      <div
-        ref={dotRef}
-        className="fixed top-0 left-0 h-2 w-2 rounded-full bg-white pointer-events-none z-[9999] hidden md:block mix-blend-difference"
-      />
     </div>
   )
 }

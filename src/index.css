@@ -1,17 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Outfit:wght@100..900&family=Syne:wght@400..800&display=swap');
 @import "tailwindcss";
-
 
 @custom-variant dark (&:where(.dark &));
 
-*{
+:root {
+  --primary: #0069ff;
+}
+
+* {
   font-family: "Outfit", sans-serif;
   font-weight: 500;
-  cursor: none;
 }
 
 .font-syne {
-    font-family: "Syne", sans-serif;
+  font-family: "Syne", sans-serif;
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.border-primary {
+  border-color: var(--primary);
 }
 
 @theme {
