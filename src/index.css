@@ -12,6 +12,12 @@
   font-weight: 500;
 }
 
+@media (min-width: 1024px) {
+  * {
+    cursor: none;
+  }
+}
+
 .font-syne {
   font-family: "Syne", sans-serif;
 }
