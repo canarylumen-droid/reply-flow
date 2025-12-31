@@ -1,109 +1,198 @@
-import React, { useState } from 'react'
-import { motion } from "framer-motion"
-import { DollarSignIcon } from './Icons'
+import React, { useState, useMemo } from 'react'
+import { motion, AnimatePresence } from "framer-motion"
+import { DollarSignIcon, ArrowRightIcon } from './Icons'
 
 const RoiCalculator = () => {
-
     // State for inputs
-    const [leads, setLeads] = useState(100)
-
-    const [offerPrice, setOfferPrice] = useState(2000)
+    const [leads, setLeads] = useState(500)
+    const [dealValue, setDealValue] = useState(5000)
     const [closeRate, setCloseRate] = useState(10) // Percent
 
-    // Metrics for calculation (Simulated improvements from Reply Flow)
-    // Assume Reply Flow improves close rate by +5% (absolute) and recovers 20% of lost leads
+    // Professional Realistic Math:
+    // 1. Current Revenue = leads * (closeRate/100) * dealValue
+    // 2. The Leak = leads * (1 - closeRate/100) * dealValue (Total potential ignored)
+    // 3. Realistic Recovery = We capture an additional 15% of those 'lost' leads through 90s response and 7-touch nurturing.
+    // 4. Why? Industry data shows 78% of leads buy from the first responder. 
 
-    // Calculations
-    const monthlyRevenue = leads * (closeRate / 100) * offerPrice
-    const lostLeads = leads * (1 - (closeRate / 100))
-    // Improving conversion by 20% relative, or recovering 20% of lost?
-    // Let's say we recover 20% of leads that didn't buy.
-    const recoveredRevenue = lostLeads * 0.2 * offerPrice
+    const stats = useMemo(() => {
+        const currentRevenue = leads * (closeRate / 100) * dealValue
+        const lostRevenue = leads * (1 - (closeRate / 100)) * dealValue
+        // 15% recovery is conservative and professional for a high-end agency
+        const recoveredLeads = (leads * (1 - (closeRate / 100))) * 0.15
+        const recoveredRevenue = recoveredLeads * dealValue
+        const totalNewRevenue = currentRevenue + recoveredRevenue
+
+        return {
+            currentRevenue,
+            lostRevenue,
+            recoveredRevenue,
+            totalNewRevenue,
+            recoveredLeads: Math.floor(recoveredLeads)
+        }
+    }, [leads, dealValue, closeRate])
 
     const formatCurrency = (val) => {
-        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val)
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+            maximumFractionDigits: 0
+        }).format(val)
     }
 
     return (
-        <section className='py-20 px-6 sm:px-12 lg:px-24 bg-gray-900 text-white overflow-hidden relative'>
-
-            {/* Background Glow */}
-            <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/20 blur-[150px] rounded-full pointer-events-none' />
+        <section className='py-32 px-6 sm:px-12 lg:px-24 bg-[#0a0a0a] text-white overflow-hidden relative border-t border-white/5'>
+            {/* Background Texture */}
+            <div className='absolute inset-0 opacity-20 pointer-events-none'
+                style={{ backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0)`, backgroundSize: '40px 40px' }}
+            />
 
             <div className='max-w-7xl mx-auto relative z-10'>
-                <div className='text-center mb-12'>
-                    <h2 className='text-3xl md:text-6xl font-black mb-4'>The Hidden Revenue Leak</h2>
-                    <p className='text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed'>
-                        Calculate exactly how much revenue you're leaving on the table right now by letting leads go cold.
+                <div className='text-center mb-20'>
+                    <div className='inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-xs font-black uppercase tracking-widest mb-6'>
+                        Revenue Forensic Audit
+                    </div>
+                    <h2 className='text-5xl md:text-7xl font-black mb-8 tracking-tighter'>
+                        Stop The <span className='text-red-500'>$0.00</span> Leaking <br />
+                        <span className='text-blue-500 underline decoration-blue-500/30 underline-offset-8 transition-all hover:decoration-blue-500 duration-500'>Through Your CRM</span>
+                    </h2>
+                    <p className='text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed'>
+                        Most businesses close the 10% that are "easy." We build the infrastructure to capture the 90% you're currently ignoring. See the real math.
                     </p>
                 </div>
 
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-black/40 backdrop-blur-md rounded-3xl p-8 border border-white/10'>
+                <div className='grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch'>
 
-                    {/* Controls */}
-                    <div className='space-y-8'>
-                        <div>
-                            <label className='block text-sm font-medium text-gray-400 mb-2'>Monthly Inbound Leads</label>
-                            <input
-                                type="range"
-                                min="10" max="1000" step="10"
-                                value={leads}
-                                onChange={(e) => setLeads(Number(e.target.value))}
-                                className='w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary'
-                            />
-                            <div className='mt-2 text-xl font-bold'>{leads} leads</div>
+                    {/* Left: Controls (4 cols) */}
+                    <div className='lg:col-span-4 bg-zinc-900/50 backdrop-blur-xl rounded-[40px] p-10 border border-white/5 flex flex-col justify-between'>
+                        <div className='space-y-12'>
+                            <div>
+                                <div className='flex justify-between items-end mb-4'>
+                                    <label className='text-sm font-black text-gray-400 uppercase tracking-widest'>Monthly Lead Volume</label>
+                                    <div className='text-2xl font-black text-blue-500'>{leads.toLocaleString()}</div>
+                                </div>
+                                <input
+                                    type="range"
+                                    min="10" max="20000" step="50"
+                                    value={leads}
+                                    onChange={(e) => setLeads(Number(e.target.value))}
+                                    className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
+                                />
+                            </div>
+
+                            <div>
+                                <div className='flex justify-between items-end mb-4'>
+                                    <label className='text-sm font-black text-gray-400 uppercase tracking-widest'>Average Deal Value</label>
+                                    <div className='text-2xl font-black text-blue-500'>{formatCurrency(dealValue)}</div>
+                                </div>
+                                <input
+                                    type="range"
+                                    min="500" max="20000" step="500"
+                                    value={dealValue}
+                                    onChange={(e) => setDealValue(Number(e.target.value))}
+                                    className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
+                                />
+                            </div>
+
+                            <div>
+                                <div className='flex justify-between items-end mb-4'>
+                                    <label className='text-sm font-black text-gray-400 uppercase tracking-widest'>Current Conversion</label>
+                                    <div className='text-2xl font-black text-blue-500'>{closeRate}%</div>
+                                </div>
+                                <input
+                                    type="range"
+                                    min="1" max="50" step="1"
+                                    value={closeRate}
+                                    onChange={(e) => setCloseRate(Number(e.target.value))}
+                                    className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
+                                />
+                            </div>
                         </div>
 
-                        <div>
-                            <label className='block text-sm font-medium text-gray-400 mb-2'>Average Deal Value ($)</label>
-                            <input
-                                type="range"
-                                min="500" max="20000" step="500"
-                                value={offerPrice}
-                                onChange={(e) => setOfferPrice(Number(e.target.value))}
-                                className='w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary'
-                            />
-                            <div className='mt-2 text-xl font-bold'>{formatCurrency(offerPrice)}</div>
-                        </div>
-
-                        <div>
-                            <label className='block text-sm font-medium text-gray-400 mb-2'>Current Team Conversion (%)</label>
-                            <input
-                                type="range"
-                                min="1" max="50" step="1"
-                                value={closeRate}
-                                onChange={(e) => setCloseRate(Number(e.target.value))}
-                                className='w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-primary'
-                            />
-                            <div className='mt-2 text-xl font-bold'>{closeRate}%</div>
+                        <div className='mt-12 p-6 rounded-2xl bg-blue-500/5 border border-blue-500/10 italic text-sm text-gray-400'>
+                            "The industry standard for manual follow-up is 12-24 hours. We bring that to 90 seconds. That's where the recovery happens."
                         </div>
                     </div>
 
-                    {/* Results */}
-                    <div className='bg-zinc-900 rounded-3xl p-10 border-2 border-green-500/30 text-center relative overflow-hidden'>
-                        <div className='absolute top-0 w-full h-1.5 bg-gradient-to-r from-green-500 to-emerald-500 left-0' />
+                    {/* Right: Detailed Math Analysis (8 cols) */}
+                    <div className='lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8'>
 
-                        <p className='text-xs text-gray-400 uppercase tracking-[0.2em] font-bold mb-4'>Revenue We Can Recover</p>
-                        <motion.div
-                            key={recoveredRevenue}
-                            initial={{ scale: 0.9, opacity: 0.8 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className='text-6xl sm:text-7xl font-black text-green-400 mb-6 tracking-tighter'
-                        >
-                            + {formatCurrency(recoveredRevenue)}
-                        </motion.div>
-                        <p className='text-gray-500 text-lg mb-10 font-medium'>Monthly Added Top-Line Revenue</p>
+                        {/* The Leak Panel */}
+                        <div className='bg-red-500/5 backdrop-blur-xl rounded-[40px] p-10 border border-red-500/20'>
+                            <div className='flex items-center gap-3 mb-8'>
+                                <div className='w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 font-bold'>!</div>
+                                <h3 className='text-xl font-black uppercase tracking-tight'>The Monthly Leakage</h3>
+                            </div>
 
-                        <div className='pt-8 border-t border-white/10'>
-                            <p className='text-xs text-gray-400 mb-2 uppercase tracking-widest'>Potential Annual Loss Stopped</p>
-                            <div className='text-4xl font-black text-white'>{formatCurrency(recoveredRevenue * 12)}</div>
+                            <div className='space-y-6'>
+                                <div className='flex justify-between items-center py-4 border-b border-red-500/10'>
+                                    <span className='text-gray-400'>Current Monthly Revenue</span>
+                                    <span className='font-bold'>{formatCurrency(stats.currentRevenue)}</span>
+                                </div>
+                                <div className='flex justify-between items-center py-4 border-b border-red-500/10'>
+                                    <span className='text-gray-400'>Ignoring (Leads)</span>
+                                    <span className='font-bold text-red-400'>{(leads - (leads * closeRate / 100)).toLocaleString()} leads</span>
+                                </div>
+                                <div className='pt-4'>
+                                    <div className='text-xs text-red-500/70 uppercase font-black tracking-widest mb-2'>Total Capital Left On Table</div>
+                                    <div className='text-4xl sm:text-5xl font-black text-red-500 tracking-tighter'>
+                                        {formatCurrency(stats.lostRevenue)}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <button onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })} className='mt-10 w-full py-5 bg-primary text-white font-black text-lg rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 uppercase tracking-widest'>
-                            Stop The Leak Now
-                        </button>
-                    </div>
+                        {/* The Recovery Panel */}
+                        <div className='bg-green-500/5 backdrop-blur-xl rounded-[40px] p-10 border border-green-500/30 relative overflow-hidden'>
+                            <div className='absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-3xl -mr-16 -mt-16' />
 
+                            <div className='flex items-center gap-3 mb-8'>
+                                <div className='w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500'>
+                                    <DollarSignIcon className='w-5 h-5' />
+                                </div>
+                                <h3 className='text-xl font-black uppercase tracking-tight text-white'>Recovery Potential</h3>
+                            </div>
+
+                            <div className='space-y-6'>
+                                <div className='flex justify-between items-center py-4 border-b border-green-500/10'>
+                                    <span className='text-gray-400'>Recovered Leads (Monthly)</span>
+                                    <span className='font-bold text-green-400'>+ {stats.recoveredLeads}</span>
+                                </div>
+                                <div className='flex justify-between items-center py-4 border-b border-green-500/10'>
+                                    <span className='text-gray-400'>New Top-Line Revenue</span>
+                                    <span className='font-bold text-green-400'>{formatCurrency(stats.recoveredRevenue)} /mo</span>
+                                </div>
+
+                                <div className='pt-4'>
+                                    <div className='text-xs text-green-500/70 uppercase font-black tracking-widest mb-2'>Projected Annual Gains</div>
+                                    <motion.div
+                                        key={stats.recoveredRevenue}
+                                        initial={{ scale: 0.95 }}
+                                        animate={{ scale: 1 }}
+                                        className='text-4xl sm:text-5xl font-black text-green-500 tracking-tighter'
+                                    >
+                                        {formatCurrency(stats.recoveredRevenue * 12)}
+                                    </motion.div>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })}
+                                className='mt-10 w-full py-5 bg-green-600 hover:bg-green-500 text-white font-black text-sm uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-green-600/20 flex items-center justify-center gap-3 group'
+                            >
+                                Plug The Leak Now
+                                <ArrowRightIcon className='w-4 h-4 group-hover:translate-x-1 transition-transform' />
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                {/* Footnote about realism */}
+                <div className='mt-12 text-center'>
+                    <p className='text-gray-500 text-sm max-w-2xl mx-auto'>
+                        *This analysis uses a conservative 15% recovery rate of ignored leads. <br className='hidden sm:block' />
+                        Real-world results vary based on industry and current response times, but most clients see immediate uplift by capturing the "Speed To Lead" advantage.
+                    </p>
                 </div>
             </div>
         </section>
