@@ -31,12 +31,12 @@ const Infrastructure = () => {
 
                         <div className='grid grid-cols-1 sm:grid-cols-2 gap-6'>
                             {[
-                                { title: "Your Value Prop", desc: "The unique 'why' that makes people buy from YOU." },
-                                { title: "Your Best Wins", desc: "Case studies and results we'll reference mid-chat." },
-                                { title: "Your Pricing", desc: "Packages, tiers, and negotiation boundaries." },
-                                { title: "The 'No-No' List", desc: "Words or concepts you never want used." },
-                                { title: "Objection Handling", desc: "How you handle price, timing, and trust issues." },
-                                { title: "Your Tone", desc: "Whether you're 'Professional' or 'Start-up Casual'." }
+                                { title: "Your Unique Value Prop", desc: "The specific 'why' that makes people choose you over everyone else." },
+                                { title: "Your Best Client Wins", desc: "Specific success stories and case studies we'll pull mid-conversation." },
+                                { title: "Your Pricing & Packages", desc: "The math of your business, deal boundaries, and upsell triggers." },
+                                { title: "How You Handle Objections", desc: "Your specific counters for price, timing, and trust concerns." },
+                                { title: "Words You Never Use", desc: "Your specific vocabulary and internal 'blacklisted' phrases." },
+                                { title: "Your Ideal Lead Profile", desc: "The signals that tell us a lead is worth your personal time." }
                             ].map((item, i) => (
                                 <motion.div
                                     key={i}

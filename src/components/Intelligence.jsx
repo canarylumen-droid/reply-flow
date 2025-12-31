@@ -1,143 +1,100 @@
 import React from 'react'
 import { motion } from "framer-motion"
-import { BrainIcon, ClockIcon, ZapIcon, CheckIcon } from './Icons'
 
 const Intelligence = () => {
-
-    const features = [
+    const points = [
         {
-            title: "We Study Your Leads",
-            desc: "Our team analyzes when each of your leads is most active and responsive, then schedules outreach for maximum engagement.",
-            icon: ClockIcon,
+            title: "24/7 Human Oversight",
+            desc: "Our team doesn't just set it and forget it. We monitor every conversation in real-time to ensure the highest quality delivery.",
+            icon: "🛡️"
         },
         {
-            title: "We Remember Everything",
-            desc: "Every conversation, every question, every objection is tracked. We never ask your leads the same question twice.",
-            icon: BrainIcon,
+            title: "Brand Safety Guarantee",
+            desc: "The system is programmed with your strict 'No-No' list. It will never misrepresent your pricing or damage your reputation.",
+            icon: "💎"
         },
         {
-            title: "We Prioritize Your Pipeline",
-            desc: "We score every lead based on buying signals and alert you immediately when someone's ready to close.",
-            icon: ZapIcon,
+            title: "Continuous Optimization",
+            desc: "We analyze every objection that isn't handled perfectly and refine the AI's logic daily. It gets smarter every single day.",
+            icon: "📈"
         },
         {
-            title: "We Handle Objections",
-            desc: "When leads hesitate, we respond instantly with proven counters and case studies—just like your best closer would.",
-            icon: CheckIcon,
+            title: "Seamless Escalation",
+            desc: "The second a lead asks for a human or a complex custom quote, our system alerts you immediately. You step in exactly when needed.",
+            icon: "📲"
         }
     ]
 
     return (
-        <section className='py-32 px-6 sm:px-12 lg:px-24 bg-white dark:bg-black text-gray-900 dark:text-white'>
+        <section className='py-32 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5'>
             <div className='max-w-7xl mx-auto'>
-                <div className='text-center mb-20'>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        className='text-primary font-medium tracking-widest uppercase text-sm mb-4'
-                    >
-                        Full-Service Management
-                    </motion.p>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className='text-4xl md:text-6xl font-bold mb-6'
-                    >
-                        We Don't Sell You Software. <br className="hidden md:block" />
-                        <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600'>We Run It For You.</span>
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className='text-gray-500 max-w-3xl mx-auto text-xl leading-relaxed'
-                    >
-                        Our team builds, trains, and manages your entire AI sales operation. You just show up to close the deals we book. Clients typically see <span className='font-bold text-gray-900 dark:text-white'>3× more qualified meetings</span> and <span className='font-bold text-gray-900 dark:text-white'>2× faster sales cycles</span>.
-                    </motion.p>
-                </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-20 items-center'>
+                    <div>
+                        <div className='inline-block px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-xs font-black uppercase tracking-widest mb-6'>
+                            Absolute Control
+                        </div>
+                        <h2 className='text-4xl md:text-6xl font-black mb-8 tracking-tighter'>
+                            The AI Sells. <br />
+                            <span className='text-green-600'>We Supervise.</span>
+                        </h2>
+                        <p className='text-xl text-gray-500 dark:text-gray-400 leading-relaxed mb-12'>
+                            Building a tool is easy. Building a system that you can trust with your brand reputation is what we do. We combine the scale of AI with the strategic oversight of seasoned sales managers.
+                        </p>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-8 mb-16'>
-                    {features.map((item, index) => (
+                        <div className='space-y-6'>
+                            {points.map((point, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.1 }}
+                                    viewport={{ once: true }}
+                                    className='flex gap-6 p-6 rounded-2xl bg-white dark:bg-black border border-gray-100 dark:border-white/5 hover:shadow-lg transition-all'
+                                >
+                                    <div className='text-3xl'>{point.icon}</div>
+                                    <div>
+                                        <h4 className='font-bold text-gray-900 dark:text-white mb-1'>{point.title}</h4>
+                                        <p className='text-sm text-gray-500 dark:text-gray-400'>{point.desc}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className='relative'>
+                        <div className='absolute -inset-10 bg-green-500/5 blur-3xl rounded-full' />
                         <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
-                            className='p-8 rounded-2xl bg-gray-50 dark:bg-zinc-900 border border-transparent hover:border-primary/20 hover:shadow-xl transition-all duration-300 group'
+                            className='relative bg-white dark:bg-black p-10 rounded-[40px] border border-green-500/20 shadow-2xl overflow-hidden'
                         >
-                            <div className='flex items-start gap-4 mb-6'>
-                                <div className='w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:scale-110 transition-transform'>
-                                    <item.icon className="w-7 h-7" />
+                            <div className='flex items-center gap-2 mb-8'>
+                                <div className='w-3 h-3 rounded-full bg-green-500 animate-pulse' />
+                                <span className='text-sm font-black uppercase tracking-widest text-gray-400'>Live Optimization Log</span>
+                            </div>
+
+                            <div className='space-y-6 font-mono text-xs'>
+                                <div className='p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10'>
+                                    <div className='text-green-500 mb-1'>[OPTIMIZATION] 13:42:01</div>
+                                    <div className='text-gray-400'>Objection "Too expensive" detected in conversation #492. Script updated with new ROI case study #A12.</div>
                                 </div>
-                                <div>
-                                    <h3 className='text-2xl font-bold mb-2'>{item.title}</h3>
-                                    <p className='text-gray-600 dark:text-gray-400 leading-relaxed'>{item.desc}</p>
+                                <div className='p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10'>
+                                    <div className='text-green-500 mb-1'>[BRAND_CHECK] 14:15:22</div>
+                                    <div className='text-gray-400'>Lead asked about custom feature #X. System deferred to human manager for custom quote. Escalation sent to user.</div>
+                                </div>
+                                <div className='p-4 rounded-xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10'>
+                                    <div className='text-green-500 mb-1'>[NURTURING] 15:00:00</div>
+                                    <div className='text-gray-400'>Re-engagement sequence triggered for 12 cold leads. Content focus: "New Industry Results".</div>
                                 </div>
                             </div>
 
-                            {/* Example Use Case */}
-                            <div className='bg-white dark:bg-black p-4 rounded-xl border border-gray-200 dark:border-white/5 mt-4'>
-                                <div className='text-xs font-bold text-primary uppercase tracking-wider mb-2'>Client Example</div>
-                                <p className='text-sm text-gray-600 dark:text-gray-400 italic'>
-                                    {index === 0 && "We noticed John always engages with emails on Tuesday afternoons. We scheduled his follow-up for 2:25 PM and he booked a call within 10 minutes."}
-                                    {index === 1 && "When a lead asked 'Do you work with real estate?', we instantly pulled up their initial inquiry about property investment from 3 weeks ago and personalized our response."}
-                                    {index === 2 && "Sarah visited your pricing page 3 times and downloaded a case study. We scored her 94% hot and sent you an immediate Slack alert. You closed her the same day."}
-                                    {index === 3 && "Lead said 'Too expensive.' Within 30 seconds, we sent them your ROI calculator, a payment plan, and a case study from their industry. They booked a call to discuss."}
-                                </p>
+                            <div className='mt-10 pt-10 border-t border-gray-100 dark:border-white/5 text-center'>
+                                <p className='text-gray-500 italic'>"We monitor the tech. You handle the checks."</p>
                             </div>
                         </motion.div>
-                    ))}
-                </div>
-
-                {/* Comparison Table */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className='bg-gradient-to-br from-gray-50 to-white dark:from-zinc-900 dark:to-black p-8 rounded-3xl border border-gray-200 dark:border-white/5'
-                >
-                    <h3 className='text-2xl font-bold mb-8 text-center'>What You Get vs. What Others Offer</h3>
-                    <div className='overflow-x-auto'>
-                        <table className='w-full'>
-                            <thead>
-                                <tr className='border-b border-gray-200 dark:border-white/10'>
-                                    <th className='text-left py-4 px-4 font-bold text-gray-900 dark:text-white'>Service</th>
-                                    <th className='text-center py-4 px-4 font-bold text-gray-500'>DIY Chatbots</th>
-                                    <th className='text-center py-4 px-4 font-bold text-gray-500'>Email Tools</th>
-                                    <th className='text-center py-4 px-4 font-bold text-primary'>Reply Flow</th>
-                                </tr>
-                            </thead>
-                            <tbody className='text-sm'>
-                                {[
-                                    { feature: 'We Build It For You', basic: false, email: false, us: true },
-                                    { feature: 'We Train It On Your Data', basic: false, email: false, us: true },
-                                    { feature: 'We Manage It Daily', basic: false, email: false, us: true },
-                                    { feature: 'Multi-Channel (Email, SMS, IG)', basic: false, email: true, us: true },
-                                    { feature: 'We Handle Objections', basic: false, email: false, us: true },
-                                    { feature: 'We Book Calls Directly', basic: false, email: false, us: true },
-                                ].map((row, i) => (
-                                    <tr key={i} className='border-b border-gray-100 dark:border-white/5'>
-                                        <td className='py-4 px-4 font-medium'>{row.feature}</td>
-                                        <td className='text-center py-4 px-4'>
-                                            {row.basic ? <span className='text-green-500'>✓</span> : <span className='text-gray-300'>—</span>}
-                                        </td>
-                                        <td className='text-center py-4 px-4'>
-                                            {row.email ? <span className='text-green-500'>✓</span> : <span className='text-gray-300'>—</span>}
-                                        </td>
-                                        <td className='text-center py-4 px-4'>
-                                            <span className='text-primary font-bold text-lg'>✓</span>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
                     </div>
-                    <p className='text-center text-sm text-gray-500 mt-6 italic'>
-                        You don't lift a finger. We handle everything from setup to optimization.
-                    </p>
-                </motion.div>
+                </div>
             </div>
         </section>
     )

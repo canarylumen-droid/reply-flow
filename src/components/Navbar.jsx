@@ -20,7 +20,7 @@ const Navbar = ({ theme, setTheme }) => {
         </div>
         <div>
           <h1 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white leading-none">Reply Flow</h1>
-          <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">By Audnix</p>
+          <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Outcome-Based AI Sales</p>
         </div>
       </div>
 
