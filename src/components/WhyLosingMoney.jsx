@@ -157,10 +157,10 @@ const WhyLosingMoney = () => {
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className='relative group overflow-hidden rounded-2xl bg-white dark:bg-black p-8 border border-red-500/20 shadow-xl'
+                        className='relative group rounded-2xl bg-white dark:bg-black p-8 border border-red-500/20 shadow-xl'
                     >
-                        <div className='absolute inset-0 bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none' />
-                        <div className='absolute top-0 left-0 w-1 h-full bg-red-500' />
+                        <div className='absolute inset-0 bg-red-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl' />
+                        <div className='absolute top-0 left-0 w-1 h-full bg-red-500 rounded-l-2xl' />
 
                         <div className='flex items-center gap-3 mb-6'>
                             <div className='w-12 h-12 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center'>
@@ -215,10 +215,10 @@ const WhyLosingMoney = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className='relative group overflow-hidden rounded-2xl bg-white dark:bg-black p-8 border border-green-500/20 shadow-xl'
+                        className='relative group rounded-2xl bg-white dark:bg-black p-8 border border-green-500/20 shadow-xl'
                     >
-                        <div className='absolute inset-0 bg-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none' />
-                        <div className='absolute top-0 left-0 w-1 h-full bg-green-500' />
+                        <div className='absolute inset-0 bg-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl' />
+                        <div className='absolute top-0 left-0 w-1 h-full bg-green-500 rounded-l-2xl' />
 
                         <div className='flex items-center gap-3 mb-6'>
                             <div className='w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center'>
