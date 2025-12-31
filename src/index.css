@@ -5,11 +5,15 @@
 @custom-variant dark (&:where(.dark &));
 
 *{
-  font-family: "Manrope", sans-serif;
+  font-family: "Outfit", sans-serif;
   font-weight: 500;
   cursor: none;
 }
 
+.font-syne {
+    font-family: "Syne", sans-serif;
+}
+
 @theme {
-  --color-primary: #5044E5;
+  --color-primary: #0069ff;
 }

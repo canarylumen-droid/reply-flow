@@ -23,20 +23,21 @@ const Hero = () => {
           viewport={{ once: true }}
           className='flex flex-col gap-6 text-left'
         >
-          <div className='flex items-center gap-2 text-primary font-semibold tracking-wide uppercase text-xs sm:text-sm'>
-            <BrainIcon className="w-5 h-5" />
-            <span>Premier Outcome-Driven Agency</span>
+          <div className='flex items-center gap-3 text-primary font-black uppercase text-xs tracking-[0.3em] font-syne'>
+            <div className='w-8 h-px bg-primary' />
+            <span>ELITE SALES INFRASTRUCTURE</span>
           </div>
 
-          <h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight'>
-            We Build Your <br />
-            <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400'>
-              AI Sales Department
-            </span>
+          <h1 className='text-6xl sm:text-7xl lg:text-9xl font-extrabold leading-[0.85] tracking-tighter font-syne uppercase'>
+            The AI <br />
+            <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-purple-500'>
+              Machine
+            </span> <br />
+            That Closes.
           </h1>
 
-          <p className='text-lg sm:text-x text-gray-600 dark:text-gray-400 max-w-lg leading-relaxed'>
-            We don't just sell software. We design, build, and manage fully autonomous <span className='font-semibold text-gray-800 dark:text-gray-200'>AI Sales Agents</span> that work 24/7 to fill your calendar with qualified meetings.
+          <p className='text-xl sm:text-2xl text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed font-medium mt-4'>
+            We don't just sell software. We design, build, and manage high-fidelity <span className='text-gray-900 dark:text-white border-b-2 border-primary/30'>AI Sales Departments</span> for elite agencies that demand outcome-driven excellence.
           </p>
 
           <div className='flex flex-wrap gap-4 pt-4'>

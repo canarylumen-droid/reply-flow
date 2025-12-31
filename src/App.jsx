@@ -15,6 +15,7 @@ import Pricing from './components/Pricing'
 import FinalCta from './components/FinalCta'
 import FAQ from './components/FAQ'
 import Booking from './components/Booking'
+import ScrollingText from './components/ScrollingText'
 import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
 import { Toaster } from 'react-hot-toast'
@@ -95,6 +96,7 @@ const App = () => {
           <Pricing />
         </div>
         <FAQ />
+        <ScrollingText />
         <div id="book">
           <FinalCta />
           <Booking />

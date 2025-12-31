@@ -14,13 +14,13 @@ const Navbar = ({ theme, setTheme }) => {
       className="flex justify-between items-center px-4 sm:px-12 lg:px-24 xl:px-40 py-6 sticky top-0 z-50 backdrop-blur-xl font-medium bg-white/70 dark:bg-black/70 border-b border-gray-200 dark:border-white/10"
     >
       {/* Logo */}
-      <div className="flex items-center gap-2">
-        <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center text-primary">
+      <div className="flex items-center gap-3 group cursor-pointer">
+        <div className="w-10 h-10 bg-primary flex items-center justify-center text-white rounded-lg shadow-lg shadow-primary/20 rotate-[-5deg] group-hover:rotate-0 transition-transform">
           <BrainIcon className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white leading-none">Reply Flow</h1>
-          <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold">Outcome-Based AI Sales</p>
+          <h1 className="text-2xl font-extrabold tracking-tighter text-gray-900 dark:text-white leading-none font-syne">REPLYFLOW</h1>
+          <p className="text-[9px] text-gray-500 uppercase tracking-[0.2em] font-black mt-1">Infrastructure agency</p>
         </div>
       </div>
 
