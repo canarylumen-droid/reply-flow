@@ -84,7 +84,7 @@ const App = () => {
         <AutomationFeatures />
         <Testimonials />
         <SimpleSetup />
-        <Team />
+        {/* <Team /> */}
         <div id="roi">
           <RoiCalculator />
         </div>
