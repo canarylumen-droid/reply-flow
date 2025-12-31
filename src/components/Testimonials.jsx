@@ -80,15 +80,15 @@ const Testimonials = () => {
                     {/* Column 1 - Discord Vibes */}
                     <div className='space-y-6 pt-10'>
                         <DiscordCard
-                            user="Alex (Vanguard Realty)"
-                            message="WTF. I just woke up and the AI booked 4 viewings overnight. These were leads from last month I thought were dead."
-                            revenue="$2.4k Comm. Possibility"
+                            user="Alex (Director of Sales)"
+                            message="The reactivation campaign you guys built is printing. We just closed an extra $2.4M in property value this month solely from leads we thought were dead."
+                            revenue="$60k Commission Added"
                             delay={0.1}
                         />
                         <InstagramCard
-                            user="Dr. Sarah"
-                            message="Hey! Just wanted to say the reactivation campaign is insane. 12 past patients rebooked in 24 hours."
-                            revenue="$3,600 Value"
+                            user="Dr. Sarah (Clinic Owner)"
+                            message="We used to hire front desk staff just to chase leads. Now your AI does it instantly. Our show-up rate literally doubled in 30 days."
+                            revenue="$15k New Revenue"
                             delay={0.2}
                         />
                     </div>
@@ -96,15 +96,15 @@ const Testimonials = () => {
                     {/* Column 2 - High Value */}
                     <div className='space-y-6'>
                         <DiscordCard
-                            user="Marcus_Auto"
-                            message="Reply Flow handled that objection perfectly... customer asked about financing, AI sent the breakdown, and they booked a test drive. "
-                            revenue="$45k Car Deal Saved"
+                            user="Marcus (Dealership GM)"
+                            message="I was skeptical about 'AI' handling my customers. But listening to the calls... it sounds more professional than my junior sales reps. It handled the financing objection perfectly."
+                            revenue="$120k Pipeline Saved"
                             delay={0.3}
                         />
                         <DiscordCard
-                            user="Jennifer.Legal"
-                            message="We were losing so many consultation requests because we took too long to reply. This thing is instant. It's actually scary good."
-                            revenue="$5,000 retainer secured"
+                            user="Jennifer (Law Partner)"
+                            message="Speed is everything in law. We are now the first to reply to every inquiry 24/7. Validated my decision to partner with Reply Flow."
+                            revenue="3 Retainers Secured this week"
                             delay={0.4}
                         />
                     </div>
@@ -112,15 +112,15 @@ const Testimonials = () => {
                     {/* Column 3 - Fast scale */}
                     <div className='space-y-6 pt-10 sm:pt-20'>
                         <InstagramCard
-                            user="FitnessElite_Owner"
-                            message="Dude. The system just recovered $5k in membership fees from inactive leads in literally 2 weeks. I'm upgrading to the pro plan."
-                            revenue="$5,000 recovered"
+                            user="FitnessChain_CEO"
+                            message="I almost hired a call center. Glad you stopped me. This system recovered $50k in membership fees without me managing a single human."
+                            revenue="$50k Recovered"
                             delay={0.5}
                         />
                         <DiscordCard
-                            user="Mike (Roofing)"
-                            message="I used to spend 2 hours a day texting leads back. Now I just check my calendar. "
-                            revenue="20hrs/mo Saved"
+                            user="Mike (Roofing Contractor)"
+                            message="My guys are good at roofing, not texting. Having this system filter the tire-kickers has saved my sanity. We only visit qualified homes now."
+                            revenue="15 Qualified Estimates"
                             delay={0.6}
                         />
                     </div>

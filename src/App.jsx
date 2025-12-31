@@ -12,6 +12,7 @@ import Team from './components/Team'
 import RoiCalculator from './components/RoiCalculator'
 import Pricing from './components/Pricing'
 import FinalCta from './components/FinalCta'
+import FAQ from './components/FAQ'
 import Booking from './components/Booking'
 import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
@@ -91,6 +92,7 @@ const App = () => {
         <div id="pricing">
           <Pricing />
         </div>
+        <FAQ />
         <div id="book">
           <FinalCta />
           <Booking />

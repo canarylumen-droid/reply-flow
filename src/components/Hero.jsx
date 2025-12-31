@@ -64,60 +64,132 @@ const Hero = () => {
           </p>
         </motion.div>
 
-        {/* Right: Visualization (Abstract UI Representation) */}
+        {/* Right: Live AI Dashboard Demo */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className='relative w-full h-[400px] sm:h-[500px] flex items-center justify-center'
+          className='relative w-full h-[500px] sm:h-[600px] flex items-center justify-center'
         >
-          {/* Abstract Floating Cards / UI */}
-          <div className='relative w-full max-w-md aspect-square'>
-            <div className='absolute inset-0 bg-gradient-to-tr from-blue-500/5 to-purple-500/5 dark:from-blue-500/10 dark:to-purple-500/10 rounded-3xl border border-gray-200 dark:border-white/10 backdrop-blur-sm' />
+          <div className='relative w-full max-w-lg h-full'>
 
-            {/* Floating Element 1: Lead Detected */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className='absolute top-10 left-[-20px] sm:left-0 bg-white dark:bg-[#111] p-4 rounded-xl shadow-xl border border-gray-100 dark:border-white/5 w-64'
-            >
-              <div className='flex items-center gap-3 mb-2'>
-                <div className='w-8 h-8 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-xs font-bold'>JL</div>
-                <div>
-                  <div className='text-sm font-bold'>John Lead</div>
-                  <div className='text-xs text-gray-500'>Just visited pricing</div>
+            {/* Main Dashboard Container */}
+            <div className='absolute inset-0 bg-gradient-to-br from-zinc-900 to-black rounded-2xl border border-zinc-800 shadow-2xl overflow-hidden'>
+
+              {/* Header Bar */}
+              <div className='bg-zinc-800/50 border-b border-zinc-700 px-4 py-3 flex items-center justify-between'>
+                <div className='flex items-center gap-2'>
+                  <div className='flex gap-1.5'>
+                    <div className='w-3 h-3 rounded-full bg-red-500/80'></div>
+                    <div className='w-3 h-3 rounded-full bg-yellow-500/80'></div>
+                    <div className='w-3 h-3 rounded-full bg-green-500/80'></div>
+                  </div>
+                  <span className='text-xs text-zinc-400 ml-3 font-mono'>reply-flow-agent.ai</span>
+                </div>
+                <div className='flex items-center gap-2'>
+                  <div className='w-2 h-2 rounded-full bg-green-500 animate-pulse'></div>
+                  <span className='text-[10px] text-green-400 font-semibold'>LIVE</span>
                 </div>
               </div>
-              <div className='h-2 w-full bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden'>
-                <div className='h-full w-[85%] bg-green-500 rounded-full' />
-              </div>
-              <div className='flex justify-between mt-1'>
-                <span className='text-[10px] text-gray-400'>Buying Intent</span>
-                <span className='text-[10px] text-green-500 font-bold'>85%</span>
-              </div>
-            </motion.div>
 
-            {/* Floating Element 2: Smart Reply */}
-            <motion.div
-              animate={{ y: [0, 15, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className='absolute bottom-20 right-[-20px] sm:right-0 bg-white dark:bg-[#111] p-4 rounded-xl shadow-xl border border-gray-100 dark:border-white/5 w-60 z-20'
-            >
-              <div className='flex items-center gap-2 mb-2'>
-                <BrainIcon className="w-4 h-4 text-purple-500" />
-                <span className='text-xs font-bold text-purple-500'>Audnix Intelligence</span>
-              </div>
-              <p className='text-xs text-gray-600 dark:text-gray-300 italic'>
-                "Drafting follow-up for optimal 2:30 PM delivery based on John's activity patterns..."
-              </p>
-            </motion.div>
+              {/* Content Area */}
+              <div className='p-6 space-y-4 h-[calc(100%-56px)] overflow-hidden'>
 
-            {/* Center Element: The Core */}
-            <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur-[40px] opacity-20 animate-pulse' />
-            <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-white dark:bg-black border border-gray-200 dark:border-white/10 rounded-full flex items-center justify-center shadow-2xl z-10'>
-              <BrainIcon className="w-10 h-10 text-primary" />
+                {/* Real-time Metrics */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className='grid grid-cols-3 gap-3'
+                >
+                  <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
+                    <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Active Leads</div>
+                    <div className='text-2xl font-bold text-white'>247</div>
+                  </div>
+                  <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
+                    <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Response Time</div>
+                    <div className='text-2xl font-bold text-green-400'>1.2s</div>
+                  </div>
+                  <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
+                    <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Booked Today</div>
+                    <div className='text-2xl font-bold text-blue-400'>18</div>
+                  </div>
+                </motion.div>
+
+                {/* Terminal-style Activity Log */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className='bg-black/40 rounded-lg p-4 border border-zinc-800 font-mono text-xs space-y-2 h-48 overflow-hidden'
+                >
+                  <div className='flex items-start gap-2'>
+                    <span className='text-zinc-600'>14:23:41</span>
+                    <span className='text-green-400'>✓</span>
+                    <span className='text-zinc-300'>Lead <span className='text-blue-400'>Sarah M.</span> qualified → Intent: 92%</span>
+                  </div>
+                  <div className='flex items-start gap-2'>
+                    <span className='text-zinc-600'>14:23:38</span>
+                    <span className='text-yellow-400'>⚡</span>
+                    <span className='text-zinc-300'>Objection detected: "Price concern"</span>
+                  </div>
+                  <div className='flex items-start gap-2'>
+                    <span className='text-zinc-600'>14:23:35</span>
+                    <span className='text-purple-400'>→</span>
+                    <span className='text-zinc-300'>Sent: ROI breakdown + case study</span>
+                  </div>
+                  <div className='flex items-start gap-2'>
+                    <span className='text-zinc-600'>14:23:12</span>
+                    <span className='text-green-400'>✓</span>
+                    <span className='text-zinc-300'>Meeting booked: <span className='text-green-400'>John D.</span> → Jan 3, 2:30 PM</span>
+                  </div>
+                  <div className='flex items-start gap-2'>
+                    <span className='text-zinc-600'>14:22:58</span>
+                    <span className='text-blue-400'>◆</span>
+                    <span className='text-zinc-300'>New lead: <span className='text-blue-400'>Mike R.</span> from Instagram</span>
+                  </div>
+                  <div className='flex items-start gap-2'>
+                    <span className='text-zinc-600'>14:22:45</span>
+                    <span className='text-purple-400'>→</span>
+                    <span className='text-zinc-300'>Reactivation sent to 47 cold leads</span>
+                  </div>
+                </motion.div>
+
+                {/* Live Conversation Preview */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7 }}
+                  className='bg-zinc-800/30 rounded-lg p-4 border border-zinc-700/50'
+                >
+                  <div className='flex items-center gap-2 mb-3'>
+                    <div className='w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center'>
+                      <BrainIcon className="w-3 h-3 text-white" />
+                    </div>
+                    <span className='text-xs font-semibold text-zinc-300'>AI Agent → John D.</span>
+                    <span className='text-[10px] text-zinc-500 ml-auto'>Just now</span>
+                  </div>
+                  <div className='bg-blue-500/10 border border-blue-500/20 rounded-lg p-3'>
+                    <p className='text-xs text-zinc-300 leading-relaxed'>
+                      "Hi John! I noticed you checked out our pricing page earlier. Based on your business size, our Growth Partner model could add an estimated <span className='text-green-400 font-semibold'>$45k/month</span> in recovered revenue. Want to see a custom projection?"
+                    </p>
+                  </div>
+                  <div className='mt-2 flex items-center gap-2 text-[10px] text-zinc-500'>
+                    <span className='flex items-center gap-1'>
+                      <div className='w-1.5 h-1.5 rounded-full bg-green-500'></div>
+                      Delivered
+                    </span>
+                    <span>•</span>
+                    <span>Personalized using: visit history, company size, industry</span>
+                  </div>
+                </motion.div>
+
+              </div>
             </div>
+
+            {/* Floating Accent Glow */}
+            <div className='absolute -inset-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl blur-3xl -z-10'></div>
           </div>
         </motion.div>
 
