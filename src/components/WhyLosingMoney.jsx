@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from "framer-motion"
 import { XIcon, CheckIcon, ClockIcon } from './Icons'
 import { TiltCard } from './TiltCard'
-
+// WhyLosingMoney component - Optimized for Agency Done-For-You service
 const WhyLosingMoney = () => {
     return (
         <section className='py-32 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 border-t border-b border-gray-200 dark:border-white/5'>
