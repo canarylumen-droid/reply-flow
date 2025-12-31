@@ -38,12 +38,15 @@ const App = () => {
   }, [theme])
 
   const dotRef = useRef(null)
-  const outlineRef = useRef(null)
+  const trailRef = useRef(null)
+  const shadowRef = useRef(null)
   const mouse = useRef({ x: 0, y: 0 })
-  const position = useRef({ x: 0, y: 0 })
+  const dotPos = useRef({ x: 0, y: 0 })
+  const trailPos = useRef({ x: 0, y: 0 })
+  const shadowPos = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < 1024) return;
 
     const handleMouseMove = (e) => {
       mouse.current.x = e.clientX
@@ -53,13 +56,26 @@ const App = () => {
     document.addEventListener('mousemove', handleMouseMove)
 
     const animate = () => {
-      position.current.x += (mouse.current.x - position.current.x) * 0.15
-      position.current.y += (mouse.current.y - position.current.y) * 0.15
+      // Different damping for each element creates the 'trail' effect
+      dotPos.current.x = mouse.current.x
+      dotPos.current.y = mouse.current.y
 
-      if (dotRef.current && outlineRef.current) {
-        dotRef.current.style.transform = `translate3D(${mouse.current.x}px, ${mouse.current.y}px, 0) translate(-50%, -50%)`
-        outlineRef.current.style.transform = `translate3D(${position.current.x}px, ${position.current.y}px, 0) translate(-50%, -50%)`
+      trailPos.current.x += (mouse.current.x - trailPos.current.x) * 0.15
+      trailPos.current.y += (mouse.current.y - trailPos.current.y) * 0.15
+
+      shadowPos.current.x += (mouse.current.x - shadowPos.current.x) * 0.08
+      shadowPos.current.y += (mouse.current.y - shadowPos.current.y) * 0.08
+
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${dotPos.current.x}px, ${dotPos.current.y}px, 0) translate(-50%, -50%)`
       }
+      if (trailRef.current) {
+        trailRef.current.style.transform = `translate3d(${trailPos.current.x}px, ${trailPos.current.y}px, 0) translate(-50%, -50%)`
+      }
+      if (shadowRef.current) {
+        shadowRef.current.style.transform = `translate3d(${shadowPos.current.x}px, ${shadowPos.current.y}px, 0) translate(-50%, -50%)`
+      }
+
       requestAnimationFrame(animate)
     }
     const frame = requestAnimationFrame(animate)
@@ -102,15 +118,23 @@ const App = () => {
 
       <Footer theme={theme} />
 
-      {/* Premium Cursor Elements */}
-      <div
-        ref={outlineRef}
-        className="fixed top-0 left-0 h-10 w-10 rounded-full border border-primary/40 pointer-events-none z-[9999] hidden lg:block mix-blend-difference"
-        style={{ transition: 'transform 0.05s ease-out' }}
-      />
+      {/* Premium Multi-Stage Cursor Trail */}
+      {/* 1. Main Dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 h-1.5 w-1.5 rounded-full bg-primary pointer-events-none z-[9999] hidden lg:block mix-blend-difference"
+        className="fixed top-0 left-0 h-1.5 w-1.5 rounded-full bg-primary pointer-events-none z-[9999] hidden lg:block"
+      />
+
+      {/* 2. Fluid Trail Ring */}
+      <div
+        ref={trailRef}
+        className="fixed top-0 left-0 h-8 w-8 rounded-full border border-primary/30 pointer-events-none z-[9998] hidden lg:block mix-blend-difference"
+      />
+
+      {/* 3. Shadow Follower (The 'Dark' Trail) */}
+      <div
+        ref={shadowRef}
+        className="fixed top-0 left-0 h-12 w-12 rounded-full bg-primary/5 dark:bg-primary/20 blur-xl pointer-events-none z-[9997] hidden lg:block"
       />
     </div>
   )
