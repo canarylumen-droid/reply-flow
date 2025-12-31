@@ -14,11 +14,11 @@ export const XIcon = ({ className }) => (
 );
 
 export const BrainIcon = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-        <path d="M22 11c0-4.97-4.03-9-9-9S4 6.03 4 11" />
-        <path d="M2 11c0 4.97 4.03 9 9 9s9-4.03 9-9" />
-        <path d="M11 2s4.03 9 9 9" />
-        <circle cx="11" cy="11" r="2" fill="currentColor" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <circle cx="12" cy="12" r="10" strokeDasharray="4 4" className="opacity-20" />
+        <path d="M12 2a10 10 0 0 1 10 10M12 22a10 10 0 0 1-10-10" className="opacity-40" />
+        <path d="M12 8a4 4 0 1 1-4 4 4 4 0 0 1 4-4z" strokeWidth="2" />
+        <path d="M12 2v4M12 18v4M2 12h4M18 12h4" />
     </svg>
 );
 

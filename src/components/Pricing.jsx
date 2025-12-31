@@ -71,14 +71,19 @@ const Pricing = () => {
                     </div>
 
                     {/* Managed Closer - MAIN OFFER */}
-                    <TiltCard className='p-12 rounded-[40px] bg-white dark:bg-black border-2 border-blue-600 relative overflow-hidden flex flex-col shadow-[0_32px_64px_-16px_rgba(37,99,235,0.2)] md:-translate-y-8'>
-                        <div className='absolute top-0 right-0 px-6 py-2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-bl-3xl'>
+                    <TiltCard className='p-10 lg:p-12 rounded-[40px] bg-white dark:bg-black border-2 border-primary relative overflow-hidden flex flex-col shadow-[0_32px_64px_-16px_rgba(0,105,255,0.25)] md:-translate-y-8'>
+                        <div className='absolute top-0 right-0 px-6 py-2 bg-primary text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-bl-3xl z-20'>
                             Most Requested
                         </div>
 
-                        <div className='mb-8'>
-                            <h3 className='text-3xl font-black mb-2'>Managed Closer</h3>
-                            <div className='inline-block px-3 py-1 rounded-lg bg-blue-600/10 text-blue-600 text-[10px] font-black uppercase tracking-widest mb-6'>
+                        {/* Subtle Logo Background */}
+                        <div className='absolute -top-10 -right-10 w-40 h-40 opacity-[0.03] dark:opacity-[0.05] pointer-events-none'>
+                            <BrainIcon className='w-full h-full' />
+                        </div>
+
+                        <div className='mb-8 relative z-10'>
+                            <h3 className='text-3xl font-black mb-2 font-syne uppercase tracking-tighter'>Managed Closer</h3>
+                            <div className='inline-block px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest mb-6'>
                                 Full Infrastructure Deployment
                             </div>
                             <p className='text-gray-500 dark:text-gray-300 leading-relaxed font-bold'>
@@ -86,13 +91,13 @@ const Pricing = () => {
                             </p>
                         </div>
 
-                        <div className='mb-10 p-6 rounded-3xl bg-blue-500/5 border border-blue-500/10'>
+                        <div className='mb-10 p-6 rounded-3xl bg-primary/5 border border-primary/10 relative z-10'>
                             <div className='text-xs font-black text-gray-400 uppercase tracking-widest mb-4'>Partnership Terms</div>
-                            <div className='text-4xl font-black text-blue-600 mb-2'>Setup Fee + 15%</div>
+                            <div className='text-4xl font-black text-primary mb-2'>Setup Fee + 15%</div>
                             <div className='text-sm text-gray-500 font-bold'>We only win when you close deals</div>
                         </div>
 
-                        <ul className='space-y-5 mb-12 flex-grow'>
+                        <ul className='space-y-4 mb-12 flex-grow relative z-10'>
                             {[
                                 "90-Second Response Time (24/7)",
                                 "Complex Objection Handling",
@@ -101,7 +106,7 @@ const Pricing = () => {
                                 "Human Oversight Included"
                             ].map((item, i) => (
                                 <li key={i} className='flex items-center gap-3 text-sm font-bold text-gray-900 dark:text-white'>
-                                    <div className='w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/30'><CheckIcon className="w-3.5 h-3.5 text-white" /></div>
+                                    <div className='w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30'><CheckIcon className="w-3.5 h-3.5 text-white" /></div>
                                     {item}
                                 </li>
                             ))}
@@ -111,7 +116,7 @@ const Pricing = () => {
                             href="https://calendly.com/replyflow"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className='w-full py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-lg uppercase tracking-widest shadow-xl shadow-blue-600/20 transition-all flex items-center justify-center gap-3'
+                            className='w-full py-5 lg:py-6 rounded-2xl bg-primary hover:bg-primary/90 text-white font-black text-base lg:text-lg uppercase tracking-widest shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-3 relative z-10'
                         >
                             Build My Department <ArrowRightIcon className='w-5 h-5' />
                         </a>

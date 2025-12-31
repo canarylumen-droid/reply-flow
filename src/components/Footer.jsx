@@ -16,11 +16,11 @@ const Footer = ({ theme }) => {
         <motion.div
           className="space-y-4 max-w-sm"
         >
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center text-primary">
-              <BrainIcon className="w-5 h-5" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary border border-primary/20 shadow-[0_0_15px_rgba(0,105,255,0.1)]">
+              <BrainIcon className="w-6 h-6" />
             </div>
-            <span className="text-xl font-bold dark:text-white">Reply Flow</span>
+            <span className="text-2xl font-black dark:text-white font-syne uppercase tracking-tighter">REPLYFLOW</span>
           </div>
 
           <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">

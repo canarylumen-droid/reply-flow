@@ -23,8 +23,10 @@ const Hero = () => {
           viewport={{ once: true }}
           className='flex flex-col gap-6 text-left'
         >
-          <div className='flex items-center gap-3 text-primary font-black uppercase text-xs tracking-[0.3em] font-syne'>
-            <div className='w-8 h-px bg-primary' />
+          <div className='flex items-center gap-4 text-primary font-black uppercase text-xs tracking-[0.3em] font-syne'>
+            <div className='w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary border border-primary/20 shadow-[0_0_20px_rgba(0,105,255,0.1)] group-hover:scale-110 transition-transform'>
+              <BrainIcon className='w-6 h-6' />
+            </div>
             <span>ELITE SALES INFRASTRUCTURE</span>
           </div>
 
