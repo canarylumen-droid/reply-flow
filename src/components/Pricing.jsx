@@ -140,9 +140,12 @@ const Pricing = () => {
                             </li>
                         </ul>
 
-                        <button onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })} className='w-full py-4 rounded-2xl border-2 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-black text-sm uppercase tracking-widest hover:bg-gray-100 dark:hover:bg-white/5 transition-colors'>
+                        <a
+                            href="mailto:info@replyflow.pro"
+                            className='w-full py-4 rounded-2xl border-2 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-black text-sm uppercase tracking-widest hover:bg-gray-100 dark:hover:bg-white/5 transition-colors text-center block'
+                        >
                             Apply for Partnership
-                        </button>
+                        </a>
                     </div>
                 </div>
 
