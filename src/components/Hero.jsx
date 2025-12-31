@@ -40,15 +40,15 @@ const Hero = () => {
           </p>
 
           <div className='flex flex-wrap gap-4 pt-4'>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })}
+            <a
+              href="https://calendly.com/replyflow"
+              target="_blank"
+              rel="noopener noreferrer"
               className='px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all shadow-lg hover:shadow-primary/50 flex items-center gap-2'
             >
               Get Your Free Audit
               <ArrowRightIcon className="w-5 h-5" />
-            </motion.button>
+            </a>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

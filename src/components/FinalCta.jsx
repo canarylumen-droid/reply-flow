@@ -23,15 +23,15 @@ const FinalCta = () => {
                     Every minute you wait is a lead you've lost. Let us install the high-performance sales infrastructure your business deserves.
                 </p>
 
-                <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })}
-                    className='px-10 py-5 bg-white text-black font-bold text-xl rounded-full shadow-2xl hover:shadow-white/25 transition-all flex items-center gap-3 mx-auto'
+                <a
+                    href="https://calendly.com/replyflow"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className='px-10 py-5 bg-white text-black font-bold text-xl rounded-full shadow-2xl hover:shadow-white/25 transition-all flex items-center gap-3 mx-auto w-fit'
                 >
                     Book Strategy Call
                     <ArrowRightIcon className="w-6 h-6" />
-                </motion.button>
+                </a>
                 <p className='mt-6 text-sm text-gray-400 font-medium tracking-wide'>LIMITED SPOTS AVAILABLE FOR Q1 2026</p>
             </div>
         </section>

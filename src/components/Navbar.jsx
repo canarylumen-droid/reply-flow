@@ -66,7 +66,9 @@ const Navbar = ({ theme, setTheme }) => {
 
         {/* Contact Button (hidden on small screens) */}
         <a
-          href="#book"
+          href="https://calendly.com/replyflow"
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-sm hidden sm:flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full cursor-pointer hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 font-bold"
         >
           Book Audit <ArrowRightIcon className="w-4 h-4" />

@@ -60,9 +60,14 @@ const Pricing = () => {
                             </li>
                         </ul>
 
-                        <button onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })} className='w-full py-4 rounded-2xl border-2 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-black text-sm uppercase tracking-widest hover:bg-gray-100 dark:hover:bg-white/5 transition-colors'>
+                        <a
+                            href="https://calendly.com/replyflow"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className='w-full py-4 rounded-2xl border-2 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-black text-sm uppercase tracking-widest hover:bg-gray-100 dark:hover:bg-white/5 transition-colors text-center block'
+                        >
                             Inquire Now
-                        </button>
+                        </a>
                     </div>
 
                     {/* Managed Closer - MAIN OFFER */}
@@ -102,9 +107,14 @@ const Pricing = () => {
                             ))}
                         </ul>
 
-                        <button onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })} className='w-full py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-lg uppercase tracking-widest shadow-xl shadow-blue-600/20 transition-all flex items-center justify-center gap-3'>
+                        <a
+                            href="https://calendly.com/replyflow"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className='w-full py-6 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-lg uppercase tracking-widest shadow-xl shadow-blue-600/20 transition-all flex items-center justify-center gap-3'
+                        >
                             Build My Department <ArrowRightIcon className='w-5 h-5' />
-                        </button>
+                        </a>
                     </TiltCard>
 
                     {/* JV Partner */}
