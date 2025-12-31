@@ -64,38 +64,90 @@ const WhyLosingMoney = () => {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className='mb-20 bg-white dark:bg-black p-8 rounded-3xl border border-gray-200 dark:border-white/5'
+                    className='mb-12 bg-white dark:bg-black p-8 rounded-3xl border border-gray-200 dark:border-white/5'
                 >
                     <h3 className='text-2xl font-bold mb-8 text-center dark:text-white'>What Happens When You Wait</h3>
                     <div className='relative'>
                         <div className='absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 via-yellow-500 to-red-500'></div>
                         <div className='grid grid-cols-4 gap-4'>
-                            {[
-                                { time: '0-5 min', temp: 'HOT', color: 'green', conversion: '21%' },
-                                { time: '5-30 min', temp: 'WARM', color: 'yellow', conversion: '8%' },
-                                { time: '30min-2hr', temp: 'COOL', color: 'orange', conversion: '3%' },
-                                { time: '2hr+', temp: 'DEAD', color: 'red', conversion: '0.2%' }
-                            ].map((stage, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: i * 0.1 }}
-                                    viewport={{ once: true }}
-                                    className='relative text-center'
-                                >
-                                    <div className={`w-16 h-16 mx-auto rounded-full bg-${stage.color}-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black`}>
-                                        {stage.conversion}
-                                    </div>
-                                    <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>{stage.time}</div>
-                                    <div className={`text-xs font-semibold text-${stage.color}-600 dark:text-${stage.color}-400`}>{stage.temp}</div>
-                                </motion.div>
-                            ))}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0 }}
+                                viewport={{ once: true }}
+                                className='relative text-center'
+                            >
+                                <div className='w-16 h-16 mx-auto rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black'>
+                                    21%
+                                </div>
+                                <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>0-5 min</div>
+                                <div className='text-xs font-semibold text-green-600 dark:text-green-400'>HOT</div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                viewport={{ once: true }}
+                                className='relative text-center'
+                            >
+                                <div className='w-16 h-16 mx-auto rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black'>
+                                    8%
+                                </div>
+                                <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>5-30 min</div>
+                                <div className='text-xs font-semibold text-yellow-600 dark:text-yellow-400'>WARM</div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                viewport={{ once: true }}
+                                className='relative text-center'
+                            >
+                                <div className='w-16 h-16 mx-auto rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black'>
+                                    3%
+                                </div>
+                                <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>30min-2hr</div>
+                                <div className='text-xs font-semibold text-orange-600 dark:text-orange-400'>COOL</div>
+                            </motion.div>
+
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
+                                viewport={{ once: true }}
+                                className='relative text-center'
+                            >
+                                <div className='w-16 h-16 mx-auto rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black'>
+                                    0.2%
+                                </div>
+                                <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>2hr+</div>
+                                <div className='text-xs font-semibold text-red-600 dark:text-red-400'>DEAD</div>
+                            </motion.div>
                         </div>
                     </div>
                     <p className='text-center text-sm text-gray-500 mt-8 italic'>
                         The clock starts ticking the second they reach out. Every minute you wait, they get colder.
                     </p>
+                </motion.div>
+
+                {/* Transition: This is why we exist */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className='mb-20 text-center max-w-4xl mx-auto'
+                >
+                    <div className='bg-gradient-to-r from-blue-600 to-purple-600 p-8 rounded-3xl text-white'>
+                        <h3 className='text-3xl font-bold mb-4'>This Is Exactly Why We Exist</h3>
+                        <p className='text-xl leading-relaxed opacity-90'>
+                            You can't be awake 24/7. You can't reply in 90 seconds while you're in a meeting. You can't remember to follow up 7 times with perfect timing. <span className='font-bold'>But we can.</span>
+                        </p>
+                        <p className='text-lg mt-4 opacity-75'>
+                            We built Reply Flow to solve this exact problem. Here's how we do it:
+                        </p>
+                    </div>
                 </motion.div>
 
                 {/* Comparison Cards */}
