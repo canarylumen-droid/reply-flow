@@ -30,17 +30,16 @@ const Hero = () => {
             <span>ELITE SALES INFRASTRUCTURE</span>
           </div>
 
-          <h1 className='text-6xl sm:text-8xl lg:text-[10rem] font-black leading-[0.8] tracking-tighter font-syne uppercase'>
-            WE BUILD <br />
+          <h1 className='text-6xl sm:text-7xl lg:text-9xl font-extrabold leading-[0.85] tracking-tighter font-syne uppercase'>
+            The AI <br />
             <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-purple-500'>
-              MACHINES.
+              Machine
             </span> <br />
-            YOU BUILD WEALTH.
+            That Closes.
           </h1>
 
-          <p className='text-xl sm:text-3xl text-gray-500 dark:text-gray-400 max-w-xl leading-tight font-black mt-4 uppercase tracking-tighter'>
-            The era of manual sales is dead. <br />
-            <span className='text-gray-900 dark:text-white'>We install high-fidelity AI infrastructure that books calls while you sleep. Guaranteed.</span>
+          <p className='text-xl sm:text-2xl text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed font-medium mt-4'>
+            We don't just sell software. We design, build, and manage high-fidelity <span className='text-gray-900 dark:text-white border-b-2 border-primary/30'>AI Sales Departments</span> for elite agencies that demand outcome-driven excellence.
           </p>
 
           <div className='flex flex-wrap gap-4 pt-4'>
