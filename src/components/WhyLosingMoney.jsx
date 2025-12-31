@@ -16,7 +16,7 @@ const WhyLosingMoney = () => {
                     <div className='inline-block px-4 py-2 rounded-full border border-red-500/30 bg-red-500/5 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-widest mb-6'>
                         The Real Problem
                     </div>
-                    <h2 className='text-4xl sm:text-5xl font-bold mb-6 dark:text-white'>
+                    <h2 className='text-4xl sm:text-6xl font-black mb-8 dark:text-white font-syne uppercase tracking-tighter'>
                         You're Not Losing Leads Because <br />
                         <span className='text-red-500'>Your Offer Is Bad.</span>
                     </h2>
@@ -64,72 +64,65 @@ const WhyLosingMoney = () => {
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    className='mb-12 bg-white dark:bg-black p-8 rounded-3xl border border-gray-200 dark:border-white/5'
+                    className='mb-24 relative'
                 >
-                    <h3 className='text-2xl font-bold mb-8 text-center dark:text-white'>What Happens When You Wait</h3>
-                    <div className='relative'>
-                        <div className='absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 via-yellow-500 to-red-500'></div>
-                        <div className='grid grid-cols-4 gap-4'>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0 }}
-                                viewport={{ once: true }}
-                                className='relative text-center'
-                            >
-                                <div className='w-16 h-16 mx-auto rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black'>
-                                    21%
-                                </div>
-                                <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>0-5 min</div>
-                                <div className='text-xs font-semibold text-green-600 dark:text-green-400'>HOT</div>
-                            </motion.div>
+                    <div className='absolute inset-0 bg-primary/5 dark:bg-primary/5 rounded-[40px] blur-3xl pointer-events-none' />
 
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.1 }}
-                                viewport={{ once: true }}
-                                className='relative text-center'
-                            >
-                                <div className='w-16 h-16 mx-auto rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black'>
-                                    8%
-                                </div>
-                                <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>5-30 min</div>
-                                <div className='text-xs font-semibold text-yellow-600 dark:text-yellow-400'>WARM</div>
-                            </motion.div>
+                    <div className='relative bg-white dark:bg-black p-12 rounded-[40px] border border-gray-200 dark:border-white/5 overflow-hidden shadow-2xl'>
+                        <h3 className='text-3xl font-black mb-16 text-center dark:text-white font-syne uppercase tracking-tighter'>The Decay of a Lead</h3>
 
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                                viewport={{ once: true }}
-                                className='relative text-center'
-                            >
-                                <div className='w-16 h-16 mx-auto rounded-full bg-orange-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black'>
-                                    3%
-                                </div>
-                                <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>30min-2hr</div>
-                                <div className='text-xs font-semibold text-orange-600 dark:text-orange-400'>COOL</div>
-                            </motion.div>
+                        <div className='relative max-w-5xl mx-auto px-4'>
+                            {/* Animated Glowing Connector Line */}
+                            <div className='absolute top-8 left-0 right-0 h-[2px] bg-gray-100 dark:bg-zinc-800 hidden md:block'>
+                                <motion.div
+                                    initial={{ x: "-100%" }}
+                                    animate={{ x: "100%" }}
+                                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                                    className='w-1/2 h-full bg-gradient-to-r from-transparent via-primary to-transparent'
+                                />
+                            </div>
 
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.3 }}
-                                viewport={{ once: true }}
-                                className='relative text-center'
-                            >
-                                <div className='w-16 h-16 mx-auto rounded-full bg-red-500 flex items-center justify-center text-white font-bold text-sm mb-3 relative z-10 border-4 border-white dark:border-black'>
-                                    0.2%
-                                </div>
-                                <div className='text-xs font-bold text-gray-900 dark:text-white mb-1'>2hr+</div>
-                                <div className='text-xs font-semibold text-red-600 dark:text-red-400'>DEAD</div>
-                            </motion.div>
+                            <div className='grid grid-cols-2 md:grid-cols-4 gap-12 relative'>
+                                {[
+                                    { pct: "21%", time: "0-5 min", label: "HOT", color: "from-green-500 to-emerald-400", glow: "shadow-green-500/50" },
+                                    { pct: "8%", time: "5-30 min", label: "WARM", color: "from-yellow-400 to-orange-400", glow: "shadow-yellow-500/50" },
+                                    { pct: "3%", time: "30min-2hr", label: "COOL", color: "from-orange-500 to-red-400", glow: "shadow-orange-500/50" },
+                                    { pct: "0.2%", time: "2hr+", label: "DEAD", color: "from-red-600 to-red-400", glow: "shadow-red-600/50" }
+                                ].map((step, i) => (
+                                    <motion.div
+                                        key={i}
+                                        initial={{ opacity: 0, scale: 0.8 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: i * 0.15 }}
+                                        viewport={{ once: true }}
+                                        className='flex flex-col items-center group'
+                                    >
+                                        <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${step.color} ${step.glow} shadow-[0_0_20px_rgba(0,0,0,0.1)] group-hover:shadow-[0_0_40px_rgba(0,0,0,0.2)] transition-all duration-500 flex flex-col items-center justify-center text-white relative z-10 border-4 border-white dark:border-black transform group-hover:scale-110`}>
+                                            <span className='text-xl font-black leading-none'>{step.pct}</span>
+                                            <span className='text-[8px] font-black tracking-tighter uppercase opacity-80'>Conv Rate</span>
+                                        </div>
+                                        <div className='mt-6 text-center'>
+                                            <div className='text-sm font-black text-gray-900 dark:text-white mb-1 font-syne'>{step.time}</div>
+                                            <div className={`text-xs font-black tracking-widest px-3 py-1 rounded-full border border-current opacity-60 group-hover:opacity-100 transition-opacity`}>{step.label}</div>
+                                        </div>
+
+                                        {/* Mobile link icons / dots */}
+                                        <div className='md:hidden absolute top-10 left-[50%] translate-x-[50%] flex gap-1 opacity-20'>
+                                            <div className='w-1 h-1 rounded-full bg-gray-400' />
+                                            <div className='w-1 h-1 rounded-full bg-gray-400' />
+                                            <div className='w-1 h-1 rounded-full bg-gray-400' />
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className='mt-16 text-center'>
+                            <p className='text-gray-500 font-medium italic max-w-xl mx-auto'>
+                                The data is brutal: You have 300 seconds to capture their attention before they're gone forever. <span className='text-primary font-bold'>We never miss a window.</span>
+                            </p>
                         </div>
                     </div>
-                    <p className='text-center text-sm text-gray-500 mt-8 italic'>
-                        The clock starts ticking the second they reach out. Every minute you wait, they get colder.
-                    </p>
                 </motion.div>
 
                 {/* Transition: This is why we exist */}

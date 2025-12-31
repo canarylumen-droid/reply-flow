@@ -33,7 +33,7 @@ const Intelligence = () => {
                         <div className='inline-block px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-xs font-black uppercase tracking-widest mb-6'>
                             Absolute Control
                         </div>
-                        <h2 className='text-4xl md:text-6xl font-black mb-8 tracking-tighter'>
+                        <h2 className='text-4xl md:text-6xl font-black mb-8 tracking-tighter font-syne uppercase'>
                             The AI Sells. <br />
                             <span className='text-green-600'>We Supervise.</span>
                         </h2>

@@ -48,12 +48,12 @@ const RoiCalculator = () => {
 
             <div className='max-w-7xl mx-auto relative z-10'>
                 <div className='text-center mb-20'>
-                    <div className='inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-xs font-black uppercase tracking-widest mb-6'>
+                    <div className='inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-widest mb-6 font-syne'>
                         Revenue Forensic Audit
                     </div>
-                    <h2 className='text-5xl md:text-7xl font-black mb-8 tracking-tighter'>
+                    <h2 className='text-5xl md:text-7xl font-black mb-8 tracking-tighter font-syne uppercase'>
                         Stop The <span className='text-red-500'>$0.00</span> Leaking <br />
-                        <span className='text-blue-500 underline decoration-blue-500/30 underline-offset-8 transition-all hover:decoration-blue-500 duration-500'>Through Your CRM</span>
+                        <span className='text-primary underline decoration-primary/30 underline-offset-8 transition-all hover:decoration-primary duration-500'>Through Your CRM</span>
                     </h2>
                     <p className='text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed'>
                         Most businesses close the 10% that are "easy." We build the infrastructure to capture the 90% you're currently ignoring. See the real math.

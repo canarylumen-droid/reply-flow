@@ -14,13 +14,14 @@ const Navbar = ({ theme, setTheme }) => {
       className="flex justify-between items-center px-4 sm:px-12 lg:px-24 xl:px-40 py-6 sticky top-0 z-50 backdrop-blur-xl font-medium bg-white/70 dark:bg-black/70 border-b border-gray-200 dark:border-white/10"
     >
       {/* Logo */}
-      <div className="flex items-center gap-3 group cursor-pointer">
-        <div className="w-10 h-10 bg-primary flex items-center justify-center text-white rounded-lg shadow-lg shadow-primary/20 rotate-[-5deg] group-hover:rotate-0 transition-transform">
-          <BrainIcon className="w-6 h-6" />
+      <div className="flex items-center gap-3 group cursor-pointer relative">
+        <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="w-12 h-12 bg-primary flex items-center justify-center text-white rounded-xl shadow-[0_0_20px_rgba(0,105,255,0.3)] rotate-[-5deg] group-hover:rotate-0 transition-transform relative z-10">
+          <BrainIcon className="w-7 h-7" />
         </div>
-        <div>
-          <h1 className="text-2xl font-extrabold tracking-tighter text-gray-900 dark:text-white leading-none font-syne">REPLYFLOW</h1>
-          <p className="text-[9px] text-gray-500 uppercase tracking-[0.2em] font-black mt-1">Infrastructure agency</p>
+        <div className="relative z-10">
+          <h1 className="text-2xl font-[900] tracking-tighter text-gray-900 dark:text-white leading-none font-syne uppercase">REPLYFLOW</h1>
+          <p className="text-[9px] text-primary uppercase tracking-[0.3em] font-black mt-1">Infrastructure agency</p>
         </div>
       </div>
 

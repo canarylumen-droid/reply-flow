@@ -14,7 +14,7 @@ const AutomationFeatures = () => {
                     {/* Left: Email Timeline */}
                     <div>
                         <div className='mb-12'>
-                            <h3 className='text-4xl font-black text-gray-900 dark:text-white mb-6 flex items-center gap-4'>
+                            <h3 className='text-4xl font-black text-gray-900 dark:text-white mb-6 flex items-center gap-4 font-syne uppercase tracking-tighter'>
                                 <span className='text-3xl'>📧</span> Persistent Nurturing
                             </h3>
                             <p className='text-xl text-gray-600 dark:text-gray-400 max-w-md leading-relaxed'>
@@ -51,7 +51,7 @@ const AutomationFeatures = () => {
                     {/* Right: Instagram & Voice */}
                     <div className='lg:sticky lg:top-24'>
                         <div className='mb-12'>
-                            <h3 className='text-4xl font-black text-gray-900 dark:text-white mb-6 flex items-center gap-4'>
+                            <h3 className='text-4xl font-black text-gray-900 dark:text-white mb-6 flex items-center gap-4 font-syne uppercase tracking-tighter'>
                                 <span className='text-3xl'>📸</span> Multi-Channel Dominance
                             </h3>
                             <p className='text-xl text-gray-600 dark:text-gray-400 max-w-md leading-relaxed'>

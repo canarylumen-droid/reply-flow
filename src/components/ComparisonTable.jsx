@@ -17,11 +17,11 @@ const ComparisonTable = () => {
         <section className='py-24 px-6 md:px-12 lg:px-24 bg-white dark:bg-black overflow-hidden relative border-b border-gray-100 dark:border-white/5'>
             <div className='max-w-7xl mx-auto'>
                 <div className='text-center mb-16'>
-                    <div className='inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest mb-6'>
+                    <div className='inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-widest mb-6 font-syne'>
                         The Competitive Edge
                     </div>
-                    <h2 className='text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6 tracking-tight'>
-                        A Different World From <span className='text-blue-500 underline decoration-blue-500/30 underline-offset-8 transition-all hover:decoration-blue-500 duration-500'>SaaS & Old Agencies</span>
+                    <h2 className='text-4xl md:text-5xl font-black text-gray-900 dark:text-white mb-6 tracking-tight font-syne uppercase'>
+                        A Different World From <span className='text-primary underline decoration-primary/30 underline-offset-8 transition-all hover:decoration-primary duration-500'>SaaS & Old Agencies</span>
                     </h2>
                     <p className='text-xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto'>
                         SaaS tools sell you features. Traditional agencies sell you manual labor. <br />

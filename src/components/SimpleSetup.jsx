@@ -13,7 +13,7 @@ const SimpleSetup = () => {
         <section id="process" className='py-32 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white'>
             <div className='max-w-7xl mx-auto'>
                 <div className='text-center mb-24'>
-                    <h2 className='text-4xl md:text-5xl font-black mb-6 tracking-tight'>How We Scale Your Revenue</h2>
+                    <h2 className='text-4xl md:text-5xl font-black mb-6 tracking-tight font-syne uppercase'>How We Scale Your Revenue</h2>
                     <p className='text-xl text-gray-500 max-w-2xl mx-auto'>You don't lift a finger. We handle everything from the initial build-out to daily performance optimization.</p>
                 </div>
 
