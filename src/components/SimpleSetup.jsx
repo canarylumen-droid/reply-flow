@@ -3,18 +3,18 @@ import { motion } from "framer-motion"
 
 const SimpleSetup = () => {
     const steps = [
-        { num: '1', title: 'Connect Accounts', desc: 'Securely link your email & Instagram.' },
-        { num: '2', title: 'Upload Brand PDF', desc: 'AI analyzes your voice and tone.' },
-        { num: '3', title: 'Set Calendar', desc: 'Define when you want to take calls.' },
-        { num: '4', title: 'Launch', desc: 'AI takes over outreach instantly.' }
+        { num: '1', title: 'Audit & Strategy', desc: 'We analyze your current lead flow and leaks.' },
+        { num: '2', title: 'Custom Build', desc: 'We train the AI on your best sales calls.' },
+        { num: '3', title: 'Integration', desc: 'Securely connects to your CRM & ads.' },
+        { num: '4', title: 'Launch & Scale', desc: 'We go live and optimize conversions.' }
     ]
 
     return (
-        <section className='py-20 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white'>
+        <section id="process" className='py-20 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white'>
             <div className='max-w-7xl mx-auto'>
                 <div className='text-center mb-16'>
-                    <h2 className='text-3xl md:text-4xl font-bold mb-4'>Set Up in Minutes</h2>
-                    <p className='text-gray-500'>No complex workflows. No coding. Just results.</p>
+                    <h2 className='text-3xl md:text-4xl font-bold mb-4'>How We Work</h2>
+                    <p className='text-gray-500'>We handle the tech. You handle the deals.</p>
                 </div>
 
                 <div className='relative'>

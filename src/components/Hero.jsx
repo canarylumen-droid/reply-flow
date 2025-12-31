@@ -29,36 +29,38 @@ const Hero = () => {
           </div>
 
           <h1 className='text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight'>
-            AI Sales Closer <br />
+            We Build Your <br />
             <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400'>
-              with Predictive Intelligence
+              AI Sales Department
             </span>
           </h1>
 
           <p className='text-lg sm:text-x text-gray-600 dark:text-gray-400 max-w-lg leading-relaxed'>
-            Stop letting warm leads go cold. <span className='font-semibold text-gray-800 dark:text-gray-200'>Reply Flow</span> learns each lead’s behavior, predicts the perfect follow-up time, and only reaches out when it’ll actually convert.
+            We don't just sell software. We design, build, and manage fully autonomous <span className='font-semibold text-gray-800 dark:text-gray-200'>AI Sales Agents</span> that work 24/7 to fill your calendar with qualified meetings.
           </p>
 
           <div className='flex flex-wrap gap-4 pt-4'>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })}
               className='px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all shadow-lg hover:shadow-primary/50 flex items-center gap-2'
             >
-              Recover My Lost Clients
+              Get Your Free Audit
               <ArrowRightIcon className="w-5 h-5" />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById('testimonials').scrollIntoView({ behavior: 'smooth' })}
               className='px-8 py-4 bg-transparent border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 rounded-full font-semibold text-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-all'
             >
-              See How It Works
+              View Case Studies
             </motion.button>
           </div>
 
           <p className='text-xs sm:text-sm text-gray-500 dark:text-gray-500 mt-2'>
-            No spam. No pushy timing. Just intelligent outreach.
+            Performance-based options available. 100% Done-For-You.
           </p>
         </motion.div>
 

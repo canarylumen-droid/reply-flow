@@ -40,11 +40,14 @@ const Navbar = ({ theme, setTheme }) => {
         <a onClick={() => setSidebarOpen(false)} href="#hero" className="hover:text-primary transition-colors">
           Home
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#roi" className="hover:text-primary transition-colors">
-          ROI Calculator
+        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="hover:text-primary transition-colors">
+          Case Studies
         </a>
         <a onClick={() => setSidebarOpen(false)} href="#pricing" className="hover:text-primary transition-colors">
-          Pricing
+          Services
+        </a>
+        <a onClick={() => setSidebarOpen(false)} href="#roi" className="hover:text-primary transition-colors">
+          Calculator
         </a>
       </div>
 
