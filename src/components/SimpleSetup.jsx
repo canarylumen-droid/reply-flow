@@ -3,10 +3,10 @@ import { motion } from "framer-motion"
 
 const SimpleSetup = () => {
     const steps = [
-        { num: '1', title: 'Audit & Strategy', desc: 'We analyze your current lead flow and leaks.' },
-        { num: '2', title: 'Custom Build', desc: 'We train the AI on your best sales calls.' },
-        { num: '3', title: 'Integration', desc: 'Securely connects to your CRM & ads.' },
-        { num: '4', title: 'Launch & Scale', desc: 'We go live and optimize conversions.' }
+        { num: '01', title: 'Leak Extraction Audit', desc: 'We deep-dive into your existing funnel to identify exactly where leads are going cold.' },
+        { num: '02', title: 'Intelligence Build', desc: 'We train our custom AI on your top sales calls and successful closing scripts.' },
+        { num: '03', title: 'Deep Integration', desc: 'We connect the system directly into your CRM, existing workflows, and ad channels.' },
+        { num: '04', title: 'Managed Growth', desc: 'Our team monitors, optimizes, and scales your sales operation daily for maximum ROI.' }
     ]
 
     return (

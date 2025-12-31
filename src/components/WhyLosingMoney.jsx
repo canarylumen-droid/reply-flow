@@ -21,7 +21,7 @@ const WhyLosingMoney = () => {
                         <span className='text-red-500'>Your Offer Is Bad.</span>
                     </h2>
                     <p className='text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12'>
-                        You're losing them because by the time you reply, they've already moved on to the next guy who answered faster. Speed wins. Every single time.
+                        You're losing them because by the time you reply, they've already moved on. <span className='font-bold text-gray-900 dark:text-white underline decoration-red-500/50 uppercase tracking-tight'>Every minute you wait, your conversion rate drops exponentially.</span> Speed wins. Every single time.
                     </p>
 
                     {/* Statistics Grid */}

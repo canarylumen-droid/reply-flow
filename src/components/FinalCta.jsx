@@ -14,12 +14,13 @@ const FinalCta = () => {
                 <motion.h2
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    className='text-4xl md:text-6xl font-bold mb-6'
+                    className='text-4xl md:text-7xl font-bold mb-8 leading-tight'
                 >
-                    Ready to Automate Your Revenue?
+                    Stop Letting Potential <br />
+                    <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400'>Deals Slip Away.</span>
                 </motion.h2>
-                <p className='text-xl text-gray-300 mb-10 max-w-2xl mx-auto'>
-                    We build the systems. You close the deals. Let's install a 24/7 sales department in your business this week.
+                <p className='text-2xl text-gray-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed'>
+                    Every minute you wait is a lead you've lost. Let us install the high-performance sales infrastructure your business deserves.
                 </p>
 
                 <motion.button

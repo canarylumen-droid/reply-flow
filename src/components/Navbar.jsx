@@ -69,7 +69,7 @@ const Navbar = ({ theme, setTheme }) => {
           href="#book"
           className="text-sm hidden sm:flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full cursor-pointer hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 font-bold"
         >
-          Book a Demo <ArrowRightIcon className="w-4 h-4" />
+          Book Audit <ArrowRightIcon className="w-4 h-4" />
         </a>
       </div>
     </motion.div>

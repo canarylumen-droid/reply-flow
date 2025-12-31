@@ -32,8 +32,10 @@ const RoiCalculator = () => {
 
             <div className='max-w-7xl mx-auto relative z-10'>
                 <div className='text-center mb-12'>
-                    <h2 className='text-3xl md:text-5xl font-bold mb-4'>Projected Revenue Lift</h2>
-                    <p className='text-gray-400'>Estimate the financial impact of installing an AI Sales Department.</p>
+                    <h2 className='text-3xl md:text-6xl font-black mb-4'>The Hidden Revenue Leak</h2>
+                    <p className='text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed'>
+                        Calculate exactly how much revenue you're leaving on the table right now by letting leads go cold.
+                    </p>
                 </div>
 
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-black/40 backdrop-blur-md rounded-3xl p-8 border border-white/10'>
@@ -78,27 +80,27 @@ const RoiCalculator = () => {
                     </div>
 
                     {/* Results */}
-                    <div className='bg-zinc-900 rounded-2xl p-8 border border-green-500/30 text-center relative overflow-hidden'>
-                        <div className='absolute top-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500 left-0' />
+                    <div className='bg-zinc-900 rounded-3xl p-10 border-2 border-green-500/30 text-center relative overflow-hidden'>
+                        <div className='absolute top-0 w-full h-1.5 bg-gradient-to-r from-green-500 to-emerald-500 left-0' />
 
-                        <p className='text-sm text-gray-400 uppercase tracking-widest mb-2'>New Net Revenue Opportunity</p>
+                        <p className='text-xs text-gray-400 uppercase tracking-[0.2em] font-bold mb-4'>Revenue We Can Recover</p>
                         <motion.div
                             key={recoveredRevenue}
                             initial={{ scale: 0.9, opacity: 0.8 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            className='text-5xl sm:text-6xl font-black text-green-400 mb-4'
+                            className='text-6xl sm:text-7xl font-black text-green-400 mb-6 tracking-tighter'
                         >
                             + {formatCurrency(recoveredRevenue)}
                         </motion.div>
-                        <p className='text-gray-500 text-sm mb-8 font-medium'>Per Month / Added to Top Line</p>
+                        <p className='text-gray-500 text-lg mb-10 font-medium'>Monthly Added Top-Line Revenue</p>
 
-                        <div className='pt-6 border-t border-white/10'>
-                            <p className='text-sm text-gray-400 mb-2'>Annual Breakdown</p>
-                            <div className='text-3xl font-bold text-white'>{formatCurrency(recoveredRevenue * 12)}</div>
+                        <div className='pt-8 border-t border-white/10'>
+                            <p className='text-xs text-gray-400 mb-2 uppercase tracking-widest'>Potential Annual Loss Stopped</p>
+                            <div className='text-4xl font-black text-white'>{formatCurrency(recoveredRevenue * 12)}</div>
                         </div>
 
-                        <button onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })} className='mt-8 w-full py-4 bg-white text-black font-bold rounded-lg hover:bg-gray-200 transition-colors shadow-lg'>
-                            Generate This Revenue
+                        <button onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })} className='mt-10 w-full py-5 bg-primary text-white font-black text-lg rounded-xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 uppercase tracking-widest'>
+                            Stop The Leak Now
                         </button>
                     </div>
 
