@@ -39,11 +39,9 @@ const App = () => {
 
   const dotRef = useRef(null)
   const trailRef = useRef(null)
-  const shadowRef = useRef(null)
   const mouse = useRef({ x: 0, y: 0 })
   const dotPos = useRef({ x: 0, y: 0 })
   const trailPos = useRef({ x: 0, y: 0 })
-  const shadowPos = useRef({ x: 0, y: 0 })
 
   useEffect(() => {
     if (window.innerWidth < 1024) return;
@@ -56,24 +54,17 @@ const App = () => {
     document.addEventListener('mousemove', handleMouseMove)
 
     const animate = () => {
-      // Different damping for each element creates the 'trail' effect
       dotPos.current.x = mouse.current.x
       dotPos.current.y = mouse.current.y
 
-      trailPos.current.x += (mouse.current.x - trailPos.current.x) * 0.15
-      trailPos.current.y += (mouse.current.y - trailPos.current.y) * 0.15
-
-      shadowPos.current.x += (mouse.current.x - shadowPos.current.x) * 0.08
-      shadowPos.current.y += (mouse.current.y - shadowPos.current.y) * 0.08
+      trailPos.current.x += (mouse.current.x - trailPos.current.x) * 0.12
+      trailPos.current.y += (mouse.current.y - trailPos.current.y) * 0.12
 
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${dotPos.current.x}px, ${dotPos.current.y}px, 0) translate(-50%, -50%)`
       }
       if (trailRef.current) {
         trailRef.current.style.transform = `translate3d(${trailPos.current.x}px, ${trailPos.current.y}px, 0) translate(-50%, -50%)`
-      }
-      if (shadowRef.current) {
-        shadowRef.current.style.transform = `translate3d(${shadowPos.current.x}px, ${shadowPos.current.y}px, 0) translate(-50%, -50%)`
       }
 
       requestAnimationFrame(animate)
@@ -118,23 +109,16 @@ const App = () => {
 
       <Footer theme={theme} />
 
-      {/* Premium Multi-Stage Cursor Trail */}
-      {/* 1. Main Dot */}
+      {/* Primary Dot - Crisp & Bright */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 h-1.5 w-1.5 rounded-full bg-primary pointer-events-none z-[9999] hidden lg:block"
+        className="fixed top-0 left-0 h-1 w-1 rounded-full bg-primary pointer-events-none z-[9999] hidden lg:block"
       />
 
-      {/* 2. Fluid Trail Ring */}
+      {/* Follower Ring - Thin & Professional */}
       <div
         ref={trailRef}
-        className="fixed top-0 left-0 h-8 w-8 rounded-full border border-primary/30 pointer-events-none z-[9998] hidden lg:block mix-blend-difference"
-      />
-
-      {/* 3. Shadow Follower (The 'Dark' Trail) */}
-      <div
-        ref={shadowRef}
-        className="fixed top-0 left-0 h-12 w-12 rounded-full bg-primary/5 dark:bg-primary/20 blur-xl pointer-events-none z-[9997] hidden lg:block"
+        className="fixed top-0 left-0 h-10 w-10 rounded-full border border-primary/50 pointer-events-none z-[9998] hidden lg:block mix-blend-difference shadow-[0_0_15px_rgba(0,105,255,0.1)]"
       />
     </div>
   )
