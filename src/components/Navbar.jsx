@@ -16,8 +16,8 @@ const Navbar = ({ theme, setTheme }) => {
       {/* Logo */}
       <div className="flex items-center gap-3 group cursor-pointer relative">
         <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-        <div className="w-12 h-12 bg-primary flex items-center justify-center text-white rounded-xl shadow-[0_0_20px_rgba(0,105,255,0.3)] rotate-[-5deg] group-hover:rotate-0 transition-transform relative z-10">
-          <BrainIcon className="w-7 h-7" />
+        <div className="w-12 h-12 bg-primary flex items-center justify-center text-white rounded-xl shadow-[0_0_20px_rgba(0,105,255,0.3)] rotate-[-5deg] group-hover:rotate-0 transition-transform relative z-10 overflow-hidden">
+          <img src="/reply_flow_logo.png" alt="Reply Flow Logo" className="w-full h-full object-cover scale-150" />
         </div>
         <div className="relative z-10">
           <h1 className="text-2xl font-[900] tracking-tighter text-gray-900 dark:text-white leading-none font-syne uppercase">REPLYFLOW</h1>
