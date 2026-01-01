@@ -33,8 +33,8 @@ const Navbar = ({ theme, setTheme }) => {
 
       {/* Sidebar / Menu Links */}
       <div
-        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-8 bg-white dark:bg-zinc-900 sm:bg-transparent transition-all duration-300 z-[60] shadow-2xl sm:shadow-none
-          ${sidebarOpen ? "w-72 px-8 pt-24" : "w-0 overflow-hidden sm:w-auto sm:px-0 sm:pt-0"}`}
+        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-8 transition-all duration-300 z-[60] 
+          ${sidebarOpen ? "bg-white dark:bg-zinc-900 w-72 px-8 pt-24 shadow-2xl" : "w-0 overflow-hidden sm:w-auto sm:px-0 sm:pt-0 sm:bg-transparent sm:shadow-none"}`}
       >
         {/* Close Button (Mobile Only) */}
         <button
