@@ -80,6 +80,7 @@ const App = () => {
 
   return (
     <div className="relative bg-white dark:bg-black transition-colors min-h-screen lg:cursor-none">
+      <ScrollProgress />
       <Toaster />
       <Navbar theme={theme} setTheme={setTheme} />
 

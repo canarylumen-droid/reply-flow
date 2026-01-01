@@ -11,7 +11,7 @@ const Navbar = ({ theme, setTheme }) => {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="flex justify-between items-center px-4 sm:px-12 lg:px-24 xl:px-40 py-6 sticky top-0 z-50 backdrop-blur-xl font-medium bg-white/70 dark:bg-black/70 border-b border-gray-200 dark:border-white/10"
+      className="flex justify-between items-center px-4 sm:px-12 lg:px-24 xl:px-40 py-6 sticky top-0 z-50 backdrop-blur-xl font-medium bg-white/70 dark:bg-black/70"
     >
       {/* Logo */}
       <div className="flex items-center gap-4 group cursor-pointer relative">
@@ -33,7 +33,7 @@ const Navbar = ({ theme, setTheme }) => {
 
       {/* Sidebar / Menu Links */}
       <div
-        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-10 bg-white dark:bg-zinc-900 sm:bg-transparent transition-all duration-300 z-[60] shadow-2xl sm:shadow-none
+        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-8 bg-white dark:bg-zinc-900 sm:bg-transparent transition-all duration-300 z-[60] shadow-2xl sm:shadow-none
           ${sidebarOpen ? "w-72 px-8 pt-24" : "w-0 overflow-hidden sm:w-auto sm:px-0 sm:pt-0"}`}
       >
         {/* Close Button (Mobile Only) */}
@@ -44,16 +44,16 @@ const Navbar = ({ theme, setTheme }) => {
           &times;
         </button>
 
-        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-[15px] text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-bold tracking-tight">
+        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
           Home
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-[15px] text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-bold tracking-tight">
+        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
           Case Studies
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-[15px] text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-bold tracking-tight">
+        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
           Services
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-[15px] text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-bold tracking-tight">
+        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
           Calculator
         </a>
         
