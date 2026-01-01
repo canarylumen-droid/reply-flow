@@ -56,9 +56,9 @@ const Booking = () => {
                 </div>
 
                 <div
-                    className="calendly-inline-widget w-full rounded-[40px] overflow-hidden shadow-[0_0_100px_rgba(0,105,255,0.05)] bg-white dark:bg-black border border-gray-100 dark:border-white/5"
+                    className="calendly-inline-widget w-full rounded-2xl md:rounded-[40px] overflow-hidden shadow-[0_0_100px_rgba(0,105,255,0.05)] bg-white dark:bg-black border border-gray-100 dark:border-white/5"
                     data-url="https://calendly.com/replyflow?hide_gdpr_banner=1"
-                    style={{ minWidth: '320px', height: '700px' }}
+                    style={{ minWidth: '100%', height: '700px' }}
                 />
             </div>
         </section>

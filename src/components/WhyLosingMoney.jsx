@@ -10,16 +10,16 @@ const WhyLosingMoney = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    className='text-center mb-20'
+                    className='text-center mb-12 sm:mb-20'
                 >
                     <div className='inline-block px-4 py-2 rounded-full border border-red-500/30 bg-red-500/5 text-red-600 dark:text-red-400 text-xs font-bold uppercase tracking-widest mb-6'>
                         The Real Problem
                     </div>
-                    <h2 className='text-4xl sm:text-6xl font-black mb-8 dark:text-white font-syne uppercase tracking-tighter'>
+                    <h2 className='text-3xl sm:text-5xl md:text-6xl font-black mb-8 dark:text-white font-syne uppercase tracking-tighter'>
                         You're Not Losing Leads Because <br />
                         <span className='text-red-500'>Your Offer Is Bad.</span>
                     </h2>
-                    <p className='text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12'>
+                    <p className='text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto'>
                         You're losing them because by the time you reply, they've already moved on. <span className='font-bold text-gray-900 dark:text-white underline decoration-red-500/50 uppercase tracking-tight'>Every minute you wait, your conversion rate drops exponentially.</span> Speed wins. Every single time.
                     </p>
 

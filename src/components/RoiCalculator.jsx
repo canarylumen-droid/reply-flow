@@ -47,15 +47,15 @@ const RoiCalculator = () => {
             />
 
             <div className='max-w-7xl mx-auto relative z-10'>
-                <div className='text-center mb-20'>
+                <div className='text-center mb-12 sm:mb-20'>
                     <div className='inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-widest mb-6 font-syne'>
                         Revenue Forensic Audit
                     </div>
-                    <h2 className='text-5xl md:text-7xl font-black mb-8 tracking-tighter font-syne uppercase'>
+                    <h2 className='text-3xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tighter font-syne uppercase'>
                         Stop The <span className='text-red-500'>$0.00</span> Leaking <br />
                         <span className='text-primary underline decoration-primary/30 underline-offset-8 transition-all hover:decoration-primary duration-500'>Through Your CRM</span>
                     </h2>
-                    <p className='text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed'>
+                    <p className='text-lg sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed'>
                         Most businesses close the 10% that are "easy." We build the infrastructure to capture the 90% you're currently ignoring. See the real math.
                     </p>
                 </div>
@@ -117,12 +117,12 @@ const RoiCalculator = () => {
                     <div className='lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8'>
 
                         {/* The Leak Panel */}
-                        <div className='bg-red-500/5 backdrop-blur-xl rounded-[40px] p-10 border border-red-500/20'>
+                        <div className='bg-red-500/5 backdrop-blur-xl rounded-3xl md:rounded-[40px] p-6 md:p-10 border border-red-500/20'>
                             <div className='flex items-center gap-3 mb-8'>
                                 <div className='w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 font-bold'>!</div>
-                                <h3 className='text-xl font-black uppercase tracking-tight'>The Monthly Leakage</h3>
+                                <h3 className='text-lg md:text-xl font-black uppercase tracking-tight'>The Monthly Leakage</h3>
                             </div>
-
+ 
                             <div className='space-y-6'>
                                 <div className='flex justify-between items-center py-4 border-b border-red-500/10'>
                                     <span className='text-gray-400'>Current Monthly Revenue</span>
@@ -134,7 +134,7 @@ const RoiCalculator = () => {
                                 </div>
                                 <div className='pt-4'>
                                     <div className='text-xs text-red-500/70 uppercase font-black tracking-widest mb-2'>Total Capital Left On Table</div>
-                                    <div className='text-4xl sm:text-5xl font-black text-red-500 tracking-tighter'>
+                                    <div className='text-3xl sm:text-5xl font-black text-red-500 tracking-tighter'>
                                         {formatCurrency(stats.lostRevenue)}
                                     </div>
                                 </div>
@@ -142,38 +142,38 @@ const RoiCalculator = () => {
                         </div>
 
                         {/* The Recovery Panel */}
-                        <div className='bg-green-500/5 backdrop-blur-xl rounded-[40px] p-10 border border-green-500/30 relative overflow-hidden'>
-                            <div className='absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-3xl -mr-16 -mt-16' />
-
-                            <div className='flex items-center gap-3 mb-8'>
-                                <div className='w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500'>
-                                    <DollarSignIcon className='w-5 h-5' />
-                                </div>
-                                <h3 className='text-xl font-black uppercase tracking-tight text-white'>Recovery Potential</h3>
-                            </div>
-
-                            <div className='space-y-6'>
-                                <div className='flex justify-between items-center py-4 border-b border-green-500/10'>
-                                    <span className='text-gray-400'>Recovered Leads (Monthly)</span>
-                                    <span className='font-bold text-green-400'>+ {stats.recoveredLeads}</span>
-                                </div>
-                                <div className='flex justify-between items-center py-4 border-b border-green-500/10'>
-                                    <span className='text-gray-400'>New Top-Line Revenue</span>
-                                    <span className='font-bold text-green-400'>{formatCurrency(stats.recoveredRevenue)} /mo</span>
-                                </div>
-
-                                <div className='pt-4'>
-                                    <div className='text-xs text-green-500/70 uppercase font-black tracking-widest mb-2'>Projected Annual Gains</div>
-                                    <motion.div
-                                        key={stats.recoveredRevenue}
-                                        initial={{ scale: 0.95 }}
-                                        animate={{ scale: 1 }}
-                                        className='text-4xl sm:text-5xl font-black text-green-500 tracking-tighter'
-                                    >
-                                        {formatCurrency(stats.recoveredRevenue * 12)}
-                                    </motion.div>
-                                </div>
-                            </div>
+                        <div className='bg-green-500/5 backdrop-blur-xl rounded-3xl md:rounded-[40px] p-6 md:p-10 border border-green-500/30 relative overflow-hidden'>
+                             <div className='absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-3xl -mr-16 -mt-16' />
+ 
+                             <div className='flex items-center gap-3 mb-8'>
+                                 <div className='w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center text-green-500'>
+                                     <DollarSignIcon className='w-5 h-5' />
+                                 </div>
+                                 <h3 className='text-lg md:text-xl font-black uppercase tracking-tight text-white'>Recovery Potential</h3>
+                             </div>
+ 
+                             <div className='space-y-6'>
+                                 <div className='flex justify-between items-center py-4 border-b border-green-500/10'>
+                                     <span className='text-gray-400'>Recovered Leads (Monthly)</span>
+                                     <span className='font-bold text-green-400'>+ {stats.recoveredLeads}</span>
+                                 </div>
+                                 <div className='flex justify-between items-center py-4 border-b border-green-500/10'>
+                                     <span className='text-gray-400'>New Top-Line Revenue</span>
+                                     <span className='font-bold text-green-400'>{formatCurrency(stats.recoveredRevenue)} /mo</span>
+                                 </div>
+ 
+                                 <div className='pt-4'>
+                                     <div className='text-xs text-green-500/70 uppercase font-black tracking-widest mb-2'>Projected Annual Gains</div>
+                                     <motion.div
+                                         key={stats.recoveredRevenue}
+                                         initial={{ scale: 0.95 }}
+                                         animate={{ scale: 1 }}
+                                         className='text-3xl sm:text-5xl font-black text-green-500 tracking-tighter'
+                                     >
+                                         {formatCurrency(stats.recoveredRevenue * 12)}
+                                     </motion.div>
+                                 </div>
+                             </div>
 
                             <button
                                 onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })}

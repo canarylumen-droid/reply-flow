@@ -8,9 +8,12 @@ const ScrollingText = () => {
         offset: ["start end", "end start"]
     })
 
-    // Text movement and effects
-    const xLeft = useTransform(scrollYProgress, [0, 1], [0, -800])
-    const xRight = useTransform(scrollYProgress, [0, 1], [0, 800])
+    // Text movement and effects - dynamic based on screen size
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false
+    const moveRange = isMobile ? 300 : 800
+
+    const xLeft = useTransform(scrollYProgress, [0, 1], [0, -moveRange])
+    const xRight = useTransform(scrollYProgress, [0, 1], [0, moveRange])
 
     // Symmetric opacity: Fades in, stays, fades out. Reverses perfectly on scroll up.
     const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])

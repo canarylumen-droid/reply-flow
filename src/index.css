@@ -7,9 +7,22 @@
   --primary: #0069ff;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 * {
   font-family: "Outfit", sans-serif;
   font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 640px) {
+  section {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
 }
 
 @media (min-width: 1024px) {

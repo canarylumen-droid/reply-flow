@@ -25,42 +25,58 @@ const Navbar = ({ theme, setTheme }) => {
         </div>
       </div>
 
+      {/* Mobile Sidebar Overlay */}
+      <div 
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 sm:hidden ${sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
       {/* Sidebar / Menu Links */}
       <div
-        className={`text-gray-700 dark:text-gray-300 text-sm font-semibold fixed sm:static top-0 bottom-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-8 sm:bg-transparent transition-all duration-300 z-50 shadow-2xl sm:shadow-none
-          ${sidebarOpen ? "w-64 pl-8 bg-white dark:bg-zinc-900 pt-24" : "w-0 overflow-hidden sm:w-auto sm:pl-0 sm:pt-0"}`}
+        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-8 bg-white dark:bg-zinc-900 sm:bg-transparent transition-all duration-300 z-[60] shadow-2xl sm:shadow-none
+          ${sidebarOpen ? "w-72 px-8 pt-24" : "w-0 overflow-hidden sm:w-auto sm:px-0 sm:pt-0"}`}
       >
         {/* Close Button (Mobile Only) */}
         <button
-          className="absolute right-6 top-6 sm:hidden text-2xl"
+          className="absolute right-6 top-6 sm:hidden text-3xl text-gray-500 hover:text-primary transition-colors"
           onClick={() => setSidebarOpen(false)}
         >
           &times;
         </button>
 
-        <a onClick={() => setSidebarOpen(false)} href="#hero" className="hover:text-primary transition-colors">
+        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
           Home
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="hover:text-primary transition-colors">
+        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
           Case Studies
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="hover:text-primary transition-colors">
+        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
           Services
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#roi" className="hover:text-primary transition-colors">
+        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
           Calculator
+        </a>
+        
+        {/* Mobile-only CTA */}
+        <a
+          href="https://calendly.com/replyflow"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="sm:hidden flex items-center justify-center gap-2 bg-primary text-white py-4 rounded-xl font-bold mt-4"
+        >
+          Book Audit <ArrowRightIcon className="w-4 h-4" />
         </a>
       </div>
 
       {/* Right Side Controls */}
-      <div className="flex items-center gap-2 sm:gap-4">
+      <div className="flex items-center gap-2 sm:gap-4 relative z-[10]">
         {/* Theme Toggle */}
         <ThemeToggleBtn theme={theme} setTheme={setTheme} />
 
         {/* Mobile Menu Button */}
         <button
           onClick={() => setSidebarOpen(true)}
-          className="sm:hidden p-2 text-2xl"
+          className="sm:hidden p-2 text-2xl text-gray-900 dark:text-white"
         >
           &#9776;
         </button>
