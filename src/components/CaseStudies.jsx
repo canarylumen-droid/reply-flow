@@ -49,25 +49,46 @@ const CaseStudyCard = ({ industry, problem, solution, metric, delay }) => (
 const CaseStudies = () => {
     const studies = [
         {
-            industry: "High-Ticket Real Estate",
+            industry: "High-Ticket Coaching",
             problem: "Losing 40% of leads due to 4+ hour response times.",
-            solution: "Bespoke AI Nurture Layer with 90s response latency & automated CRM logging.",
-            metric: "$2.4M Recovered",
+            solution: "Bespoke AI Nurture Layer with 90s response latency.",
+            metric: "$14,500 Recovered",
             delay: 0.1
         },
         {
             industry: "B2B SaaS Agency",
-            problem: "Saturated inbox leading to missed high-value opportunities.",
+            problem: "Saturated inbox leading to missed high-value discovery calls.",
             solution: "Intent-based AI Filtering & automated calendar scheduling.",
-            metric: "410% ROI Improvement",
+            metric: "$8,200 New Pipeline",
             delay: 0.2
         },
         {
-            industry: "Professional Services",
-            problem: "Manual follow-up fatigue resulting in lead decay.",
-            solution: "Persistent Multi-Channel Automation (Email + DM + SMS).",
-            metric: "3.5x Scale Factor",
+            industry: "E-commerce Agency",
+            problem: "Manual follow-up fatigue resulting in cart abandonment decay.",
+            solution: "Persistent Multi-Channel Automation (Email + DM).",
+            metric: "$12,400 Revenue Sync",
             delay: 0.3
+        },
+        {
+            industry: "Consulting Firm",
+            problem: "Cold leads going stagnant after initial inquiry.",
+            solution: "AI-Driven Reactivation engine with dynamic personalization.",
+            metric: "$17,800 Recaptured",
+            delay: 0.4
+        },
+        {
+            industry: "Real Estate Team",
+            problem: "Weekend inquiries ignored until Monday morning.",
+            solution: "24/7 Managed Infrastructure for instant lead qualification.",
+            metric: "$9,500 Commission Saved",
+            delay: 0.5
+        },
+        {
+            industry: "Growth Agency",
+            problem: "Operationally heavy manual lead vetting process.",
+            solution: "High-Fidelity AI Sales Closer for 1st-level qualification.",
+            metric: "$11,200 Op-Ex Saved",
+            delay: 0.6
         }
     ]
 
