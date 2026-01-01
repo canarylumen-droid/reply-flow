@@ -44,16 +44,16 @@ const Navbar = ({ theme, setTheme }) => {
           &times;
         </button>
 
-        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
+        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-semibold">
           Home
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
+        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-semibold">
           Case Studies
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
+        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-semibold">
           Services
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm hover:text-primary transition-colors font-bold sm:font-semibold">
+        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-semibold">
           Calculator
         </a>
         
