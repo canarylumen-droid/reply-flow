@@ -7,7 +7,7 @@ import ComparisonTable from './components/ComparisonTable'
 import Intelligence from './components/Intelligence'
 import Infrastructure from './components/Infrastructure'
 import AutomationFeatures from './components/AutomationFeatures'
-import Testimonials from './components/Testimonials'
+import CaseStudies from './components/CaseStudies'
 import SimpleSetup from './components/SimpleSetup'
 import Team from './components/Team'
 import RoiCalculator from './components/RoiCalculator'
@@ -92,7 +92,7 @@ const App = () => {
         <Intelligence />
         <Infrastructure />
         <AutomationFeatures />
-        <Testimonials />
+        <CaseStudies />
         <SimpleSetup />
         <div id="roi">
           <RoiCalculator />
