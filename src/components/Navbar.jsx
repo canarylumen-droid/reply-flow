@@ -11,16 +11,16 @@ const Navbar = ({ theme, setTheme }) => {
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="flex justify-between items-center px-4 sm:px-12 lg:px-24 xl:px-40 py-6 sticky top-0 z-50 backdrop-blur-xl font-medium bg-black/80 border-b border-white/10"
+      className="flex justify-between items-center px-4 sm:px-12 lg:px-24 xl:px-40 py-6 sticky top-0 z-50 backdrop-blur-xl font-medium bg-white/80 dark:bg-black/80 border-b border-gray-100 dark:border-white/10 transition-colors duration-300"
     >
       {/* Logo */}
-      <div className="flex items-center gap-3 group cursor-pointer relative">
+      <div className="flex items-center gap-3 group cursor-pointer relative" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
         <div className="w-12 h-12 bg-primary flex items-center justify-center text-white rounded-xl shadow-[0_0_20px_rgba(0,105,255,0.3)] rotate-[-5deg] group-hover:rotate-0 transition-transform relative z-10">
           <BrainIcon className="w-7 h-7" />
         </div>
-        <div className="relative z-10 text-white">
-          <h1 className="text-2xl font-[900] tracking-tighter leading-none font-syne uppercase">REPLYFLOW</h1>
+        <div className="relative z-10">
+          <h1 className="text-2xl font-[900] tracking-tighter leading-none font-syne uppercase text-gray-900 dark:text-white">REPLYFLOW</h1>
           <p className="text-[9px] text-primary uppercase tracking-[0.3em] font-black mt-1">Infrastructure agency</p>
         </div>
       </div>
@@ -33,7 +33,7 @@ const Navbar = ({ theme, setTheme }) => {
 
       {/* Sidebar / Menu Links */}
       <div
-        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-8 bg-zinc-900 sm:bg-transparent transition-all duration-300 z-[60] shadow-2xl sm:shadow-none
+        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-8 bg-white dark:bg-zinc-900 sm:bg-transparent transition-all duration-300 z-[60] shadow-2xl sm:shadow-none
           ${sidebarOpen ? "w-72 px-8 pt-24" : "w-0 overflow-hidden sm:w-auto sm:px-0 sm:pt-0"}`}
       >
         {/* Close Button (Mobile Only) */}
@@ -44,21 +44,21 @@ const Navbar = ({ theme, setTheme }) => {
           &times;
         </button>
 
-        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm text-white/90 hover:text-white transition-all font-bold sm:font-semibold relative group">
+        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
           Home
-          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm text-white/90 hover:text-white transition-all font-bold sm:font-semibold relative group">
+        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
           Case Studies
-          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm text-white/90 hover:text-white transition-all font-bold sm:font-semibold relative group">
+        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
           Services
-          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm text-white/90 hover:text-white transition-all font-bold sm:font-semibold relative group">
+        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
           Calculator
-          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
         </a>
         
         {/* Mobile-only CTA */}
