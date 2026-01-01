@@ -12,6 +12,7 @@ import SimpleSetup from './components/SimpleSetup'
 import Team from './components/Team'
 import RoiCalculator from './components/RoiCalculator'
 import Pricing from './components/Pricing'
+import Guarantees from './components/Guarantees'
 import FinalCta from './components/FinalCta'
 import FAQ from './components/FAQ'
 import Booking from './components/Booking'
@@ -99,6 +100,7 @@ const App = () => {
         <div id="pricing">
           <Pricing />
         </div>
+        <Guarantees />
         <FAQ />
         <ScrollingText />
         <div id="book">

@@ -29,7 +29,7 @@ const ComparisonTable = () => {
                     </p>
                 </div>
 
-                <div className='overflow-x-auto pb-4'>
+                <div className='hidden md:block overflow-x-auto pb-4'>
                     <table className='w-full text-left border-collapse min-w-[900px]'>
                         <thead>
                             <tr className='border-b border-gray-200 dark:border-white/10'>
@@ -68,7 +68,7 @@ const ComparisonTable = () => {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colSpan={3} className='py-8 text-right pr-12 text-gray-500 italic'>
+                                <td colSpan={3} className='py-8 text-right pr-12 text-gray-500 italic font-syne'>
                                     "Leads think they're talking to you — not a bot."
                                 </td>
                                 <td className='py-8 text-center relative'>
@@ -81,6 +81,44 @@ const ComparisonTable = () => {
                         </tfoot>
                     </table>
                 </div>
+
+                {/* Mobile View: High Impact Cards */}
+                <div className='md:hidden space-y-4'>
+                    <div className='p-8 rounded-3xl bg-blue-600 text-white shadow-2xl relative overflow-hidden'>
+                        <div className='absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl' />
+                        <h3 className='text-2xl font-black mb-6 uppercase tracking-tight font-syne'>Why Reply Flow Wins</h3>
+                        <div className='space-y-4'>
+                            {rows.map((row, i) => (
+                                <div key={i} className='flex items-start gap-3 border-b border-white/10 pb-4 last:border-0'>
+                                    <CheckIcon className='w-5 h-5 text-blue-200 shrink-0 mt-0.5' />
+                                    <div>
+                                        <p className='font-bold text-sm leading-tight'>{row.service}</p>
+                                        <p className='text-[10px] text-blue-100 uppercase mt-1 tracking-widest'>Fully Managed Infrastructure</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <button 
+                            onClick={() => document.getElementById('book').scrollIntoView({ behavior: 'smooth' })}
+                            className='w-full mt-8 py-4 bg-white text-blue-600 font-black rounded-xl uppercase tracking-widest text-sm shadow-xl'
+                        >
+                            Get Started
+                        </button>
+                    </div>
+
+                    <div className='grid grid-cols-2 gap-4'>
+                        <div className='p-6 rounded-3xl bg-gray-100 dark:bg-zinc-900 border border-gray-200 dark:border-white/5 opacity-60'>
+                            <p className='text-xs font-black uppercase tracking-widest mb-4'>SaaS Tools</p>
+                            <p className='text-[10px] text-gray-500'>Lacks strategic management and high-fidelity training.</p>
+                        </div>
+                        <div className='p-6 rounded-3xl bg-gray-100 dark:bg-zinc-900 border border-gray-200 dark:border-white/5 opacity-60'>
+                            <p className='text-xs font-black uppercase tracking-widest mb-4'>Old Agency</p>
+                            <p className='text-[10px] text-gray-500'>Expensive manual labor with slow response times.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p className='text-center text-sm text-gray-500 mt-12'>You don't lift a finger. We handle everything from setup to daily performance optimization.</p>
                 <p className='text-center text-sm text-gray-500 mt-12'>You don't lift a finger. We handle everything from setup to daily performance optimization.</p>
             </div>
         </section>

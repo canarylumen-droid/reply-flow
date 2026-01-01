@@ -4,10 +4,9 @@ import { motion } from "framer-motion"
 // Discord-style card component
 const DiscordCard = ({ user, handle, message, revenue, delay }) => (
     <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         transition={{ delay: delay, duration: 0.5 }}
-        viewport={{ once: true }}
         className='bg-[#313338] text-gray-100 p-4 rounded-lg max-w-sm w-full font-sans shadow-xl border-l-4 border-indigo-500 mb-6 mx-auto'
     >
         <div className='flex items-start gap-3'>
@@ -38,7 +37,6 @@ const InstagramCard = ({ user, message, revenue, delay }) => (
         initial={{ opacity: 0, x: 20 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ delay: delay, duration: 0.5 }}
-        viewport={{ once: true }}
         className='bg-white dark:bg-black border border-gray-200 dark:border-zinc-800 p-5 rounded-2xl max-w-sm w-full shadow-lg mb-6 mx-auto relative'
     >
         <div className='absolute -left-2 top-8 w-4 h-4 bg-white dark:bg-black border-l border-b border-gray-200 dark:border-zinc-800 transform rotate-45' />
