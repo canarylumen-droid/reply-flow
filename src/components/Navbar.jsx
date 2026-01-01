@@ -44,19 +44,19 @@ const Navbar = ({ theme, setTheme }) => {
           &times;
         </button>
 
-        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
+        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm text-gray-700 dark:text-white hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
           Home
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
+        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm text-gray-700 dark:text-white hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
           Case Studies
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
+        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm text-gray-700 dark:text-white hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
           Services
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
+        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm text-gray-700 dark:text-white hover:text-primary dark:hover:text-primary transition-all font-bold sm:font-semibold relative group">
           Calculator
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
         </a>
