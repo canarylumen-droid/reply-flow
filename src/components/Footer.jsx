@@ -18,7 +18,7 @@ const Footer = ({ theme }) => {
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary border border-primary/20 shadow-[0_0_15px_rgba(0,105,255,0.1)] overflow-hidden">
-              <img src="/reply_flow_logo.png" alt="Reply Flow Logo" className="w-full h-full object-cover scale-[1.8]" />
+              <img src="/reply_flow_logo.png" alt="Reply Flow Logo" className="w-6 h-6 object-contain" />
             </div>
             <span className="text-2xl font-black dark:text-white font-syne uppercase tracking-tighter">REPLYFLOW</span>
           </div>
