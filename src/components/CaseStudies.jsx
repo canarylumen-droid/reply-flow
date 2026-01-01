@@ -2,13 +2,57 @@ import React from 'react'
 import { motion } from "framer-motion"
 import { BrainIcon, ArrowRightIcon } from './Icons'
 
-const CaseStudyCard = ({ industry, problem, solution, metric, delay }) => (
+const ProofMockup = ({ type, user, message, delay }) => {
+    if (type === 'discord') {
+        return (
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: delay + 0.2 }}
+                className='bg-[#313338] text-gray-100 p-3 rounded-xl font-sans shadow-lg border-l-4 border-indigo-500 my-4 text-left'
+            >
+                <div className='flex items-start gap-2'>
+                    <div className='w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center font-bold text-white shrink-0 text-xs'>
+                        {user.charAt(0)}
+                    </div>
+                    <div>
+                        <div className='flex items-baseline gap-1.5'>
+                            <span className='font-semibold text-white text-xs hover:underline cursor-pointer'>{user}</span>
+                            <span className='text-[10px] text-gray-400'>Today at 9:41 AM</span>
+                        </div>
+                        <p className='text-[11px] text-gray-300 mt-0.5 leading-relaxed opacity-90'>
+                            {message}
+                        </p>
+                    </div>
+                </div>
+            </motion.div>
+        )
+    }
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: delay + 0.2 }}
+            className='bg-gray-50 dark:bg-zinc-900/50 border border-gray-100 dark:border-white/5 p-4 rounded-2xl my-4 text-left relative'
+        >
+            <div className='flex justify-between items-center mb-1'>
+                <span className='text-[9px] font-bold text-gray-400 uppercase tracking-wide italic'>Direct Message</span>
+                <div className='w-1.5 h-1.5 rounded-full bg-blue-500' />
+            </div>
+            <p className='text-gray-600 dark:text-gray-300 text-[11px] leading-relaxed italic'>
+                "{message}"
+            </p>
+        </motion.div>
+    )
+}
+
+const CaseStudyCard = ({ industry, problem, solution, metric, delay, proofType, proofUser, proofMessage }) => (
     <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: delay, duration: 0.8 }}
         viewport={{ once: true }}
-        className='group bg-white dark:bg-black border border-gray-100 dark:border-white/5 rounded-3xl p-8 hover:border-primary/50 transition-all shadow-2xl shadow-gray-200/50 dark:shadow-none relative overflow-hidden'
+        className='group bg-white dark:bg-black border border-gray-100 dark:border-white/5 rounded-3xl p-8 hover:border-primary/50 transition-all shadow-2xl shadow-gray-200/50 dark:shadow-none relative overflow-hidden flex flex-col'
     >
         <div className='absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity'>
             <BrainIcon className="w-24 h-24" />
@@ -21,11 +65,11 @@ const CaseStudyCard = ({ industry, problem, solution, metric, delay }) => (
             <div className='h-px flex-1 bg-gray-100 dark:bg-white/10' />
         </div>
 
-        <h3 className='text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary transition-colors'>
+        <h3 className='text-lg font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary transition-colors leading-tight'>
             {problem}
         </h3>
 
-        <div className='space-y-4 mb-8'>
+        <div className='space-y-4 mb-2'>
             <div className='flex items-start gap-3'>
                 <div className='w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0' />
                 <p className='text-sm text-gray-500 dark:text-gray-400'>
@@ -34,7 +78,12 @@ const CaseStudyCard = ({ industry, problem, solution, metric, delay }) => (
             </div>
         </div>
 
-        <div className='pt-6 border-t border-gray-100 dark:border-white/10 flex items-center justify-between'>
+        {/* Visual Proof Section */}
+        <div className='flex-1'>
+            <ProofMockup type={proofType} user={proofUser} message={proofMessage} delay={delay} />
+        </div>
+
+        <div className='pt-6 border-t border-gray-100 dark:border-white/10 flex items-center justify-between mt-auto'>
             <div>
                 <p className='text-[10px] text-gray-400 uppercase font-bold tracking-tighter mb-1'>Verified Outcome</p>
                 <p className='text-2xl font-black text-primary font-syne'>{metric}</p>
@@ -53,13 +102,18 @@ const CaseStudies = () => {
             problem: "Losing 40% of leads due to 4+ hour response times.",
             solution: "Bespoke AI Nurture Layer with 90s response latency.",
             metric: "140+ Hours Saved/Mo",
+            proofType: 'discord',
+            proofUser: 'Alex (Sales Director)',
+            proofMessage: 'The reactivation campaign is printing. show-up rates literally doubled and we salvaged $14,5k in commissions.',
             delay: 0.1
         },
         {
             industry: "B2B SaaS Agency",
-            problem: "Saturated inbox leading to missed high-value discovery calls.",
+            problem: "Saturated inbox leading to missed discovery calls.",
             solution: "Intent-based AI Filtering & automated calendar scheduling.",
             metric: "410% ROI Increase",
+            proofType: 'dm',
+            proofMessage: 'I almost hired a call center. Glad I didn\'t. This recovered $8.2k this month without me managing a human.',
             delay: 0.2
         },
         {
@@ -67,6 +121,9 @@ const CaseStudies = () => {
             problem: "Manual follow-up fatigue resulting in cart abandonment decay.",
             solution: "Persistent Multi-Channel Automation (Email + DM).",
             metric: "$12,400 Recovered",
+            proofType: 'discord',
+            proofUser: 'Mike (Founder)',
+            proofMessage: 'My guys are good at sales, not texting. Having this system filter tire-kickers has saved my sanity.',
             delay: 0.3
         },
         {
@@ -74,6 +131,8 @@ const CaseStudies = () => {
             problem: "Cold leads going stagnant after initial inquiry.",
             solution: "AI-Driven Reactivation engine with dynamic personalization.",
             metric: "3.5x Pipeline Velocity",
+            proofType: 'dm',
+            proofMessage: 'The objection handling is insane. It sounds more professional than my junior reps. Financing objections cleared!',
             delay: 0.4
         },
         {
@@ -81,6 +140,9 @@ const CaseStudies = () => {
             problem: "Weekend inquiries ignored until Monday morning.",
             solution: "24/7 Managed Infrastructure for instant lead qualification.",
             metric: "0% Lead Decay Rate",
+            proofType: 'discord',
+            proofUser: 'Sarah (Team Lead)',
+            proofMessage: 'We are now the first to reply to every inquiry 24/7. Speed is everything and Reply Flow delivers.',
             delay: 0.5
         },
         {
@@ -88,6 +150,8 @@ const CaseStudies = () => {
             problem: "Operationally heavy manual lead vetting process.",
             solution: "High-Fidelity AI Sales Closer for 1st-level qualification.",
             metric: "75% Op-Ex Reduction",
+            proofType: 'dm',
+            proofMessage: 'We recovered $11.2k that would have decayed. Our show-up rate is up 30% from the AI qualification alone.',
             delay: 0.6
         }
     ]
@@ -107,7 +171,7 @@ const CaseStudies = () => {
                             <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400'>Field Verified</span>
                         </h2>
                         <p className='text-lg text-gray-500 dark:text-gray-400'>
-                            We don't sell theory. We deploy high-fidelity sales machines that deliver measurable revenue recovery. These are the benchmarks of our active deployments.
+                            Visual proof of our active sales machines. We don't sell theory—we deploy infrastructure that delivers measurable recovery across every channel.
                         </p>
                     </div>
                     
