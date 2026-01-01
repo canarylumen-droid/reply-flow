@@ -33,7 +33,7 @@ const Navbar = ({ theme, setTheme }) => {
 
       {/* Sidebar / Menu Links */}
       <div
-        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-8 bg-white dark:bg-zinc-900 sm:bg-transparent transition-all duration-300 z-[60] shadow-2xl sm:shadow-none
+        className={`fixed sm:static top-0 right-0 h-full sm:h-auto flex flex-col sm:flex-row sm:items-center gap-10 bg-white dark:bg-zinc-900 sm:bg-transparent transition-all duration-300 z-[60] shadow-2xl sm:shadow-none
           ${sidebarOpen ? "w-72 px-8 pt-24" : "w-0 overflow-hidden sm:w-auto sm:px-0 sm:pt-0"}`}
       >
         {/* Close Button (Mobile Only) */}
@@ -44,16 +44,16 @@ const Navbar = ({ theme, setTheme }) => {
           &times;
         </button>
 
-        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-sm text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-semibold">
+        <a onClick={() => setSidebarOpen(false)} href="#hero" className="text-lg sm:text-[15px] text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-bold tracking-tight">
           Home
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-sm text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-semibold">
+        <a onClick={() => setSidebarOpen(false)} href="#testimonials" className="text-lg sm:text-[15px] text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-bold tracking-tight">
           Case Studies
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-sm text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-semibold">
+        <a onClick={() => setSidebarOpen(false)} href="#pricing" className="text-lg sm:text-[15px] text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-bold tracking-tight">
           Services
         </a>
-        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-sm text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-semibold">
+        <a onClick={() => setSidebarOpen(false)} href="#roi" className="text-lg sm:text-[15px] text-gray-900 dark:text-white hover:text-primary transition-colors font-bold sm:font-bold tracking-tight">
           Calculator
         </a>
         
