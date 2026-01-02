@@ -27,8 +27,11 @@ const Footer = ({ theme }) => {
             Premier AI Sales Infrastructure for High-Ticket Agencies.
           </p>
 
-          <a href="mailto:info@replyflow.pro" className="inline-block text-primary font-semibold hover:underline">
-            info@replyflow.pro
+          <a 
+            href="mailto:team@replyflow.pro?subject=Inquiry%3A%20AI%20Sales%20Infrastructure%20for%20%5BAgency%20Name%5D&body=Hi%20ReplyFlow%20Team%2C%0A%0AI%20am%20interested%20in%20automating%20our%20lead%20follow-up%20and%20recovering%20lost%20sales.%20We%20are%20looking%20for%20a%20high-fidelity%20solution.%0A%0APlease%20provide%20information%20on%20your%20audit%20process%20and%20next%20steps.%0A%0ABest%20regards%2C%0A%0AName%3A%20%0AAgency%20Name%3A%20%0AWebsite%3A%20"
+            className="inline-block text-primary font-semibold hover:underline"
+          >
+            team@replyflow.pro
           </a>
 
           <div className="flex gap-4 pt-4">

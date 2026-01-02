@@ -156,7 +156,7 @@ const Pricing = () => {
                         </ul>
 
                         <a
-                            href="mailto:info@replyflow.pro"
+                            href="mailto:team@replyflow.pro?subject=Partnership%20Application%20-%20%5BAgency%20Name%5D&body=Hi%20ReplyFlow%20Team%2C%0A%0AI%20am%20submitting%20my%20application%20for%20a%20growth%20partnership.%20We%20are%20ready%20to%20deploy%20AI%20infrastructure%20to%20scale%20our%20revenue.%0A%0AHere%20are%20my%20agency%20details%3A%0A%0ACurrent%20Monthly%20Revenue%3A%20%0ANiche%20%2F%20Industry%3A%20%0AWebsite%3A%20%0A%0ALooking%20forward%20to%20the%20potential%20fit."
                             className='w-full py-4 rounded-2xl border-2 border-gray-200 dark:border-white/10 text-gray-900 dark:text-white font-black text-sm uppercase tracking-widest hover:bg-gray-100 dark:hover:bg-white/5 transition-colors text-center block'
                         >
                             Apply for Partnership
