@@ -96,8 +96,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
 
       // Draw Connections (Neural Network effect)
       ctx.beginPath()
-      ctx.strokeStyle = `rgba(147, 51, 234, 0.1)`
-      ctx.lineWidth = 0.5
+      ctx.strokeStyle = `rgba(147, 51, 234, ${isMobile ? 0.1 : 0.15})`
+      ctx.lineWidth = isMobile ? 0.5 : 0.8 // Bolder for desktop
       
       for (let i = 0; i < projected.length; i++) {
         for (let j = i + 1; j < projected.length; j++) {
@@ -117,8 +117,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
         ctx.beginPath()
-        ctx.arc(p.sx, p.sy, 1.2 * p.scale, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.8})`
+        ctx.arc(p.sx, p.sy, (isMobile ? 1.2 : 1.8) * p.scale, 0, Math.PI * 2) // Bolder dots
+        ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.9})`
         ctx.fill()
       })
 

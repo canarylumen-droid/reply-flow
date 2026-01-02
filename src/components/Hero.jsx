@@ -5,13 +5,22 @@ import AiBrain from './AiBrain';
 
 const Hero = () => {
   const containerRef = useRef(null);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
+
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth > 1024);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
   });
   
-  // Use spring physics to smooth out the scroll value (removes lag/jitter)
+  // ... rest of logic updated in JSX below ...
   const smoothScroll = useSpring(scrollYProgress, { stiffness: 100, damping: 20 });
+  // ...
 
   // Dashboard Transformation (Exit) - happens in first 40% of scroll
   const scale = useTransform(smoothScroll, [0, 0.4], [1, 0.8]); 
@@ -22,12 +31,15 @@ const Hero = () => {
 
   // AI Brain Transformation (Entry) - happens in first 50% of scroll
   const brainOpacity = useTransform(smoothScroll, [0.1, 0.5], [0, 1]);
-  const brainScale = useTransform(smoothScroll, [0.1, 0.5], [0.5, 1.2]);
-  const brainY = useTransform(smoothScroll, [0, 0.5], [0, -50]); 
+  const brainScale = useTransform(smoothScroll, [0.1, 0.8], [0.6, 2.2]); // Grows much larger
+  const brainY = useTransform(smoothScroll, [0.1, 0.8], [100, -20]); // Arrives from below, then stays
+  
+  // Transition to center for Desktop (starts at right, moves to center)
+  const brainX = useTransform(smoothScroll, [0.3, 0.7], [0, "-50%"]); 
 
   // Copy Fade Out - fade out text as we scroll deep
-  const copyOpacity = useTransform(smoothScroll, [0.4, 0.6], [1, 0]);
-  const copyY = useTransform(smoothScroll, [0.4, 0.6], [0, -50]);
+  const copyOpacity = useTransform(smoothScroll, [0.3, 0.5], [1, 0]);
+  const copyY = useTransform(smoothScroll, [0.3, 0.5], [0, -100]);
 
   return (
     <section ref={containerRef} id='hero' className='relative h-[250vh] bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300'>
@@ -175,15 +187,21 @@ const Hero = () => {
               </div>
               </motion.div>
 
-              {/* 2. AI Brain Visual (Fades/Scales In) */}
+              {/* 2. AI Brain Visual (Fades/Scales In + Moves to Center) */}
               <motion.div 
-                  style={{ opacity: brainOpacity, scale: brainScale, y: brainY }}
+                  style={{ 
+                    opacity: brainOpacity, 
+                    scale: brainScale, 
+                    y: brainY,
+                    x: isDesktop ? brainX : 0 
+                  }}
                   className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform will-change-opacity"
               >
-                  <div className="w-[400px] h-[400px] md:w-[600px] md:h-[600px] relative">
-                      <AiBrain scale={1.5} opacity={1} />
-                      {/* Central Core Glow */}
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-blue-500/20 rounded-full blur-[40px]" />
+                  <div className="w-[450px] h-[450px] md:w-[700px] md:h-[700px] relative">
+                      <AiBrain scale={1.8} opacity={1} />
+                      {/* Central Core Glow - Bolder and more central */}
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/20 rounded-full blur-[60px]" />
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-purple-500/20 rounded-full blur-[40px]" />
                   </div>
               </motion.div>
 
