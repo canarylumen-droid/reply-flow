@@ -119,7 +119,7 @@ const ComparisonTable = () => {
                 </div>
 
                 <p className='text-center text-sm text-gray-500 mt-12'>You don't lift a finger. We handle everything from setup to daily performance optimization.</p>
-                <p className='text-center text-sm text-gray-500 mt-12'>You don't lift a finger. We handle everything from setup to daily performance optimization.</p>
+
             </div>
         </section>
     )

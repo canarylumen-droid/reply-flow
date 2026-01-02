@@ -24,12 +24,18 @@ const Paragraph = ({ value }) => {
 }
 
 const Word = ({ children, progress, range }) => {
-  const opacity = useTransform(progress, range, [0.1, 1])
-  
+  const opacity = useTransform(progress, range, [0.05, 1]) // More dramatic fade
+  const color = useTransform(progress, range, ["#6b7280", "currentColor"]) // Gray to Current
+
   return (
     <span className="relative mr-3 mt-3 lg:mr-5 lg:mt-5">
-      <span className="absolute opacity-10">{children}</span>
-      <motion.span style={{ opacity }} className="text-gray-900 dark:text-white">
+      {/* Ghost text for layout */}
+      <span className="absolute opacity-0">{children}</span>
+      
+      <motion.span 
+        style={{ opacity, color }} 
+        className="text-gray-900 dark:text-white transition-colors duration-200"
+      >
         {children}
       </motion.span>
     </span>
