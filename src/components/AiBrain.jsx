@@ -8,10 +8,11 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     const ctx = canvas.getContext('2d')
     let animationFrameId
     
-    // Configuration
-    const particleCount = 250 // Low count for performance
-    const connectionDistance = 40
-    const globeRadius = 120
+    // Configuration based on device capability
+    const isMobile = window.innerWidth < 768
+    const particleCount = isMobile ? 120 : 250
+    const connectionDistance = isMobile ? 35 : 40 // Tighter connections on mobile
+    const globeRadius = isMobile ? 80 : 120
     const rotationSpeed = 0.003
 
     // State
