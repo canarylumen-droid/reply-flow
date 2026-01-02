@@ -97,7 +97,7 @@ const Hero = () => {
               {/* 1. Dashboard Visual (Fades Out) */}
               <motion.div
                   style={{ scale, opacity, y, rotateX, rotateZ }}
-                  className='absolute inset-0 z-10 origin-center will-change-transform'
+                  className='absolute inset-0 z-10 origin-center will-change-transform will-change-opacity'
               >
               <div className='relative w-full max-w-lg h-full mx-auto'>
                   <div className='absolute inset-0 bg-gradient-to-br from-zinc-900 to-black rounded-2xl border border-zinc-800 shadow-2xl overflow-hidden'>
@@ -105,16 +105,16 @@ const Hero = () => {
                   {/* Header Bar */}
                   <div className='bg-zinc-800/50 border-b border-zinc-700 px-4 py-3 flex items-center justify-between'>
                       <div className='flex items-center gap-2'>
-                      <div className='flex gap-1.5'>
-                          <div className='w-3 h-3 rounded-full bg-red-500/80'></div>
-                          <div className='w-3 h-3 rounded-full bg-yellow-500/80'></div>
-                          <div className='w-3 h-3 rounded-full bg-green-500/80'></div>
-                      </div>
-                      <span className='text-xs text-zinc-400 ml-3 font-mono'>reply-flow-agent.ai</span>
+                        <div className='flex gap-1.5'>
+                            <div className='w-3 h-3 rounded-full bg-red-500/80'></div>
+                            <div className='w-3 h-3 rounded-full bg-yellow-500/80'></div>
+                            <div className='w-3 h-3 rounded-full bg-green-500/80'></div>
+                        </div>
+                        <span className='text-xs text-zinc-400 ml-3 font-mono'>reply-flow-agent.ai</span>
                       </div>
                       <div className='flex items-center gap-2'>
-                      <div className='w-2 h-2 rounded-full bg-green-500 animate-pulse'></div>
-                      <span className='text-[10px] text-green-400 font-semibold'>LIVE</span>
+                        <div className='w-2 h-2 rounded-full bg-green-500 animate-pulse'></div>
+                        <span className='text-[10px] text-green-400 font-semibold'>LIVE</span>
                       </div>
                   </div>
 
@@ -122,23 +122,23 @@ const Hero = () => {
                   <div className='p-6 space-y-4 h-[calc(100%-56px)] overflow-hidden'>
                       {/* Real-time Metrics */}
                       <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className='grid grid-cols-3 gap-3'
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className='grid grid-cols-3 gap-3'
                       >
-                      <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
-                          <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Active Leads</div>
-                          <div className='text-2xl font-bold text-white'>247</div>
-                      </div>
-                      <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
-                          <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Response</div>
-                          <div className='text-2xl font-bold text-green-400'>1.2s</div>
-                      </div>
-                      <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
-                          <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Booked</div>
-                          <div className='text-2xl font-bold text-blue-400'>18</div>
-                      </div>
+                        <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
+                            <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Active Leads</div>
+                            <div className='text-2xl font-bold text-white'>247</div>
+                        </div>
+                        <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
+                            <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Response</div>
+                            <div className='text-2xl font-bold text-green-400'>1.2s</div>
+                        </div>
+                        <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
+                            <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Booked</div>
+                            <div className='text-2xl font-bold text-blue-400'>18</div>
+                        </div>
                       </motion.div>
 
                       {/* Terminal-style Activity Log */}
@@ -171,19 +171,19 @@ const Hero = () => {
                   </div>
                   </div>
                   {/* Glow */}
-                  <div className='absolute -inset-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl blur-3xl -z-10'></div>
+                  <div className='absolute -inset-4 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-3xl blur-2xl -z-10'></div>
               </div>
               </motion.div>
 
               {/* 2. AI Brain Visual (Fades/Scales In) */}
               <motion.div 
                   style={{ opacity: brainOpacity, scale: brainScale, y: brainY }}
-                  className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
+                  className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform will-change-opacity"
               >
                   <div className="w-[400px] h-[400px] md:w-[600px] md:h-[600px] relative">
                       <AiBrain scale={1.5} opacity={1} />
                       {/* Central Core Glow */}
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-blue-500/20 rounded-full blur-[50px] animate-pulse" />
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-blue-500/20 rounded-full blur-[40px]" />
                   </div>
               </motion.div>
 

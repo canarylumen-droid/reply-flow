@@ -61,7 +61,7 @@ const WhyLosingMoney = () => {
                     whileInView={{ opacity: 1 }}
                     className='mb-24 relative'
                 >
-                    <div className='absolute inset-0 bg-primary/5 dark:bg-primary/5 rounded-[40px] blur-3xl pointer-events-none' />
+                    <div className='absolute inset-0 bg-primary/5 dark:bg-primary/5 rounded-[40px] blur-xl pointer-events-none' />
 
                     <div className='relative bg-white dark:bg-black p-12 rounded-[40px] border border-gray-200 dark:border-white/5 overflow-hidden shadow-2xl'>
                         <h3 className='text-3xl font-black mb-16 text-center dark:text-white font-syne uppercase tracking-tighter'>The Decay of a Lead</h3>
