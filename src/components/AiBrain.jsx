@@ -80,8 +80,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       
       // Smooth mouse movement tracking
-      mouseX += (targetMouseX - mouseX) * 0.05
-      mouseY += (targetMouseY - mouseY) * 0.05
+      mouseX += (targetMouseX - mouseX) * 0.15
+      mouseY += (targetMouseY - mouseY) * 0.15
 
       angleY += rotationSpeed
       angleX += rotationSpeed * 0.3
@@ -107,12 +107,12 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
           const dx = mouseX - px
           const dy = mouseY - py
           const dist = Math.sqrt(dx * dx + dy * dy)
-          const limit = 100
+          const limit = 150 // Increased range
           
           if (dist < limit) {
             const force = (limit - dist) / limit
-            x1 += dx * force * 0.2
-            y1 += dy * force * 0.2
+            x1 += dx * force * 0.35 // Increased strength
+            y1 += dy * force * 0.35
           }
         }
 
@@ -156,8 +156,14 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       animationFrameId = requestAnimationFrame(draw)
     }
 
+    const handleMouseLeave = () => {
+      targetMouseX = centerX
+      targetMouseY = centerY
+    }
+
     if (!isMobile) {
       window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseleave', handleMouseLeave)
     }
     window.addEventListener('resize', resize)
     resize()

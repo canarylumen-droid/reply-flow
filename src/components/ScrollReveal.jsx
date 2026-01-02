@@ -51,9 +51,17 @@ const Character = ({ children, progress, range }) => {
   )
 
   return (
-    <span className="grid place-items-center relative">
+    <motion.span 
+      whileHover={{ 
+        scale: 1.2,
+        color: "#0069ff",
+        textShadow: "0 0 20px rgba(0, 105, 255, 0.8)",
+        transition: { duration: 0.2 }
+      }}
+      className="grid place-items-center relative group cursor-default"
+    >
       {/* 1. Ghost Layer */}
-      <span className="opacity-10 text-gray-900 dark:text-white transition-colors cursor-default select-none pointer-events-none col-start-1 row-start-1">
+      <span className="opacity-10 text-gray-900 dark:text-white transition-colors select-none pointer-events-none col-start-1 row-start-1">
         {children}
       </span>
       
@@ -70,7 +78,7 @@ const Character = ({ children, progress, range }) => {
         style={{ opacity: cursorOpacity }}
         className="absolute -bottom-1 left-0 right-0 h-[2px] bg-primary blur-[2px] z-20 pointer-events-none"
       />
-    </span>
+    </motion.span>
   )
 }
 
