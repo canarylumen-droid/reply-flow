@@ -43,8 +43,16 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     let mouseY = 0
     let hoverAlpha = 0 
     let isCurrentlyHovered = false
-    let revealedLetters = new Array(9).fill(0) // Logic for "REPLY FLOW" random reveal
     const agencyName = "REPLYFLOW"
+    // Pre-calculate random properties for "jampacked" letters to ensure stability
+    const charMeta = "REPLY FLOW".split("").map(() => ({
+      xOff: (Math.random() - 0.5) * 15,
+      yOff: (Math.random() - 0.5) * 15,
+      zOff: (Math.random() - 0.5) * 20,
+      scale: 0.8 + Math.random() * 0.4,
+      isOutline: Math.random() > 0.6,
+      flickerSpeed: 0.5 + Math.random() * 1.5
+    }))
 
     const resize = () => {
       if (!canvas.parentNode) return
@@ -192,52 +200,61 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
         ctx.stroke()
 
-        // 2b. Agency Name Reveal (Glassmorphic Inline Reveal)
+        // 2b. Agency Name Reveal (Stochastic Glassmorphic Reveal)
         if (hoverAlpha > 0.01) {
           ctx.save()
-          ctx.translate(centerX + mouseX * 50, centerY + mouseY * 50)
+          ctx.translate(centerX + mouseX * 60, centerY + mouseY * 60)
           
-          // Apply 3D Tilt
-          const textTiltX = tiltX * 0.4
-          const textTiltY = tiltY * 0.4
+          const textTiltX = tiltX * 0.5
+          const textTiltY = tiltY * 0.5
           ctx.transform(1, textTiltY, textTiltX, 1, 0, 0)
-
-          // 1. Draw Glassmorphic Backdrop Plate
-          const plateW = globeRadius * 1.2
-          const plateH = globeRadius * 0.35
-          ctx.beginPath()
-          ctx.roundRect(-plateW/2, -plateH/2, plateW, plateH, 12)
-          ctx.fillStyle = `rgba(255, 255, 255, ${hoverAlpha * 0.05})` // Super transparent glass
-          ctx.fill()
-          ctx.strokeStyle = `rgba(255, 255, 255, ${hoverAlpha * 0.1})`
-          ctx.lineWidth = 1
-          ctx.stroke()
-          
-          // 2. Random Letter Uncover Logic
-          // The more alpha, the more random letters turn high-alpha
-          ctx.textAlign = 'center'
-          ctx.textBaseline = 'middle'
-          ctx.font = `bold ${Math.floor(globeRadius * 0.18)}px Syne` // Smaller, more professional
-          ctx.letterSpacing = "4px"
 
           const fullText = "REPLY FLOW"
           const chars = fullText.split("")
-          const charWidth = (globeRadius * 0.1)
+          const charWidth = (globeRadius * 0.12)
           const startX = -((chars.length - 1) * charWidth) / 2
 
           chars.forEach((char, idx) => {
-            // Pseudo-random reveal based on hover progress
-            const threshold = (idx / chars.length) * 0.8
-            const charAlpha = Math.max(0, Math.min(1, (hoverAlpha - threshold) * 5))
+            if (char === " ") return
             
-            ctx.fillStyle = char === " " 
-                ? "transparent" 
-                : `rgba(255, 255, 255, ${charAlpha * 0.95})`
+            const meta = charMeta[idx]
+            // Jampacked Randomness: combine hover progress with meta flicker
+            const flicker = Math.sin(time * 5 * meta.flickerSpeed) * 0.2 + 0.8
+            const threshold = (idx / chars.length) * 0.7
+            const charAlpha = Math.max(0, Math.min(1, (hoverAlpha - threshold) * 4)) * flicker
             
-            if (charAlpha > 0) {
-              ctx.shadowBlur = 10 * charAlpha
-              ctx.shadowColor = 'rgba(0, 105, 255, 0.4)'
-              ctx.fillText(char, startX + idx * charWidth, 0)
+            if (charAlpha > 0.05) {
+              ctx.save()
+              // Random 3D offset per character for the "jampacked" feel
+              ctx.translate(startX + idx * charWidth + meta.xOff * hoverAlpha, meta.yOff * hoverAlpha)
+              ctx.scale(meta.scale, meta.scale)
+              
+              ctx.textAlign = 'center'
+              ctx.textBaseline = 'middle'
+              ctx.font = `900 ${Math.floor(globeRadius * 0.22)}px Syne`
+              
+              // Random rendering styles: Outlines vs Glassy Solids
+              if (meta.isOutline) {
+                ctx.strokeStyle = `rgba(255, 255, 255, ${charAlpha * 0.5})`
+                ctx.lineWidth = 1
+                ctx.strokeText(char, 0, 0)
+              } else {
+                // Glowing Glass Fill
+                ctx.shadowBlur = 12 * charAlpha
+                ctx.shadowColor = 'rgba(0, 105, 255, 0.8)'
+                ctx.fillStyle = `rgba(255, 255, 255, ${charAlpha * 0.9})`
+                ctx.fillText(char, 0, 0)
+              }
+
+              // Tiny "data" glow under some letters
+              if (charAlpha > 0.8 && idx % 3 === 0) {
+                ctx.beginPath()
+                ctx.arc(0, 15, 2, 0, Math.PI * 2)
+                ctx.fillStyle = `rgba(0, 105, 255, ${charAlpha})`
+                ctx.fill()
+              }
+              
+              ctx.restore()
             }
           })
           
@@ -245,7 +262,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
       }
 
-      // 3. Draw Core Glow (Central Glass Orb)
+      // 3. Draw Core Glow (Central Deep Blue Orb)
       const coreGrad = ctx.createRadialGradient(
         centerX + mouseX * 40, 
         centerY + mouseY * 40, 
@@ -254,7 +271,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         centerY + mouseY * 40, 
         globeRadius * (0.8 + hoverAlpha * 0.2)
       )
-      coreGrad.addColorStop(0, `rgba(0, 105, 255, ${0.08 + hoverAlpha * 0.1})`)
+      coreGrad.addColorStop(0, `rgba(0, 50, 200, ${0.12 + hoverAlpha * 0.1})`) // Deeper branding blue
       coreGrad.addColorStop(1, 'transparent')
       ctx.fillStyle = coreGrad
       ctx.beginPath()
@@ -264,18 +281,16 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       // 4. Draw Particles (Both)
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
-        const pSize = (isSmallMobile ? 0.9 : 1.6) * p.scale // Slightly larger
+        const pSize = (isSmallMobile ? 0.9 : 1.6) * p.scale 
         ctx.beginPath()
         ctx.arc(p.sx, p.sy, pSize, 0, Math.PI * 2)
         
         if (isSmallMobile) {
-            ctx.fillStyle = `rgba(0, 80, 200, ${alpha * 0.85})` // Darker branding blue
+            ctx.fillStyle = `rgba(0, 40, 180, ${alpha * 0.9})` // Deepest branding blue
         } else {
-            // Specular highlighting
-            const spec = Math.pow(alpha, 3) * 0.6
-            // Particles fade slightly to show text better
-            const pAlpha = (alpha * 0.8 + spec) * (1 - hoverAlpha * 0.4)
-            ctx.fillStyle = `rgba(0, 90, 220, ${pAlpha})`
+            const spec = Math.pow(alpha, 3) * 0.7
+            const pAlpha = (alpha * 0.85 + spec) * (1 - hoverAlpha * 0.4)
+            ctx.fillStyle = `rgba(0, 50, 200, ${pAlpha})` // Richer deeper blue
         }
         ctx.fill()
       })
