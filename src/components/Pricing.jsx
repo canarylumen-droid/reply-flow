@@ -17,7 +17,7 @@ const Pricing = () => {
                     </div>
                     <h2 className='text-3xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tighter'>
                         Real Offers. Real Solutions. <br />
-                        <span className='text-blue-600 underline decoration-blue-500/30 underline-offset-8'>Zero Retainer Fluff.</span>
+                        <span className='text-blue-600 cursor-default transition-all duration-150 hover:underline decoration-blue-500 decoration-2 underline-offset-8'>Zero Retainer Fluff.</span>
                     </h2>
                     <p className='text-lg sm:text-xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed'>
                         We spent 2025 watching the "AI Hype" fail businesses with flashy tools that don't book calls. <br className='hidden md:block' />
