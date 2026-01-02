@@ -26,7 +26,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     const isMobile = window.innerWidth < 1024
     const particleCount = isMobile ? 450 : 180 // Ultra-dense for mobile 'Orb' feel
     const connectionDistance = isMobile ? 0 : 50 // No lines on mobile for 'rounded' feel
-    const rotationSpeed = isMobile ? 0.005 : 0.0015
+    const rotationSpeed = isMobile ? 0.002 : 0.0008 // Slower, more professional rotation
 
     // State
     let angleY = 0
@@ -81,9 +81,9 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       
-      // Interactions
-      mouseX += (targetMouseX - mouseX) * 0.1
-      mouseY += (targetMouseY - mouseY) * 0.1
+      // Interactions - Slower lerp for a premium "viscous" feel
+      mouseX += (targetMouseX - mouseX) * 0.07
+      mouseY += (targetMouseY - mouseY) * 0.07
 
       const tiltX = mouseX * (isMobile ? 0.05 : 0.1)
       const tiltY = mouseY * (isMobile ? 0.05 : 0.1)
@@ -105,9 +105,9 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         let y1 = p.baseY * cosX - z1 * sinX
         let z2 = z1 * cosX + p.baseY * sinX
 
-        // Pulse effect for mobile 'rounded' orb feel - More subtle for professional look
+        // Pulse effect for mobile 'rounded' orb feel - Ultra-slow heartbeat
         if (isMobile) {
-            const pulse = 1 + Math.sin(time * 0.5 + p.phase) * 0.03
+            const pulse = 1 + Math.sin(time * 0.3 + p.phase) * 0.03
             x1 *= pulse
             y1 *= pulse
             z2 *= pulse
@@ -123,7 +123,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
           const limit = globeRadius * 1.5
           
           if (dist < limit) {
-            const force = (1 - dist / limit) * 0.4
+            // Smooth cubic easing for the force to feel more flexible
+            const force = Math.pow(1 - dist / limit, 2) * 0.5
             x1 += dx * force
             y1 += dy * force
             z2 -= force * 30
