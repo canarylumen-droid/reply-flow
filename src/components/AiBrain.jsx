@@ -24,19 +24,19 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     
     // Configuration based on device capability
     const isMobile = window.innerWidth < 1024
-    const particleCount = isMobile ? 60 : 180 
-    const connectionDistance = isMobile ? 30 : 50
-    const rotationSpeed = 0.0015
+    const particleCount = isMobile ? 450 : 180 // Ultra-dense for mobile 'Orb' feel
+    const connectionDistance = isMobile ? 0 : 50 // No lines on mobile for 'rounded' feel
+    const rotationSpeed = isMobile ? 0.005 : 0.0015
 
     // State
     let angleY = 0
     let angleX = 0
     let particles = []
     let canvasWidth, canvasHeight, centerX, centerY, globeRadius
-    let mouseX = 0
-    let mouseY = 0
     let targetMouseX = 0
     let targetMouseY = 0
+    let mouseX = 0
+    let mouseY = 0
 
     const resize = () => {
       if (!canvas.parentNode) return
@@ -49,8 +49,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       centerX = canvasWidth / 2
       centerY = canvasHeight / 2
       
-      // Auto-adjust globe radius to fit PERFECTLY on any screen
-      globeRadius = Math.min(canvasWidth, canvasHeight) * (isMobile ? 0.35 : 0.4)
+      // Fitting logic
+      globeRadius = Math.min(canvasWidth, canvasHeight) * (isMobile ? 0.3 : 0.4)
       initParticles()
     }
 
@@ -66,14 +66,14 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         particles.push({
           baseX: Math.cos(theta) * radius * globeRadius,
           baseY: y * globeRadius,
-          baseZ: Math.sin(theta) * radius * globeRadius
+          baseZ: Math.sin(theta) * radius * globeRadius,
+          phase: Math.random() * Math.PI * 2 // For pulsing effect
         })
       }
     }
 
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect()
-      // Center relative coordinates (-1 to 1)
       targetMouseX = ((e.clientX - rect.left) / canvasWidth) * 2 - 1
       targetMouseY = ((e.clientY - rect.top) / canvasHeight) * 2 - 1
     }
@@ -81,34 +81,42 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       
-      // Zero-latency smooth tracking
+      // Interactions
       mouseX += (targetMouseX - mouseX) * 0.1
       mouseY += (targetMouseY - mouseY) * 0.1
 
-      // Global Sphere Tilt (Responsive 360 feel)
-      angleY += rotationSpeed + (mouseX * 0.02)
-      angleX += rotationSpeed * 0.3 + (mouseY * 0.02)
+      const tiltX = mouseX * (isMobile ? 0.05 : 0.1)
+      const tiltY = mouseY * (isMobile ? 0.05 : 0.1)
+
+      angleY += rotationSpeed + tiltX
+      angleX += rotationSpeed * 0.3 + tiltY
 
       const cosY = Math.cos(angleY)
       const sinY = Math.sin(angleY)
       const cosX = Math.cos(angleX)
       const sinX = Math.sin(angleX)
 
-      // Time for pulsating effects
       const time = Date.now() * 0.001
 
       const projected = particles.map(p => {
-        // Base 3D rotation
+        // Core 3D rotation
         let x1 = p.baseX * cosY - p.baseZ * sinY
         let z1 = p.baseZ * cosY + p.baseX * sinY
         let y1 = p.baseY * cosX - z1 * sinX
         let z2 = z1 * cosX + p.baseY * sinX
 
-        // Spatial 3D Magnetism
+        // Pulse effect for mobile 'rounded' orb feel
+        if (isMobile) {
+            const pulse = 1 + Math.sin(time + p.phase) * 0.05
+            x1 *= pulse
+            y1 *= pulse
+            z2 *= pulse
+        }
+
+        // Magnetism
         if (!isMobile) {
-          const worldMouseX = mouseX * (globeRadius * 1.8)
-          const worldMouseY = mouseY * (globeRadius * 1.8)
-          
+          const worldMouseX = mouseX * globeRadius * 2
+          const worldMouseY = mouseY * globeRadius * 2
           const dx = worldMouseX - x1
           const dy = worldMouseY - y1
           const dist = Math.sqrt(dx * dx + dy * dy)
@@ -118,7 +126,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
             const force = (1 - dist / limit) * 0.5
             x1 += dx * force
             y1 += dy * force
-            z2 -= force * 40 
+            z2 -= force * 30
           }
         }
 
@@ -131,66 +139,53 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
       })
 
-      // Draw Connections & Synaptic Pulses
-      ctx.beginPath()
-      ctx.strokeStyle = `rgba(147, 51, 234, ${isMobile ? 0.06 : 0.1})`
-      ctx.lineWidth = isMobile ? 0.3 : 0.6
-      
-      const distLimitSq = connectionDistance * connectionDistance
-      const activeConnections = []
-
-      for (let i = 0; i < projected.length; i++) {
-        const p1 = projected[i]
-        for (let j = i + 1; j < projected.length; j++) {
-            const p2 = projected[j]
-            const dx = p1.sx - p2.sx
-            const dy = p1.sy - p2.sy
-            const distanceSq = dx * dx + dy * dy
-
-            if (distanceSq < distLimitSq) {
-                ctx.moveTo(p1.sx, p1.sy)
-                ctx.lineTo(p2.sx, p2.sy)
-                
-                // Track active connections for pulsing effect (limited for perf)
-                if (!isMobile && activeConnections.length < 15 && Math.random() < 0.01) {
-                  activeConnections.push({ p1, p2, startTime: time })
+      // Rendering logic
+      if (!isMobile) {
+        // 1. Draw Connections (PC only - Neural Net)
+        ctx.beginPath()
+        ctx.strokeStyle = `rgba(147, 51, 234, 0.12)`
+        ctx.lineWidth = 0.7
+        const distLimitSq = connectionDistance * connectionDistance
+        for (let i = 0; i < projected.length; i++) {
+            const p1 = projected[i]
+            for (let j = i + 1; j < projected.length; j++) {
+                const p2 = projected[j]
+                const dx = p1.sx - p2.sx
+                const dy = p1.sy - p2.sy
+                if (dx*dx + dy*dy < distLimitSq) {
+                    ctx.moveTo(p1.sx, p1.sy)
+                    ctx.lineTo(p2.sx, p2.sy)
                 }
             }
         }
-      }
-      ctx.stroke()
-
-      // Render Synaptic Pulses (Data Packets)
-      if (!isMobile) {
-        activeConnections.forEach(conn => {
-          const t = (time - conn.startTime) % 2 // 2 second cycle
-          const x = conn.p1.sx + (conn.p2.sx - conn.p1.sx) * t
-          const y = conn.p1.sy + (conn.p2.sy - conn.p1.sy) * t
-          
+        ctx.stroke()
+      } else {
+          // 2. Draw Core Glow for Mobile 'Orb' (Deeper & more central)
+          const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, globeRadius * 1.2)
+          grad.addColorStop(0, 'rgba(0, 105, 255, 0.1)')
+          grad.addColorStop(1, 'transparent')
+          ctx.fillStyle = grad
           ctx.beginPath()
-          ctx.arc(x, y, 1.2, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(0, 105, 255, ${1 - t})`
+          ctx.arc(centerX, centerY, globeRadius * 1.5, 0, Math.PI * 2)
           ctx.fill()
-        })
       }
 
-      // Dots with "Breathing" Effect
+      // 3. Draw Particles (Both)
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
-        const breathe = 1 + Math.sin(time * 2 + p.sx) * 0.1
-        
         ctx.beginPath()
-        ctx.arc(p.sx, p.sy, (isMobile ? 0.8 : 1.4) * p.scale * breathe, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.9})`
-        ctx.fill()
-
-        // Subtle Glow for dots
-        if (!isMobile && alpha > 0.6) {
-          ctx.beginPath()
-          ctx.arc(p.sx, p.sy, (isMobile ? 1.5 : 3) * p.scale, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.1})`
-          ctx.fill()
+        ctx.arc(p.sx, p.sy, (isMobile ? 1.0 : 1.6) * p.scale, 0, Math.PI * 2)
+        
+        if (isMobile) {
+            // 3D Glowing Particle for Mobile
+            const dotGrad = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, 1.5 * p.scale)
+            dotGrad.addColorStop(0, `rgba(0, 105, 255, ${alpha})`)
+            dotGrad.addColorStop(1, 'rgba(0, 105, 255, 0)')
+            ctx.fillStyle = dotGrad
+        } else {
+            ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.9})`
         }
+        ctx.fill()
       })
 
       animationFrameId = requestAnimationFrame(draw)
@@ -204,6 +199,15 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     if (!isMobile) {
       window.addEventListener('mousemove', handleMouseMove)
       window.addEventListener('mouseleave', handleMouseLeave)
+    }
+    window.addEventListener('resize', resize)
+    resize()
+    draw()
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('resize', resize)
+      cancelAnimationFrame(animationFrameId)
     }
     window.addEventListener('resize', resize)
     resize()

@@ -30,9 +30,10 @@ const Hero = () => {
   const rotateZ = useTransform(smoothScroll, [0, 0.4], [0, 5]);
 
   // AI Brain Transformation (Entry) - happens in first 50% of scroll
+  const isMobile = !isDesktop;
   const brainOpacity = useTransform(smoothScroll, [0.1, 0.5], [0, 1]);
-  const brainScale = useTransform(smoothScroll, [0.1, 0.8], [0.6, 2.2]); // Grows much larger
-  const brainY = useTransform(smoothScroll, [0.1, 0.8], [100, -20]); // Arrives from below, then stays
+  const brainScale = useTransform(smoothScroll, [0.1, 0.8], [0.6, isMobile ? 1.5 : 2.2]); 
+  const brainY = useTransform(smoothScroll, [0.1, 0.8], [100, isMobile ? 0 : -20]); // Center for mobile/tablet
   
   // Transition to center for Desktop (starts at right, moves to center)
   const brainX = useTransform(smoothScroll, [0.3, 0.7], [0, "-50%"]); 
@@ -198,9 +199,9 @@ const Hero = () => {
                     y: brainY,
                     x: isDesktop ? brainX : 0 
                   }}
-                  className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform will-change-opacity overflow-hidden"
+                  className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform will-change-opacity"
               >
-                  <div className="w-[85vw] h-[85vw] sm:w-[450px] sm:h-[450px] md:w-[700px] md:h-[700px] relative flex items-center justify-center">
+                  <div className="w-[450px] h-[450px] md:w-[700px] md:h-[700px] relative">
                       <AiBrain scale={1.8} opacity={1} />
                       {/* Central Core Glow - Bolder and more central */}
                       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/20 rounded-full blur-[60px]" />
