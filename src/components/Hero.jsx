@@ -45,7 +45,7 @@ const Hero = () => {
     <section ref={containerRef} id='hero' className='relative h-[250vh] bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300'>
       
       {/* Sticky Container - Pins content relative to viewport */}
-      <div className='sticky top-0 h-screen flex items-center justify-center overflow-hidden p-6 sm:p-12 pt-24 lg:pt-32'>
+      <div className='sticky top-0 h-[100svh] flex flex-col items-center justify-start overflow-hidden p-6 sm:p-12 pt-28 lg:pt-48'>
 
         {/* Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -53,7 +53,7 @@ const Hero = () => {
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen" />
         </div>
 
-        <div className='max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center z-10'>
+        <div className='max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-start z-10'>
 
           {/* Left: Copy */}
           <motion.div
@@ -69,7 +69,7 @@ const Hero = () => {
               <span>ELITE SALES INFRASTRUCTURE</span>
             </div>
 
-            <h1 className='text-4xl sm:text-7xl lg:text-9xl font-extrablack leading-[0.85] tracking-tighter font-syne uppercase'>
+            <h1 className='text-4xl sm:text-7xl lg:text-[10rem] font-extrablack leading-[0.8] tracking-tighter font-syne uppercase'>
               The AI <br />
               <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-purple-500'>
                 Machine
@@ -107,7 +107,7 @@ const Hero = () => {
           </motion.div>
 
           {/* Right: Dashboard Morphing Container */}
-          <div className='relative w-full h-[500px] sm:h-[600px] flex items-center justify-center perspective-[1000px]'>
+          <div className='relative w-full h-[300px] sm:h-[450px] lg:h-[600px] flex items-center justify-center perspective-[1000px]'>
               
               {/* 1. Dashboard Visual (Fades Out) */}
               <motion.div

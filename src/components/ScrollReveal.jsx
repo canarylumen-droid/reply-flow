@@ -5,11 +5,11 @@ const Paragraph = ({ value }) => {
   const element = useRef(null)
   const { scrollYProgress } = useScroll({
     target: element,
-    offset: ['start 0.9', 'start 0.2']
+    offset: ['start 0.8', 'start 0.3'] // Tighter range for faster reveal
   })
 
-  // Use spring for a smoother "liquid" fill feel
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 })
+  // Use a snappier spring for more "tactile" scroll typing
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 200, damping: 25, restDelta: 0.001 })
 
   const words = value.split(' ')
 

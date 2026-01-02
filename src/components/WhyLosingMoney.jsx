@@ -75,6 +75,14 @@ const WhyLosingMoney = () => {
                                     transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                                     className='w-1/2 h-full bg-gradient-to-r from-transparent via-primary to-transparent'
                                 />
+                                {/* Scanning Laser Vertically */}
+                                <motion.div
+                                    animate={{ 
+                                        left: ["0%", "100%", "0%"]
+                                    }}
+                                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                                    className='absolute top-[-40px] bottom-[-160px] w-[2px] bg-gradient-to-b from-transparent via-primary to-transparent blur-[2px] opacity-50 z-20 hidden md:block'
+                                />
                             </div>
 
                             <div className='grid grid-cols-2 md:grid-cols-4 gap-12 relative'>
