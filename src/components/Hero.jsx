@@ -45,7 +45,7 @@ const Hero = () => {
     <section ref={containerRef} id='hero' className='relative h-[250vh] bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300'>
       
       {/* Sticky Container - Pins content relative to viewport */}
-      <div className='sticky top-0 h-[100svh] flex flex-col items-center justify-start overflow-hidden p-6 sm:p-12 pt-8 lg:pt-10'>
+      <div className='sticky top-0 h-[100svh] flex flex-col items-center justify-start overflow-hidden p-6 sm:p-12 pt-6 lg:pt-8'>
 
         {/* Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -69,7 +69,7 @@ const Hero = () => {
               <span>ELITE SALES INFRASTRUCTURE</span>
             </div>
 
-            <h1 className='text-4xl sm:text-7xl lg:text-[9.5rem] font-extrablack leading-[0.8] tracking-tighter font-syne uppercase'>
+            <h1 className='text-4xl sm:text-7xl lg:text-[9rem] font-extrablack leading-[0.8] tracking-tighter font-syne uppercase'>
               The AI <br />
               <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-purple-500'>
                 Machine

@@ -16,7 +16,7 @@ html, body {
 
 /* Custom Scrollbar for Chrome, Edge, Safari */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 10px; /* Thicker for premium feel */
 }
 
 ::-webkit-scrollbar-track {
@@ -24,21 +24,27 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 10px;
+  background: #2a2a2a;
+  border-radius: 20px;
+  border: 3px solid transparent; /* Gives it a floating look */
+  background-clip: content-box;
   transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background-color: var(--primary);
+  border: 2px solid transparent;
 }
 
 .dark ::-webkit-scrollbar-thumb {
   background: #222;
+  border: 3px solid transparent;
+  background-clip: content-box;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background-color: var(--primary);
+  border: 2px solid transparent;
 }
 
 * {

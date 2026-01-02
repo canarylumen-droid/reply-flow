@@ -23,17 +23,16 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     let animationFrameId
     
     // Configuration based on device capability
-    const isMobile = window.innerWidth < 768
-    const particleCount = isMobile ? 80 : 200
-    const connectionDistance = isMobile ? 35 : 45
-    const globeRadius = isMobile ? 70 : 120
-    const rotationSpeed = 0.002
+    const isMobile = window.innerWidth < 1024
+    const particleCount = isMobile ? 60 : 180 
+    const connectionDistance = isMobile ? 30 : 50
+    const rotationSpeed = 0.0015
 
     // State
     let angleY = 0
     let angleX = 0
     let particles = []
-    let canvasWidth, canvasHeight, centerX, centerY
+    let canvasWidth, canvasHeight, centerX, centerY, globeRadius
     let mouseX = 0
     let mouseY = 0
     let targetMouseX = 0
@@ -49,6 +48,10 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       ctx.scale(window.devicePixelRatio, window.devicePixelRatio)
       centerX = canvasWidth / 2
       centerY = canvasHeight / 2
+      
+      // Auto-adjust globe radius to fit PERFECTLY on any screen
+      globeRadius = Math.min(canvasWidth, canvasHeight) * (isMobile ? 0.35 : 0.4)
+      initParticles()
     }
 
     const initParticles = () => {
@@ -63,9 +66,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         particles.push({
           baseX: Math.cos(theta) * radius * globeRadius,
           baseY: y * globeRadius,
-          baseZ: Math.sin(theta) * radius * globeRadius,
-          x: 0, y: 0, z: 0,
-          vx: 0, vy: 0, vz: 0
+          baseZ: Math.sin(theta) * radius * globeRadius
         })
       }
     }
@@ -79,21 +80,24 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       
-      // Smooth mouse movement tracking
+      // Zero-latency smooth tracking
       mouseX += (targetMouseX - mouseX) * 0.15
       mouseY += (targetMouseY - mouseY) * 0.15
 
-      angleY += rotationSpeed
-      angleX += rotationSpeed * 0.3
+      // Add spatial influence to rotation
+      const driftX = !isMobile ? (mouseX - centerX) * 0.00005 : 0
+      const driftY = !isMobile ? (mouseY - centerY) * 0.00005 : 0
+
+      angleY += rotationSpeed + driftX
+      angleX += rotationSpeed * 0.3 + driftY
 
       const cosY = Math.cos(angleY)
       const sinY = Math.sin(angleY)
       const cosX = Math.cos(angleX)
       const sinX = Math.sin(angleX)
 
-      // Pre-calculate positions with interaction
+      // Pre-calculate positions with 360 spatial interaction
       const projected = particles.map(p => {
-        // Core spherical movement
         let x1 = p.baseX * cosY - p.baseZ * sinY
         let z1 = p.baseZ * cosY + p.baseX * sinY
         let y1 = p.baseY * cosX - z1 * sinX
@@ -102,17 +106,19 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         const px = x1 + centerX
         const py = y1 + centerY
 
-        // Cursor Interaction (Magnet Effect)
+        // Spatial Magnetism
         if (!isMobile) {
           const dx = mouseX - px
           const dy = mouseY - py
           const dist = Math.sqrt(dx * dx + dy * dy)
-          const limit = 150 // Increased range
+          const limit = globeRadius * 1.5
           
           if (dist < limit) {
             const force = (limit - dist) / limit
-            x1 += dx * force * 0.35 // Increased strength
-            y1 += dy * force * 0.35
+            x1 += dx * force * 0.4
+            y1 += dy * force * 0.4
+            // Pull depth slightly towards cursor for 3D feel
+            z2 -= force * 20
           }
         }
 
@@ -125,30 +131,33 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
       })
 
-      // Draw Connections (Neural Network effect)
+      // Optimized Drawing
       ctx.beginPath()
-      ctx.strokeStyle = `rgba(147, 51, 234, ${isMobile ? 0.1 : 0.15})`
-      ctx.lineWidth = isMobile ? 0.5 : 0.8
+      ctx.strokeStyle = `rgba(147, 51, 234, ${isMobile ? 0.08 : 0.12})`
+      ctx.lineWidth = isMobile ? 0.4 : 0.7
       
+      const distLimitSq = connectionDistance * connectionDistance
       for (let i = 0; i < projected.length; i++) {
+        const p1 = projected[i]
         for (let j = i + 1; j < projected.length; j++) {
-            const dx = projected[i].sx - projected[j].sx
-            const dy = projected[i].sy - projected[j].sy
+            const p2 = projected[j]
+            const dx = p1.sx - p2.sx
+            const dy = p1.sy - p2.sy
             const distanceSq = dx * dx + dy * dy
 
-            if (distanceSq < connectionDistance * connectionDistance) {
-                ctx.moveTo(projected[i].sx, projected[i].sy)
-                ctx.lineTo(projected[j].sx, projected[j].sy)
+            if (distanceSq < distLimitSq) {
+                ctx.moveTo(p1.sx, p1.sy)
+                ctx.lineTo(p2.sx, p2.sy)
             }
         }
       }
       ctx.stroke()
 
-      // Draw Dots
+      // Dots
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
         ctx.beginPath()
-        ctx.arc(p.sx, p.sy, (isMobile ? 1.2 : 1.8) * p.scale, 0, Math.PI * 2)
+        ctx.arc(p.sx, p.sy, (isMobile ? 1.0 : 1.6) * p.scale, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.9})`
         ctx.fill()
       })
