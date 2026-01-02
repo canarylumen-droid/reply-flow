@@ -73,7 +73,6 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     }
 
     const handleMouseMove = (e) => {
-      if (isMobile) return
       const rect = canvas.getBoundingClientRect()
       targetMouseX = ((e.clientX - rect.left) / canvasWidth) * 2 - 1
       targetMouseY = ((e.clientY - rect.top) / canvasHeight) * 2 - 1
@@ -81,30 +80,23 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-      const time = Date.now() * 0.001
       
-      // Interactions Only for Desktop
-      if (!isMobile) {
-        mouseX += (targetMouseX - mouseX) * 0.1
-        mouseY += (targetMouseY - mouseY) * 0.1
+      // Interactions
+      mouseX += (targetMouseX - mouseX) * 0.1
+      mouseY += (targetMouseY - mouseY) * 0.1
 
-        const tiltX = mouseX * 0.1
-        const tiltY = mouseY * 0.1
+      const tiltX = mouseX * (isMobile ? 0.05 : 0.1)
+      const tiltY = mouseY * (isMobile ? 0.05 : 0.1)
 
-        angleY += rotationSpeed + tiltX
-        angleX += rotationSpeed * 0.3 + tiltY
-      } else {
-        // Autonomous Smooth Rotation for Mobile (Static but moving)
-        angleY += rotationSpeed
-        angleX += rotationSpeed * 0.3
-        // Add a tiny bit of random drift for "living" feel
-        angleY += Math.sin(time * 0.5) * 0.001
-      }
+      angleY += rotationSpeed + tiltX
+      angleX += rotationSpeed * 0.3 + tiltY
 
       const cosY = Math.cos(angleY)
       const sinY = Math.sin(angleY)
       const cosX = Math.cos(angleX)
       const sinX = Math.sin(angleX)
+
+      const time = Date.now() * 0.001
 
       const projected = particles.map(p => {
         // Core 3D rotation
@@ -113,25 +105,25 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         let y1 = p.baseY * cosX - z1 * sinX
         let z2 = z1 * cosX + p.baseY * sinX
 
-        // Pulse effect for mobile 'rounded' orb feel
+        // Pulse effect for mobile 'rounded' orb feel - More subtle for professional look
         if (isMobile) {
-            const pulse = 1 + Math.sin(time + p.phase) * 0.05
+            const pulse = 1 + Math.sin(time * 0.5 + p.phase) * 0.03
             x1 *= pulse
             y1 *= pulse
             z2 *= pulse
         }
 
-        // Magnetism Only for Desktop
+        // Magnetism
         if (!isMobile) {
-          const worldMouseX = mouseX * globeRadius * 2
-          const worldMouseY = mouseY * globeRadius * 2
+          const worldMouseX = mouseX * globeRadius * 1.5
+          const worldMouseY = mouseY * globeRadius * 1.5
           const dx = worldMouseX - x1
           const dy = worldMouseY - y1
           const dist = Math.sqrt(dx * dx + dy * dy)
-          const limit = globeRadius * 2
+          const limit = globeRadius * 1.5
           
           if (dist < limit) {
-            const force = (1 - dist / limit) * 0.5
+            const force = (1 - dist / limit) * 0.4
             x1 += dx * force
             y1 += dy * force
             z2 -= force * 30
@@ -151,8 +143,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       if (!isMobile) {
         // 1. Draw Connections (PC only - Neural Net)
         ctx.beginPath()
-        ctx.strokeStyle = `rgba(147, 51, 234, 0.12)`
-        ctx.lineWidth = 0.7
+        ctx.strokeStyle = `rgba(147, 51, 234, 0.1)`
+        ctx.lineWidth = 0.6
         const distLimitSq = connectionDistance * connectionDistance
         for (let i = 0; i < projected.length; i++) {
             const p1 = projected[i]
@@ -168,9 +160,9 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
         ctx.stroke()
       } else {
-          // 2. Draw Core Glow for Mobile 'Orb' (Deeper & more central)
-          const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, globeRadius * 1.2)
-          grad.addColorStop(0, 'rgba(0, 105, 255, 0.1)')
+          // 2. Draw Core Glow for Mobile 'Orb' (Cleaner & more focused)
+          const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, globeRadius * 1.5)
+          grad.addColorStop(0, 'rgba(0, 105, 255, 0.05)')
           grad.addColorStop(1, 'transparent')
           ctx.fillStyle = grad
           ctx.beginPath()
@@ -182,16 +174,13 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
         ctx.beginPath()
-        ctx.arc(p.sx, p.sy, (isMobile ? 1.0 : 1.6) * p.scale, 0, Math.PI * 2)
+        ctx.arc(p.sx, p.sy, (isMobile ? 0.9 : 1.6) * p.scale, 0, Math.PI * 2)
         
         if (isMobile) {
-            // 3D Glowing Particle for Mobile
-            const dotGrad = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, 1.5 * p.scale)
-            dotGrad.addColorStop(0, `rgba(0, 105, 255, ${alpha})`)
-            dotGrad.addColorStop(1, 'rgba(0, 105, 255, 0)')
-            ctx.fillStyle = dotGrad
+            // High-fidelity 3D dot for mobile
+            ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.7})`
         } else {
-            ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.9})`
+            ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.8})`
         }
         ctx.fill()
       })
@@ -210,27 +199,23 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     }
     window.addEventListener('resize', resize)
     resize()
-    initParticles()
     draw()
 
     return () => {
-      if (!isMobile) {
-        window.removeEventListener('mousemove', handleMouseMove)
-        window.removeEventListener('mouseleave', handleMouseLeave)
-      }
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseleave', handleMouseLeave)
       window.removeEventListener('resize', resize)
       cancelAnimationFrame(animationFrameId)
     }
   }, [isVisible])
 
   return (
-    <div ref={containerRef} className="w-full h-full">
+    <div ref={containerRef} className="w-full h-full flex items-center justify-center overflow-hidden rounded-full">
       <canvas 
         ref={canvasRef} 
         className="w-full h-full will-change-transform"
         style={{
           opacity: opacity,
-          transform: `scale(${scale})`,
           transition: 'opacity 0.3s ease-out'
         }}
       />

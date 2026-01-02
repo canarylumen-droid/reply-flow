@@ -201,11 +201,11 @@ const Hero = () => {
                   }}
                   className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform will-change-opacity"
               >
-                  <div className="w-[450px] h-[450px] md:w-[700px] md:h-[700px] relative">
-                      <AiBrain scale={1.8} opacity={1} />
-                      {/* Central Core Glow - Bolder and more central */}
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/20 rounded-full blur-[60px]" />
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-purple-500/20 rounded-full blur-[40px]" />
+                  <div className="w-[280px] h-[280px] sm:w-[450px] sm:h-[450px] lg:w-[700px] lg:h-[700px] relative">
+                      <AiBrain opacity={1} />
+                      {/* Central Core Glow - Reactive and proportional */}
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-blue-500/20 rounded-full blur-[60px]" />
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] bg-purple-500/20 rounded-full blur-[40px]" />
                   </div>
               </motion.div>
 
