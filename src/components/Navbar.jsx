@@ -89,63 +89,65 @@ const Navbar = ({ theme, setTheme }) => {
           sidebarOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* 1. Solid Base Layer (Guarantees No Transparency) */}
-        <div className="absolute inset-0 bg-white dark:bg-black" />
+        {/* 1. Glassmorphism Base Layer (Slightly Transparent as requested) */}
+        <div className="absolute inset-0 bg-white/90 dark:bg-black/90 backdrop-blur-3xl support-[backdrop-filter]:bg-white/60" />
 
-        {/* 2. "Nice" Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-zinc-900 dark:via-black dark:to-zinc-900 opacity-80" />
+        {/* 2. "Nice" Gradient Overlay - Subtle & Lightweight */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/50 to-blue-50/30 dark:from-black/0 dark:via-black/50 dark:to-blue-900/10 pointer-events-none" />
 
-        {/* 3. Decorative Blobs for Premium Feel */}
-        <div className="absolute top-[-20%] left-[-20%] w-[80%] h-[80%] bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[-20%] right-[-20%] w-[80%] h-[80%] bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-[100px]" />
+        {/* 3. Decorative Blobs for Premium Feel - Very Subtle */}
+        <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-400/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[60%] bg-purple-400/10 rounded-full blur-[80px] pointer-events-none" />
 
         {/* Content Container */}
-        <div className="relative z-10 w-full h-full flex flex-col justify-center items-center gap-8 p-6">
+        <div className="relative z-10 w-full h-full flex flex-col justify-center items-center gap-10 p-6">
           
           {/* Close Button */}
           <button
-            className="absolute top-6 right-6 text-4xl text-gray-400 hover:text-primary transition-colors focus:outline-none"
+            className="absolute top-6 right-6 p-2 text-4xl text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors focus:outline-none"
             onClick={() => setSidebarOpen(false)}
           >
             &times;
           </button>
 
-          {/* Mobile Links */}
-          <a 
-            onClick={() => setSidebarOpen(false)} 
-            href="#hero" 
-            className="w-full max-w-sm text-center px-6 py-5 rounded-2xl bg-white/50 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 text-xl text-gray-900 dark:text-white font-bold hover:bg-primary hover:text-white dark:hover:bg-primary hover:border-transparent transition-all shadow-xl hover:scale-[1.02]"
-          >
-            Home
-          </a>
-          <a 
-            onClick={() => setSidebarOpen(false)} 
-            href="#casestudies" 
-            className="w-full max-w-sm text-center px-6 py-5 rounded-2xl bg-white/50 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 text-xl text-gray-900 dark:text-white font-bold hover:bg-primary hover:text-white dark:hover:bg-primary hover:border-transparent transition-all shadow-xl hover:scale-[1.02]"
-          >
-            Case Studies
-          </a>
-          <a 
-            onClick={() => setSidebarOpen(false)} 
-            href="#pricing" 
-            className="w-full max-w-sm text-center px-6 py-5 rounded-2xl bg-white/50 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 text-xl text-gray-900 dark:text-white font-bold hover:bg-primary hover:text-white dark:hover:bg-primary hover:border-transparent transition-all shadow-xl hover:scale-[1.02]"
-          >
-            Services
-          </a>
-          <a 
-            onClick={() => setSidebarOpen(false)} 
-            href="#roi" 
-            className="w-full max-w-sm text-center px-6 py-5 rounded-2xl bg-white/50 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 text-xl text-gray-900 dark:text-white font-bold hover:bg-primary hover:text-white dark:hover:bg-primary hover:border-transparent transition-all shadow-xl hover:scale-[1.02]"
-          >
-            Calculator
-          </a>
+          {/* Mobile Links - Clean, Aesthetic, Lightweight (No heavy boxes) */}
+          <nav className="flex flex-col items-center gap-8 w-full">
+            <a 
+              onClick={() => setSidebarOpen(false)} 
+              href="#hero" 
+              className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
+            >
+              Home
+            </a>
+            <a 
+              onClick={() => setSidebarOpen(false)} 
+              href="#casestudies" 
+              className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
+            >
+              Case Studies
+            </a>
+            <a 
+              onClick={() => setSidebarOpen(false)} 
+              href="#pricing" 
+              className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
+            >
+              Services
+            </a>
+            <a 
+              onClick={() => setSidebarOpen(false)} 
+              href="#roi" 
+              className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
+            >
+              Calculator
+            </a>
+          </nav>
 
-          {/* Mobile CTA */}
+          {/* Mobile CTA - Premium & Distinct */}
           <a
             href="https://calendly.com/replyflow"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full max-w-sm flex items-center justify-center gap-2 bg-gradient-to-r from-primary to-blue-600 text-white py-5 rounded-2xl font-bold text-xl mt-4 shadow-2xl shadow-primary/30 hover:shadow-primary/50 hover:scale-[1.02] transition-all"
+            className="w-full max-w-xs flex items-center justify-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-black py-4 rounded-full font-bold text-lg mt-4 shadow-2xl hover:shadow-xl hover:scale-105 transition-all"
           >
             Book Audit <ArrowRightIcon className="w-5 h-5" />
           </a>
