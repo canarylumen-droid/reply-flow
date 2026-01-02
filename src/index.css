@@ -10,6 +10,35 @@
 html, body {
   overflow-x: hidden;
   width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+}
+
+/* Custom Scrollbar for Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #222;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
 * {
