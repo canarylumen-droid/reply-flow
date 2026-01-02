@@ -73,52 +73,51 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
 
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect()
-      targetMouseX = e.clientX - rect.left
-      targetMouseY = e.clientY - rect.top
+      // Center relative coordinates (-1 to 1)
+      targetMouseX = ((e.clientX - rect.left) / canvasWidth) * 2 - 1
+      targetMouseY = ((e.clientY - rect.top) / canvasHeight) * 2 - 1
     }
 
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       
-      // Zero-latency smooth tracking
-      mouseX += (targetMouseX - mouseX) * 0.15
-      mouseY += (targetMouseY - mouseY) * 0.15
+      // Buttery smooth lerping (GSAP-like feel)
+      mouseX += (targetMouseX - mouseX) * 0.1
+      mouseY += (targetMouseY - mouseY) * 0.1
 
-      // Add spatial influence to rotation
-      const driftX = !isMobile ? (mouseX - centerX) * 0.00005 : 0
-      const driftY = !isMobile ? (mouseY - centerY) * 0.00005 : 0
-
-      angleY += rotationSpeed + driftX
-      angleX += rotationSpeed * 0.3 + driftY
+      // Global Sphere Tilt (Responsive 360 feel)
+      angleY += rotationSpeed + (mouseX * 0.02)
+      angleX += rotationSpeed * 0.3 + (mouseY * 0.02)
 
       const cosY = Math.cos(angleY)
       const sinY = Math.sin(angleY)
       const cosX = Math.cos(angleX)
       const sinX = Math.sin(angleX)
 
-      // Pre-calculate positions with 360 spatial interaction
       const projected = particles.map(p => {
+        // Base 3D rotation
         let x1 = p.baseX * cosY - p.baseZ * sinY
         let z1 = p.baseZ * cosY + p.baseX * sinY
         let y1 = p.baseY * cosX - z1 * sinX
         let z2 = z1 * cosX + p.baseY * sinX
 
-        const px = x1 + centerX
-        const py = y1 + centerY
-
-        // Spatial Magnetism
+        // Spatial 3D Magnetism
         if (!isMobile) {
-          const dx = mouseX - px
-          const dy = mouseY - py
+          // Convert mouse (-1 to 1) to canvas units
+          const worldMouseX = mouseX * (globeRadius * 1.8)
+          const worldMouseY = mouseY * (globeRadius * 1.8)
+          
+          const dx = worldMouseX - x1
+          const dy = worldMouseY - y1
           const dist = Math.sqrt(dx * dx + dy * dy)
-          const limit = globeRadius * 1.5
+          const limit = globeRadius * 2
           
           if (dist < limit) {
-            const force = (limit - dist) / limit
-            x1 += dx * force * 0.4
-            y1 += dy * force * 0.4
-            // Pull depth slightly towards cursor for 3D feel
-            z2 -= force * 20
+            const force = (1 - dist / limit) * 0.5
+            x1 += dx * force
+            y1 += dy * force
+            // Pull Z towards mouse for depth interactivity
+            z2 -= force * 40 
           }
         }
 
@@ -131,7 +130,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
       })
 
-      // Optimized Drawing
+      // Draw Connections
       ctx.beginPath()
       ctx.strokeStyle = `rgba(147, 51, 234, ${isMobile ? 0.08 : 0.12})`
       ctx.lineWidth = isMobile ? 0.4 : 0.7
@@ -166,8 +165,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     }
 
     const handleMouseLeave = () => {
-      targetMouseX = centerX
-      targetMouseY = centerY
+      targetMouseX = 0
+      targetMouseY = 0
     }
 
     if (!isMobile) {
