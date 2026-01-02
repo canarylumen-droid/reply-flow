@@ -1,3 +1,8 @@
+import React, { useEffect, useState, useRef } from 'react'
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { ArrowRightIcon, BrainIcon } from './Icons';
+import AiBrain from './AiBrain';
+
 const Hero = () => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
