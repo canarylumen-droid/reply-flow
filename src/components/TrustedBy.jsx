@@ -10,7 +10,6 @@ const TrustedBy = () => {
     "ORBIEON",
     "SAS REC",
     "FANTASY LUXE",
-    "KREATEYO",
   ]
 
   return (
