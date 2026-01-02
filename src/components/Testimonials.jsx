@@ -75,48 +75,48 @@ const Testimonials = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
 
-                    {/* Column 1 - Service & Retail */}
+                    {/* Column 1 - Service Sectors */}
                     <div className='space-y-6 pt-10'>
                         <DiscordCard
-                            user="Vanguard Estates (Lead Dev)"
+                            user="Modern Arc Realty (Manager)"
                             message="The reactivation engine is insane. Just recovered two high-intent purchasers from a dead 2023 list. That's nearly $85k in commission equity back on the table."
                             revenue="$85,000 Equity Recovered"
                             delay={0.1}
                         />
                         <InstagramCard
-                            user="Radiant Wellness Clinic"
+                            user="Elite Wellness Systems"
                             message="Our biggest leak was the weekend gap. People would inquire Saturday and we'd reply Monday. Your AI now closes them in 30 seconds on Saturday night. Booking rates are up 40%."
                             revenue="12 New Consults/Week"
                             delay={0.2}
                         />
                     </div>
 
-                    {/* Column 2 - High Ticket & Logic */}
+                    {/* Column 2 - Agency & Founder Focus */}
                     <div className='space-y-6'>
                         <DiscordCard
-                            user="NitroScale SaaS (Founder)"
+                            user="Growth Ops (Founder)"
                             message="I was worried about the AI sounding 'botty' for a tech audience. But it handles the technical integration questions better than our junior SDRs. The 15% recovery model is a steal."
                             revenue="$12k MRR Saved"
                             delay={0.3}
                         />
                         <DiscordCard
-                            user="Lexington Law Partners"
-                            message="Client intake is now 100% autonomous. The speed-to-lead is actually 2 seconds. In legal, if you aren't first, you're last. This puts us first every single time."
+                            user="Scale Media Group"
+                            message="Client intake is now 100% autonomous. The speed-to-lead is actually 2 seconds. For a scaling agency, if you aren't first, you're last. This puts us first every single time."
                             revenue="9 Retainers Signed"
                             delay={0.4}
                         />
                     </div>
 
-                    {/* Column 3 - Operations & Logic */}
+                    {/* Column 3 - High-Intent Niche */}
                     <div className='space-y-6 pt-10 sm:pt-20'>
                         <InstagramCard
-                            user="Apex Solar Solutions"
+                            user="Summit Solar Partners"
                             message="We stopped buying new leads because we had 5,000 old ones sitting there. Your system has turned that 'trash' into 20 qualified site surveys in two weeks."
                             revenue="20 Validated Surveys"
                             delay={0.5}
                         />
                         <DiscordCard
-                            user="Precision Roofing & Co"
+                            user="Pro-Line Exterior Solutions"
                             message="I don't have to manage my sales guys' follow-ups anymore. The AI does the heavy lifting of chasing. We only step in when the contract is ready to sign."
                             revenue="$45k Pipeline Velocity"
                             delay={0.6}
