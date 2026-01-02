@@ -29,15 +29,15 @@ const Hero = () => {
           </div>
 
           <h1 className='text-4xl sm:text-7xl lg:text-9xl font-extrabold leading-[0.85] tracking-tighter font-syne uppercase'>
-            The AI <br />
+            Lead Follow Up <br />
             <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-purple-500'>
-              Machine
+              Automation
             </span> <br />
-            That Closes.
+            To Recover Sales.
           </h1>
 
           <p className='text-lg sm:text-2xl text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed font-medium mt-4'>
-            We don't just sell software. We design, build, and manage high-fidelity <span className='text-gray-900 dark:text-white border-b-2 border-primary/30'>AI Sales Departments</span> for elite agencies that demand outcome-driven excellence.
+            Stop losing revenue to slow response times. We install and manage <span className='text-gray-900 dark:text-white border-b-2 border-primary/30'>Automated Follow-Up Systems</span> that turn missed calls and messages into closed deals—instantly.
           </p>
 
           <div className='flex flex-wrap gap-4 pt-4'>

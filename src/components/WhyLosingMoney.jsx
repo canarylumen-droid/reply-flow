@@ -16,8 +16,8 @@ const WhyLosingMoney = () => {
                         The Real Problem
                     </div>
                     <h2 className='text-3xl sm:text-5xl md:text-6xl font-black mb-8 dark:text-white font-syne uppercase tracking-tighter'>
-                        You're Not Losing Leads Because <br />
-                        <span className='text-red-500'>Your Offer Is Bad.</span>
+                        Why Your Current Lead Follow Up <br />
+                        <span className='text-red-500'>Is Costing You Money.</span>
                     </h2>
                     <p className='text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto'>
                         You're losing them because by the time you reply, they've already moved on. <span className='font-bold text-gray-900 dark:text-white underline decoration-red-500/50 uppercase tracking-tight'>Every minute you wait, your conversion rate drops exponentially.</span> Speed wins. Every single time.

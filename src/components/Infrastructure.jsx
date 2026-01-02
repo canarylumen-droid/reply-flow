@@ -10,8 +10,8 @@ const Infrastructure = () => {
                 {/* Section Header */}
                 <div className='mb-24 text-center'>
                     <h2 className='text-3xl sm:text-4xl md:text-6xl font-black text-gray-900 dark:text-white mb-8 tracking-tighter font-syne uppercase'>
-                        We Don't Hand You a Template. <br />
-                        <span className='text-primary'>We Build Your Selling Machine.</span>
+                        Respond to Every Missed Call <br />
+                        <span className='text-primary'>And Message in Seconds.</span>
                     </h2>
                     <p className='text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed'>
                         Most agencies give you a "strategy deck." We build the AI infrastructure that actually executes it. We analyze how <span className='font-bold text-gray-900 dark:text-white underline decoration-blue-500/50 underline-offset-4'>YOU</span> sell, then build a custom system that sounds exactly like you.
