@@ -81,20 +81,21 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       
-      // Interactions - Slower lerp for a premium "viscous" feel
-      mouseX += (targetMouseX - mouseX) * 0.07
-      mouseY += (targetMouseY - mouseY) * 0.07
+      // Zero-latency smooth tracking (Viscous feel)
+      mouseX += (targetMouseX - mouseX) * 0.08
+      mouseY += (targetMouseY - mouseY) * 0.08
 
-      const tiltX = mouseX * (isMobile ? 0.05 : 0.1)
-      const tiltY = mouseY * (isMobile ? 0.05 : 0.1)
+      // High-Precision Spatial Tilt
+      const tiltX = mouseX * (isMobile ? 0.08 : 0.15)
+      const tiltY = mouseY * (isMobile ? 0.08 : 0.15)
 
-      angleY += rotationSpeed + tiltX
-      angleX += rotationSpeed * 0.3 + tiltY
+      angleY += rotationSpeed + tiltX * 0.1
+      angleX += rotationSpeed * 0.3 + tiltY * 0.1
 
-      const cosY = Math.cos(angleY)
-      const sinY = Math.sin(angleY)
-      const cosX = Math.cos(angleX)
-      const sinX = Math.sin(angleX)
+      const cosY = Math.cos(angleY + tiltX)
+      const sinY = Math.sin(angleY + tiltX)
+      const cosX = Math.cos(angleX + tiltY)
+      const sinX = Math.sin(angleX + tiltY)
 
       const time = Date.now() * 0.001
 
@@ -105,7 +106,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         let y1 = p.baseY * cosX - z1 * sinX
         let z2 = z1 * cosX + p.baseY * sinX
 
-        // Pulse effect for mobile 'rounded' orb feel - Ultra-slow heartbeat
+        // Pulse effect for mobile 'rounded' orb feel
         if (isMobile) {
             const pulse = 1 + Math.sin(time * 0.3 + p.phase) * 0.03
             x1 *= pulse
@@ -113,21 +114,21 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
             z2 *= pulse
         }
 
-        // Magnetism
+        // High-Precision Spatial Magnetism (Stretchy & Elastic)
         if (!isMobile) {
-          const worldMouseX = mouseX * globeRadius * 1.5
-          const worldMouseY = mouseY * globeRadius * 1.5
+          const worldMouseX = mouseX * globeRadius * 1.8
+          const worldMouseY = mouseY * globeRadius * 1.8
           const dx = worldMouseX - x1
           const dy = worldMouseY - y1
           const dist = Math.sqrt(dx * dx + dy * dy)
-          const limit = globeRadius * 1.5
+          const limit = globeRadius * 2.2 // Wider range
           
           if (dist < limit) {
-            // Smooth cubic easing for the force to feel more flexible
-            const force = Math.pow(1 - dist / limit, 2) * 0.5
+            // Elastic cubic easing
+            const force = Math.pow(1 - dist / limit, 2.5) * 0.7
             x1 += dx * force
             y1 += dy * force
-            z2 -= force * 30
+            z2 -= force * 40 // Depth displacement
           }
         }
 
@@ -141,11 +142,28 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       })
 
       // Rendering logic
+      
+      // 1. Draw "Atmosphere" (Glassmorphic Outer Glow)
+      const atmosphereGrad = ctx.createRadialGradient(
+        centerX + mouseX * 20, 
+        centerY + mouseY * 20, 
+        0, 
+        centerX, 
+        centerY, 
+        globeRadius * 1.5
+      )
+      atmosphereGrad.addColorStop(0, 'rgba(0, 105, 255, 0.03)')
+      atmosphereGrad.addColorStop(1, 'transparent')
+      ctx.fillStyle = atmosphereGrad
+      ctx.beginPath()
+      ctx.arc(centerX, centerY, globeRadius * 1.8, 0, Math.PI * 2)
+      ctx.fill()
+
       if (!isMobile) {
-        // 1. Draw Connections (PC only - Neural Net)
+        // 2. Draw Connections (PC only - Neural Net)
         ctx.beginPath()
-        ctx.strokeStyle = `rgba(147, 51, 234, 0.1)`
-        ctx.lineWidth = 0.6
+        ctx.strokeStyle = `rgba(0, 105, 255, 0.08)`
+        ctx.lineWidth = 0.5
         const distLimitSq = connectionDistance * connectionDistance
         for (let i = 0; i < projected.length; i++) {
             const p1 = projected[i]
@@ -160,28 +178,36 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
             }
         }
         ctx.stroke()
-      } else {
-          // 2. Draw Core Glow for Mobile 'Orb' (Cleaner & more focused)
-          const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, globeRadius * 1.5)
-          grad.addColorStop(0, 'rgba(0, 105, 255, 0.05)')
-          grad.addColorStop(1, 'transparent')
-          ctx.fillStyle = grad
-          ctx.beginPath()
-          ctx.arc(centerX, centerY, globeRadius * 1.5, 0, Math.PI * 2)
-          ctx.fill()
       }
 
-      // 3. Draw Particles (Both)
+      // 3. Draw Core Glow (Central Glass Orb)
+      const coreGrad = ctx.createRadialGradient(
+        centerX + mouseX * 40, 
+        centerY + mouseY * 40, 
+        0, 
+        centerX + mouseX * 40, 
+        centerY + mouseY * 40, 
+        globeRadius * 0.8
+      )
+      coreGrad.addColorStop(0, 'rgba(0, 105, 255, 0.08)')
+      coreGrad.addColorStop(1, 'transparent')
+      ctx.fillStyle = coreGrad
+      ctx.beginPath()
+      ctx.arc(centerX + mouseX * 40, centerY + mouseY * 40, globeRadius, 0, Math.PI * 2)
+      ctx.fill()
+
+      // 4. Draw Particles (Both)
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
         ctx.beginPath()
-        ctx.arc(p.sx, p.sy, (isMobile ? 0.9 : 1.6) * p.scale, 0, Math.PI * 2)
+        ctx.arc(p.sx, p.sy, (isMobile ? 0.9 : 1.5) * p.scale, 0, Math.PI * 2)
         
         if (isMobile) {
-            // High-fidelity 3D dot for mobile
-            ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.7})`
-        } else {
             ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.8})`
+        } else {
+            // Add subtle specular highlight for premium look
+            const spec = Math.pow(alpha, 3) * 0.5
+            ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.7 + spec})`
         }
         ctx.fill()
       })
@@ -211,7 +237,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
   }, [isVisible])
 
   return (
-    <div ref={containerRef} className="w-full h-full flex items-center justify-center overflow-hidden rounded-full">
+    <div ref={containerRef} className="w-full h-full flex items-center justify-center overflow-hidden rounded-full filter drop-shadow-[0_0_30px_rgba(0,105,255,0.1)]">
       <canvas 
         ref={canvasRef} 
         className="w-full h-full will-change-transform"
