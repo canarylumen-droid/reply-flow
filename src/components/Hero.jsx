@@ -10,8 +10,8 @@ const Hero = () => {
     offset: ["start start", "end end"]
   });
   
-  // Use spring physics to smooth out the scroll value (removes lag/jitter)
-  const smoothScroll = useSpring(scrollYProgress, { stiffness: 100, damping: 20 });
+  // Direct scroll tracking for zero latency
+  const smoothScroll = scrollYProgress;
 
   // Dashboard Transformation (Exit) - happens in first 40% of scroll
   const scale = useTransform(smoothScroll, [0, 0.4], [1, 0.8]); 
