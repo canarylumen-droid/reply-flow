@@ -50,7 +50,7 @@ const Footer = ({ theme }) => {
       {/* footer bottom */}
       <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-400 gap-4">
         <p>© 2026 Reply Flow. All rights reserved.</p>
-        <p>info@replyflow.pro</p>
+        <p>team@replyflow.pro</p>
       </div>
     </motion.div>
   );

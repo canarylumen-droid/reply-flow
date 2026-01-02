@@ -21,7 +21,7 @@ const Booking = () => {
             if (window.Calendly) {
                 window.Calendly.initBadgeWidget({
                     url: 'https://calendly.com/replyflow?hide_gdpr_banner=1',
-                    text: 'Schedule time with me',
+                    text: 'Schedule time with us',
                     color: '#0069ff',
                     textColor: '#ffffff',
                     branding: true

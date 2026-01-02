@@ -4,6 +4,9 @@ import { motion } from "framer-motion"
 const TrustedBy = () => {
   // Premium sounding local businesses
   const brands = [
+    "KYNOX AI",
+    "AUDNIX AI",
+    "ORBIEON",
     "VANGUARD REALTY",
     "APEX LEGAL GROUP",
     "SUMMIT HEALTH",
