@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ArrowRightIcon, BrainIcon } from './Icons';
 
 const Hero = () => {
   const { scrollY } = useScroll();
-  const scale = useTransform(scrollY, [0, 400], [1, 0.8]);
-  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const y = useTransform(scrollY, [0, 400], [0, 100]);
+  
+  // Use spring physics to smooth out the scroll value (removes lag/jitter)
+  const smoothScroll = useSpring(scrollY, { stiffness: 100, damping: 20 });
+
+  // 3D Fall & Turn Animation
+  const scale = useTransform(smoothScroll, [0, 500], [1, 0.9]); 
+  const opacity = useTransform(smoothScroll, [0, 400], [1, 0]); 
+  const y = useTransform(smoothScroll, [0, 500], [0, 150]);
+  const rotateX = useTransform(smoothScroll, [0, 500], [0, 20]); // Turns "into" the screen
+  const rotateZ = useTransform(smoothScroll, [0, 500], [0, 5]); // Slight tilt for style
 
   return (
     <section id='hero' className='relative min-h-[90vh] flex items-center justify-center p-6 sm:p-12 overflow-hidden bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300'>
@@ -75,8 +82,8 @@ const Hero = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          style={{ scale, opacity, y }}
-          className='relative w-full h-[500px] sm:h-[600px] flex items-center justify-center'
+          style={{ scale, opacity, y, rotateX, rotateZ, perspective: 1000 }}
+          className='relative w-full h-[500px] sm:h-[600px] flex items-center justify-center will-change-transform'
         >
           <div className='relative w-full max-w-lg h-full'>
 
