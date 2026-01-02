@@ -24,16 +24,20 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     
     // Configuration based on device capability
     const isMobile = window.innerWidth < 768
-    const particleCount = isMobile ? 80 : 200 // Further reduced for zero lag
+    const particleCount = isMobile ? 80 : 200
     const connectionDistance = isMobile ? 35 : 45
     const globeRadius = isMobile ? 70 : 120
-    const rotationSpeed = 0.002 // Slightly slower for smoother look
+    const rotationSpeed = 0.002
 
     // State
     let angleY = 0
     let angleX = 0
     let particles = []
     let canvasWidth, canvasHeight, centerX, centerY
+    let mouseX = 0
+    let mouseY = 0
+    let targetMouseX = 0
+    let targetMouseY = 0
 
     const resize = () => {
       if (!canvas.parentNode) return
@@ -60,13 +64,25 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
           baseX: Math.cos(theta) * radius * globeRadius,
           baseY: y * globeRadius,
           baseZ: Math.sin(theta) * radius * globeRadius,
+          x: 0, y: 0, z: 0,
+          vx: 0, vy: 0, vz: 0
         })
       }
+    }
+
+    const handleMouseMove = (e) => {
+      const rect = canvas.getBoundingClientRect()
+      targetMouseX = e.clientX - rect.left
+      targetMouseY = e.clientY - rect.top
     }
 
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       
+      // Smooth mouse movement tracking
+      mouseX += (targetMouseX - mouseX) * 0.05
+      mouseY += (targetMouseY - mouseY) * 0.05
+
       angleY += rotationSpeed
       angleX += rotationSpeed * 0.3
 
@@ -75,15 +91,30 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       const cosX = Math.cos(angleX)
       const sinX = Math.sin(angleX)
 
-      // Pre-calculate positions
+      // Pre-calculate positions with interaction
       const projected = particles.map(p => {
-        // Rotation Y
+        // Core spherical movement
         let x1 = p.baseX * cosY - p.baseZ * sinY
         let z1 = p.baseZ * cosY + p.baseX * sinY
-        
-        // Rotation X
         let y1 = p.baseY * cosX - z1 * sinX
         let z2 = z1 * cosX + p.baseY * sinX
+
+        const px = x1 + centerX
+        const py = y1 + centerY
+
+        // Cursor Interaction (Magnet Effect)
+        if (!isMobile) {
+          const dx = mouseX - px
+          const dy = mouseY - py
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          const limit = 100
+          
+          if (dist < limit) {
+            const force = (limit - dist) / limit
+            x1 += dx * force * 0.2
+            y1 += dy * force * 0.2
+          }
+        }
 
         const scaleProj = 400 / (400 + z2)
         return {
@@ -97,7 +128,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       // Draw Connections (Neural Network effect)
       ctx.beginPath()
       ctx.strokeStyle = `rgba(147, 51, 234, ${isMobile ? 0.1 : 0.15})`
-      ctx.lineWidth = isMobile ? 0.5 : 0.8 // Bolder for desktop
+      ctx.lineWidth = isMobile ? 0.5 : 0.8
       
       for (let i = 0; i < projected.length; i++) {
         for (let j = i + 1; j < projected.length; j++) {
@@ -117,7 +148,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
         ctx.beginPath()
-        ctx.arc(p.sx, p.sy, (isMobile ? 1.2 : 1.8) * p.scale, 0, Math.PI * 2) // Bolder dots
+        ctx.arc(p.sx, p.sy, (isMobile ? 1.2 : 1.8) * p.scale, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.9})`
         ctx.fill()
       })
@@ -125,12 +156,16 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       animationFrameId = requestAnimationFrame(draw)
     }
 
+    if (!isMobile) {
+      window.addEventListener('mousemove', handleMouseMove)
+    }
     window.addEventListener('resize', resize)
     resize()
     initParticles()
     draw()
 
     return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('resize', resize)
       cancelAnimationFrame(animationFrameId)
     }

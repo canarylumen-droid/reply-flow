@@ -45,7 +45,7 @@ const Hero = () => {
     <section ref={containerRef} id='hero' className='relative h-[250vh] bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300'>
       
       {/* Sticky Container - Pins content relative to viewport */}
-      <div className='sticky top-0 h-[100svh] flex flex-col items-center justify-start overflow-hidden p-6 sm:p-12 pt-28 lg:pt-48'>
+      <div className='sticky top-0 h-[100svh] flex flex-col items-center justify-start overflow-hidden p-6 sm:p-12 pt-28 lg:pt-36'>
 
         {/* Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
