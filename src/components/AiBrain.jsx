@@ -173,10 +173,10 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       ctx.fill()
 
       if (isTabletOrDesktop) {
-        // 2. Draw Connections (PC/Tablet only - Neural Net) - Deep Premium Blue
+        // 2. Draw Connections (PC/Tablet only - Neural Net) - Thicker & Darker for Premium Feel
         ctx.beginPath()
-        ctx.strokeStyle = `rgba(0, 50, 150, ${0.15 - hoverAlpha * 0.05})` // Deep, expensive blue
-        ctx.lineWidth = 0.9 
+        ctx.strokeStyle = `rgba(0, 80, 200, ${0.12 - hoverAlpha * 0.04})` // Darker blue
+        ctx.lineWidth = 0.8 // Thicker
         const distLimitSq = connectionDistance * connectionDistance
         for (let i = 0; i < projected.length; i++) {
             const p1 = projected[i]
@@ -192,43 +192,51 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
         ctx.stroke()
 
-        // 2b. Agency Name Reveal (Apple-Minimalist Inline)
+        // 2b. Agency Name Reveal (Glassmorphic Inline Reveal)
         if (hoverAlpha > 0.01) {
           ctx.save()
-          ctx.translate(centerX + mouseX * 60, centerY + mouseY * 60)
+          ctx.translate(centerX + mouseX * 50, centerY + mouseY * 50)
           
-          // Apply 3D Tilt (Subtler for Apple vibes)
-          const textTiltX = tiltX * 0.3
-          const textTiltY = tiltY * 0.3
+          // Apply 3D Tilt
+          const textTiltX = tiltX * 0.4
+          const textTiltY = tiltY * 0.4
           ctx.transform(1, textTiltY, textTiltX, 1, 0, 0)
+
+          // 1. Draw Glassmorphic Backdrop Plate
+          const plateW = globeRadius * 1.2
+          const plateH = globeRadius * 0.35
+          ctx.beginPath()
+          ctx.roundRect(-plateW/2, -plateH/2, plateW, plateH, 12)
+          ctx.fillStyle = `rgba(255, 255, 255, ${hoverAlpha * 0.05})` // Super transparent glass
+          ctx.fill()
+          ctx.strokeStyle = `rgba(255, 255, 255, ${hoverAlpha * 0.1})`
+          ctx.lineWidth = 1
+          ctx.stroke()
           
-          // 1. Text Config
+          // 2. Random Letter Uncover Logic
+          // The more alpha, the more random letters turn high-alpha
           ctx.textAlign = 'center'
           ctx.textBaseline = 'middle'
-          ctx.font = `900 ${Math.floor(globeRadius * 0.14)}px Syne` // Smaller, tighter font
-          
+          ctx.font = `bold ${Math.floor(globeRadius * 0.18)}px Syne` // Smaller, more professional
+          ctx.letterSpacing = "4px"
+
           const fullText = "REPLY FLOW"
           const chars = fullText.split("")
-          
-          // Tight character spacing logic
-          const charWidth = (globeRadius * 0.075) 
+          const charWidth = (globeRadius * 0.1)
           const startX = -((chars.length - 1) * charWidth) / 2
 
           chars.forEach((char, idx) => {
-            // High-precision reveal
-            const threshold = (idx / chars.length) * 0.7
-            const charAlpha = Math.max(0, Math.min(1, (hoverAlpha - threshold) * 4))
+            // Pseudo-random reveal based on hover progress
+            const threshold = (idx / chars.length) * 0.8
+            const charAlpha = Math.max(0, Math.min(1, (hoverAlpha - threshold) * 5))
+            
+            ctx.fillStyle = char === " " 
+                ? "transparent" 
+                : `rgba(255, 255, 255, ${charAlpha * 0.95})`
             
             if (charAlpha > 0) {
-              // Soft Bloom Glow (Minimalist)
-              ctx.shadowBlur = 12 * charAlpha
-              ctx.shadowColor = 'rgba(0, 105, 255, 0.5)'
-              
-              // Base Letter
-              ctx.fillStyle = char === " " 
-                  ? "transparent" 
-                  : `rgba(255, 255, 255, ${charAlpha * 0.9})`
-              
+              ctx.shadowBlur = 10 * charAlpha
+              ctx.shadowColor = 'rgba(0, 105, 255, 0.4)'
               ctx.fillText(char, startX + idx * charWidth, 0)
             }
           })
@@ -256,20 +264,18 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       // 4. Draw Particles (Both)
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
-        const pSize = (isSmallMobile ? 0.9 : 1.7) * p.scale // More robust particles
+        const pSize = (isSmallMobile ? 0.9 : 1.6) * p.scale // Slightly larger
         ctx.beginPath()
         ctx.arc(p.sx, p.sy, pSize, 0, Math.PI * 2)
         
         if (isSmallMobile) {
-            ctx.fillStyle = `rgba(0, 50, 150, ${alpha * 0.85})` 
+            ctx.fillStyle = `rgba(0, 80, 200, ${alpha * 0.85})` // Darker branding blue
         } else {
-            // Advanced specular depth
-            const spec = Math.pow(alpha, 4) * 0.7 // Sharper highlight
-            const baseAlpha = alpha * 0.8
-            // Particles fade slightly on hover but stay structurally visible
-            const finalAlpha = (baseAlpha + spec) * (1 - hoverAlpha * 0.3)
-            
-            ctx.fillStyle = `rgba(0, 70, 180, ${finalAlpha})` // Deep bluish branding
+            // Specular highlighting
+            const spec = Math.pow(alpha, 3) * 0.6
+            // Particles fade slightly to show text better
+            const pAlpha = (alpha * 0.8 + spec) * (1 - hoverAlpha * 0.4)
+            ctx.fillStyle = `rgba(0, 90, 220, ${pAlpha})`
         }
         ctx.fill()
       })
