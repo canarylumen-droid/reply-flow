@@ -198,9 +198,9 @@ const Hero = () => {
                     y: brainY,
                     x: isDesktop ? brainX : 0 
                   }}
-                  className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform will-change-opacity"
+                  className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform will-change-opacity overflow-hidden"
               >
-                  <div className="w-[450px] h-[450px] md:w-[700px] md:h-[700px] relative">
+                  <div className="w-[85vw] h-[85vw] sm:w-[450px] sm:h-[450px] md:w-[700px] md:h-[700px] relative flex items-center justify-center">
                       <AiBrain scale={1.8} opacity={1} />
                       {/* Central Core Glow - Bolder and more central */}
                       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/20 rounded-full blur-[60px]" />

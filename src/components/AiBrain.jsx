@@ -81,7 +81,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       
-      // Buttery smooth lerping (GSAP-like feel)
+      // Zero-latency smooth tracking
       mouseX += (targetMouseX - mouseX) * 0.1
       mouseY += (targetMouseY - mouseY) * 0.1
 
@@ -94,6 +94,9 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       const cosX = Math.cos(angleX)
       const sinX = Math.sin(angleX)
 
+      // Time for pulsating effects
+      const time = Date.now() * 0.001
+
       const projected = particles.map(p => {
         // Base 3D rotation
         let x1 = p.baseX * cosY - p.baseZ * sinY
@@ -103,7 +106,6 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
 
         // Spatial 3D Magnetism
         if (!isMobile) {
-          // Convert mouse (-1 to 1) to canvas units
           const worldMouseX = mouseX * (globeRadius * 1.8)
           const worldMouseY = mouseY * (globeRadius * 1.8)
           
@@ -116,7 +118,6 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
             const force = (1 - dist / limit) * 0.5
             x1 += dx * force
             y1 += dy * force
-            // Pull Z towards mouse for depth interactivity
             z2 -= force * 40 
           }
         }
@@ -130,12 +131,14 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
       })
 
-      // Draw Connections
+      // Draw Connections & Synaptic Pulses
       ctx.beginPath()
-      ctx.strokeStyle = `rgba(147, 51, 234, ${isMobile ? 0.08 : 0.12})`
-      ctx.lineWidth = isMobile ? 0.4 : 0.7
+      ctx.strokeStyle = `rgba(147, 51, 234, ${isMobile ? 0.06 : 0.1})`
+      ctx.lineWidth = isMobile ? 0.3 : 0.6
       
       const distLimitSq = connectionDistance * connectionDistance
+      const activeConnections = []
+
       for (let i = 0; i < projected.length; i++) {
         const p1 = projected[i]
         for (let j = i + 1; j < projected.length; j++) {
@@ -147,18 +150,47 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
             if (distanceSq < distLimitSq) {
                 ctx.moveTo(p1.sx, p1.sy)
                 ctx.lineTo(p2.sx, p2.sy)
+                
+                // Track active connections for pulsing effect (limited for perf)
+                if (!isMobile && activeConnections.length < 15 && Math.random() < 0.01) {
+                  activeConnections.push({ p1, p2, startTime: time })
+                }
             }
         }
       }
       ctx.stroke()
 
-      // Dots
+      // Render Synaptic Pulses (Data Packets)
+      if (!isMobile) {
+        activeConnections.forEach(conn => {
+          const t = (time - conn.startTime) % 2 // 2 second cycle
+          const x = conn.p1.sx + (conn.p2.sx - conn.p1.sx) * t
+          const y = conn.p1.sy + (conn.p2.sy - conn.p1.sy) * t
+          
+          ctx.beginPath()
+          ctx.arc(x, y, 1.2, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(0, 105, 255, ${1 - t})`
+          ctx.fill()
+        })
+      }
+
+      // Dots with "Breathing" Effect
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
+        const breathe = 1 + Math.sin(time * 2 + p.sx) * 0.1
+        
         ctx.beginPath()
-        ctx.arc(p.sx, p.sy, (isMobile ? 1.0 : 1.6) * p.scale, 0, Math.PI * 2)
+        ctx.arc(p.sx, p.sy, (isMobile ? 0.8 : 1.4) * p.scale * breathe, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.9})`
         ctx.fill()
+
+        // Subtle Glow for dots
+        if (!isMobile && alpha > 0.6) {
+          ctx.beginPath()
+          ctx.arc(p.sx, p.sy, (isMobile ? 1.5 : 3) * p.scale, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.1})`
+          ctx.fill()
+        }
       })
 
       animationFrameId = requestAnimationFrame(draw)
