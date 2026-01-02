@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRightIcon, BrainIcon } from './Icons';
 
 const Hero = () => {
+  const { scrollY } = useScroll();
+  const scale = useTransform(scrollY, [0, 400], [1, 0.8]);
+  const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const y = useTransform(scrollY, [0, 400], [0, 100]);
 
   return (
     <section id='hero' className='relative min-h-[90vh] flex items-center justify-center p-6 sm:p-12 overflow-hidden bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300'>
@@ -71,6 +75,7 @@ const Hero = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
+          style={{ scale, opacity, y }}
           className='relative w-full h-[500px] sm:h-[600px] flex items-center justify-center'
         >
           <div className='relative w-full max-w-lg h-full'>

@@ -12,8 +12,7 @@ const Paragraph = ({ value }) => {
 
   return (
     <p 
-      className="flex flex-wrap text-3xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight p-10 max-w-7xl mx-auto"
-      ref={element}
+      className="flex flex-wrap text-4xl md:text-6xl lg:text-8xl font-black leading-[1.0] tracking-tighter p-10 max-w-7xl mx-auto font-syne"
     >
       {words.map((word, i) => {
         const start = i / words.length
