@@ -23,10 +23,14 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     let animationFrameId
     
     // Configuration based on device capability
-    const isMobile = window.innerWidth < 1024
-    const particleCount = isMobile ? 450 : 180 // Ultra-dense for mobile 'Orb' feel
-    const connectionDistance = isMobile ? 0 : 50 // No lines on mobile for 'rounded' feel
-    const rotationSpeed = isMobile ? 0.002 : 0.0008 // Slower, more professional rotation
+    const width = window.innerWidth
+    const isSmallMobile = width < 768
+    const isTabletOrDesktop = width >= 768
+    const isMobileUI = width < 1024 // For general UI layout
+
+    const particleCount = isSmallMobile ? 450 : 180 
+    const connectionDistance = isSmallMobile ? 0 : 50 
+    const rotationSpeed = isSmallMobile ? 0.002 : 0.0008 
 
     // State
     let angleY = 0
@@ -37,6 +41,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     let targetMouseY = 0
     let mouseX = 0
     let mouseY = 0
+    let hoverAlpha = 0 // For text reveal logic
+    let isCurrentlyHovered = false
 
     const resize = () => {
       if (!canvas.parentNode) return
@@ -50,7 +56,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       centerY = canvasHeight / 2
       
       // Fitting logic
-      globeRadius = Math.min(canvasWidth, canvasHeight) * (isMobile ? 0.3 : 0.4)
+      globeRadius = Math.min(canvasWidth, canvasHeight) * (isSmallMobile ? 0.3 : 0.4)
       initParticles()
     }
 
@@ -76,6 +82,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       const rect = canvas.getBoundingClientRect()
       targetMouseX = ((e.clientX - rect.left) / canvasWidth) * 2 - 1
       targetMouseY = ((e.clientY - rect.top) / canvasHeight) * 2 - 1
+      isCurrentlyHovered = true
     }
 
     const draw = () => {
@@ -107,7 +114,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         let z2 = z1 * cosX + p.baseY * sinX
 
         // Pulse effect for mobile 'rounded' orb feel
-        if (isMobile) {
+        if (isSmallMobile) {
             const pulse = 1 + Math.sin(time * 0.3 + p.phase) * 0.03
             x1 *= pulse
             y1 *= pulse
@@ -115,7 +122,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         }
 
         // High-Precision Spatial Magnetism (Stretchy & Elastic)
-        if (!isMobile) {
+        if (isTabletOrDesktop) {
           const worldMouseX = mouseX * globeRadius * 1.8
           const worldMouseY = mouseY * globeRadius * 1.8
           const dx = worldMouseX - x1
@@ -143,6 +150,10 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
 
       // Rendering logic
       
+      // Interpolate Hover Alpha for agency name reveal
+      const targetAlpha = isCurrentlyHovered && (Math.abs(targetMouseX) < 0.8 && Math.abs(targetMouseY) < 0.8) ? 1 : 0
+      hoverAlpha += (targetAlpha - hoverAlpha) * 0.05
+
       // 1. Draw "Atmosphere" (Glassmorphic Outer Glow)
       const atmosphereGrad = ctx.createRadialGradient(
         centerX + mouseX * 20, 
@@ -152,17 +163,17 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         centerY, 
         globeRadius * 1.5
       )
-      atmosphereGrad.addColorStop(0, 'rgba(0, 105, 255, 0.03)')
+      atmosphereGrad.addColorStop(0, `rgba(0, 105, 255, ${0.03 + hoverAlpha * 0.05})`)
       atmosphereGrad.addColorStop(1, 'transparent')
       ctx.fillStyle = atmosphereGrad
       ctx.beginPath()
       ctx.arc(centerX, centerY, globeRadius * 1.8, 0, Math.PI * 2)
       ctx.fill()
 
-      if (!isMobile) {
-        // 2. Draw Connections (PC only - Neural Net)
+      if (isTabletOrDesktop) {
+        // 2. Draw Connections (PC/Tablet only - Neural Net)
         ctx.beginPath()
-        ctx.strokeStyle = `rgba(0, 105, 255, 0.08)`
+        ctx.strokeStyle = `rgba(0, 105, 255, ${0.08 - hoverAlpha * 0.04})`
         ctx.lineWidth = 0.5
         const distLimitSq = connectionDistance * connectionDistance
         for (let i = 0; i < projected.length; i++) {
@@ -178,6 +189,43 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
             }
         }
         ctx.stroke()
+
+        // 2b. Agency Name Reveal (Holographic Real-time Render)
+        if (hoverAlpha > 0.01) {
+          ctx.save()
+          ctx.translate(centerX + mouseX * 40, centerY + mouseY * 40)
+          
+          // Apply 3D Tilt to Text
+          const textTiltX = tiltX * 0.5
+          const textTiltY = tiltY * 0.5
+          ctx.transform(1, textTiltY, textTiltX, 1, 0, 0)
+          
+          // Outer Glow for Text
+          ctx.shadowBlur = 15 * hoverAlpha
+          ctx.shadowColor = 'rgba(0, 105, 255, 0.8)'
+          
+          ctx.textAlign = 'center'
+          ctx.textBaseline = 'middle'
+          
+          // Top Line: REPLY
+          ctx.font = `bold ${Math.floor(globeRadius * 0.3)}px Syne`
+          ctx.fillStyle = `rgba(255, 255, 255, ${hoverAlpha * 0.9})`
+          ctx.fillText('REPLY', 0, -globeRadius * 0.15)
+          
+          // Bottom Line: FLOW
+          ctx.font = `900 ${Math.floor(globeRadius * 0.35)}px Syne`
+          ctx.fillStyle = `rgba(0, 105, 255, ${hoverAlpha})`
+          ctx.fillText('FLOW', 0, globeRadius * 0.18)
+          
+          // Holographic Scanline effect
+          const scanPos = (time * 100) % (globeRadius * 2)
+          ctx.beginPath()
+          ctx.rect(-globeRadius, -globeRadius + scanPos, globeRadius * 2, 2)
+          ctx.fillStyle = `rgba(0, 105, 255, ${hoverAlpha * 0.2})`
+          ctx.fill()
+          
+          ctx.restore()
+        }
       }
 
       // 3. Draw Core Glow (Central Glass Orb)
@@ -187,27 +235,30 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
         0, 
         centerX + mouseX * 40, 
         centerY + mouseY * 40, 
-        globeRadius * 0.8
+        globeRadius * (0.8 + hoverAlpha * 0.2)
       )
-      coreGrad.addColorStop(0, 'rgba(0, 105, 255, 0.08)')
+      coreGrad.addColorStop(0, `rgba(0, 105, 255, ${0.08 + hoverAlpha * 0.1})`)
       coreGrad.addColorStop(1, 'transparent')
       ctx.fillStyle = coreGrad
       ctx.beginPath()
-      ctx.arc(centerX + mouseX * 40, centerY + mouseY * 40, globeRadius, 0, Math.PI * 2)
+      ctx.arc(centerX + mouseX * 40, centerY + mouseY * 40, globeRadius * (1 + hoverAlpha * 0.2), 0, Math.PI * 2)
       ctx.fill()
 
       // 4. Draw Particles (Both)
       projected.forEach(p => {
         const alpha = Math.max(0, (p.z2 + globeRadius) / (2 * globeRadius))
+        const pSize = (isSmallMobile ? 0.9 : 1.5) * p.scale
         ctx.beginPath()
-        ctx.arc(p.sx, p.sy, (isMobile ? 0.9 : 1.5) * p.scale, 0, Math.PI * 2)
+        ctx.arc(p.sx, p.sy, pSize, 0, Math.PI * 2)
         
-        if (isMobile) {
+        if (isSmallMobile) {
             ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.8})`
         } else {
-            // Add subtle specular highlight for premium look
+            // Specular highlighting
             const spec = Math.pow(alpha, 3) * 0.5
-            ctx.fillStyle = `rgba(0, 105, 255, ${alpha * 0.7 + spec})`
+            // Particles fade slightly to show text better
+            const pAlpha = (alpha * 0.7 + spec) * (1 - hoverAlpha * 0.4)
+            ctx.fillStyle = `rgba(0, 105, 255, ${pAlpha})`
         }
         ctx.fill()
       })
@@ -218,9 +269,10 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     const handleMouseLeave = () => {
       targetMouseX = 0
       targetMouseY = 0
+      isCurrentlyHovered = false
     }
 
-    if (!isMobile) {
+    if (isTabletOrDesktop) {
       window.addEventListener('mousemove', handleMouseMove)
       window.addEventListener('mouseleave', handleMouseLeave)
     }
