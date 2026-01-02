@@ -93,8 +93,8 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
       mouseY += (targetMouseY - mouseY) * 0.08
 
       // High-Precision Spatial Tilt
-      const tiltX = mouseX * (isMobile ? 0.08 : 0.15)
-      const tiltY = mouseY * (isMobile ? 0.08 : 0.15)
+      const tiltX = mouseX * (isSmallMobile ? 0.08 : 0.15)
+      const tiltY = mouseY * (isSmallMobile ? 0.08 : 0.15)
 
       angleY += rotationSpeed + tiltX * 0.1
       angleX += rotationSpeed * 0.3 + tiltY * 0.1
