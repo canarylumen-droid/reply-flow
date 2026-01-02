@@ -75,50 +75,50 @@ const Testimonials = () => {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
 
-                    {/* Column 1 - Discord Vibes */}
+                    {/* Column 1 - Service & Retail */}
                     <div className='space-y-6 pt-10'>
                         <DiscordCard
-                            user="Alex (Director of Sales)"
-                            message="The reactivation campaign you guys built is printing. We just closed an extra $2.4M in property value this month solely from leads we thought were dead."
-                            revenue="$60k Commission Added"
+                            user="Vanguard Estates (Lead Dev)"
+                            message="The reactivation engine is insane. Just recovered two high-intent purchasers from a dead 2023 list. That's nearly $85k in commission equity back on the table."
+                            revenue="$85,000 Equity Recovered"
                             delay={0.1}
                         />
                         <InstagramCard
-                            user="Dr. Sarah (Clinic Owner)"
-                            message="We used to hire front desk staff just to chase leads. Now your AI does it instantly. Our show-up rate literally doubled in 30 days."
-                            revenue="$15k New Revenue"
+                            user="Radiant Wellness Clinic"
+                            message="Our biggest leak was the weekend gap. People would inquire Saturday and we'd reply Monday. Your AI now closes them in 30 seconds on Saturday night. Booking rates are up 40%."
+                            revenue="12 New Consults/Week"
                             delay={0.2}
                         />
                     </div>
 
-                    {/* Column 2 - High Value */}
+                    {/* Column 2 - High Ticket & Logic */}
                     <div className='space-y-6'>
                         <DiscordCard
-                            user="Marcus (Dealership GM)"
-                            message="I was skeptical about 'AI' handling my customers. But listening to the calls... it sounds more professional than my junior sales reps. It handled the financing objection perfectly."
-                            revenue="$120k Pipeline Saved"
+                            user="NitroScale SaaS (Founder)"
+                            message="I was worried about the AI sounding 'botty' for a tech audience. But it handles the technical integration questions better than our junior SDRs. The 15% recovery model is a steal."
+                            revenue="$12k MRR Saved"
                             delay={0.3}
                         />
                         <DiscordCard
-                            user="Jennifer (Law Partner)"
-                            message="Speed is everything in law. We are now the first to reply to every inquiry 24/7. Validated my decision to partner with Reply Flow."
-                            revenue="3 Retainers Secured this week"
+                            user="Lexington Law Partners"
+                            message="Client intake is now 100% autonomous. The speed-to-lead is actually 2 seconds. In legal, if you aren't first, you're last. This puts us first every single time."
+                            revenue="9 Retainers Signed"
                             delay={0.4}
                         />
                     </div>
 
-                    {/* Column 3 - Fast scale */}
+                    {/* Column 3 - Operations & Logic */}
                     <div className='space-y-6 pt-10 sm:pt-20'>
                         <InstagramCard
-                            user="FitnessChain_CEO"
-                            message="I almost hired a call center. Glad you stopped me. This system recovered $50k in membership fees without me managing a single human."
-                            revenue="$50k Recovered"
+                            user="Apex Solar Solutions"
+                            message="We stopped buying new leads because we had 5,000 old ones sitting there. Your system has turned that 'trash' into 20 qualified site surveys in two weeks."
+                            revenue="20 Validated Surveys"
                             delay={0.5}
                         />
                         <DiscordCard
-                            user="Mike (Roofing Contractor)"
-                            message="My guys are good at roofing, not texting. Having this system filter the tire-kickers has saved my sanity. We only visit qualified homes now."
-                            revenue="15 Qualified Estimates"
+                            user="Precision Roofing & Co"
+                            message="I don't have to manage my sales guys' follow-ups anymore. The AI does the heavy lifting of chasing. We only step in when the contract is ready to sign."
+                            revenue="$45k Pipeline Velocity"
                             delay={0.6}
                         />
                     </div>
