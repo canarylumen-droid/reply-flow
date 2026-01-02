@@ -42,15 +42,35 @@ const App = () => {
   }, [theme])
 
   useEffect(() => {
+    let subLoaded = false;
+    let timerDone = false;
+
+    const checkReady = () => {
+      if (subLoaded && timerDone) {
+        setIsLoading(false);
+      }
+    };
+
     const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1800) // Minimum 1.8s for premium feel
+      timerDone = true;
+      checkReady();
+    }, 2200); // 2.2s for a truly premium, confident reveal
     
-    // Also clear if window loads faster
-    const handleLoad = () => clearTimeout(timer) || setIsLoading(false)
-    window.addEventListener('load', handleLoad)
+    const handleLoad = () => {
+      subLoaded = true;
+      checkReady();
+    };
+
+    if (document.readyState === 'complete') {
+      subLoaded = true;
+    } else {
+      window.addEventListener('load', handleLoad);
+    }
     
-    return () => window.removeEventListener('load', handleLoad)
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      clearTimeout(timer);
+    };
   }, [])
 
   const dotRef = useRef(null)

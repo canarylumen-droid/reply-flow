@@ -25,18 +25,19 @@ const Paragraph = ({ value }) => {
 
 const Word = ({ children, progress, range }) => {
   const opacity = useTransform(progress, range, [0, 1])
+  const y = useTransform(progress, range, [10, 0])
 
   return (
-    <span className="relative mr-3 mt-3 lg:mr-5 lg:mt-5 inline-block">
+    <span className="relative mr-[0.5ch] inline-block overflow-hidden">
       {/* 1. Base Layer (Faint Shadow) */}
-      <span className="absolute opacity-10 text-gray-900 dark:text-white">
+      <span className="opacity-10 text-gray-900 dark:text-white transition-colors">
         {children}
       </span>
       
       {/* 2. Highlight Layer (Animated Fill) */}
       <motion.span 
-        style={{ opacity }} 
-        className="text-gray-900 dark:text-white relative z-10"
+        style={{ opacity, y }} 
+        className="absolute inset-0 text-gray-900 dark:text-white z-10 transition-colors"
       >
         {children}
       </motion.span>
