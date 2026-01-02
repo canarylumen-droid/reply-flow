@@ -73,6 +73,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     }
 
     const handleMouseMove = (e) => {
+      if (isMobile) return
       const rect = canvas.getBoundingClientRect()
       targetMouseX = ((e.clientX - rect.left) / canvasWidth) * 2 - 1
       targetMouseY = ((e.clientY - rect.top) / canvasHeight) * 2 - 1
@@ -80,23 +81,30 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+      const time = Date.now() * 0.001
       
-      // Interactions
-      mouseX += (targetMouseX - mouseX) * 0.1
-      mouseY += (targetMouseY - mouseY) * 0.1
+      // Interactions Only for Desktop
+      if (!isMobile) {
+        mouseX += (targetMouseX - mouseX) * 0.1
+        mouseY += (targetMouseY - mouseY) * 0.1
 
-      const tiltX = mouseX * (isMobile ? 0.05 : 0.1)
-      const tiltY = mouseY * (isMobile ? 0.05 : 0.1)
+        const tiltX = mouseX * 0.1
+        const tiltY = mouseY * 0.1
 
-      angleY += rotationSpeed + tiltX
-      angleX += rotationSpeed * 0.3 + tiltY
+        angleY += rotationSpeed + tiltX
+        angleX += rotationSpeed * 0.3 + tiltY
+      } else {
+        // Autonomous Smooth Rotation for Mobile (Static but moving)
+        angleY += rotationSpeed
+        angleX += rotationSpeed * 0.3
+        // Add a tiny bit of random drift for "living" feel
+        angleY += Math.sin(time * 0.5) * 0.001
+      }
 
       const cosY = Math.cos(angleY)
       const sinY = Math.sin(angleY)
       const cosX = Math.cos(angleX)
       const sinX = Math.sin(angleX)
-
-      const time = Date.now() * 0.001
 
       const projected = particles.map(p => {
         // Core 3D rotation
@@ -113,7 +121,7 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
             z2 *= pulse
         }
 
-        // Magnetism
+        // Magnetism Only for Desktop
         if (!isMobile) {
           const worldMouseX = mouseX * globeRadius * 2
           const worldMouseY = mouseY * globeRadius * 2
@@ -202,20 +210,14 @@ const AiBrain = ({ scale = 1, opacity = 1 }) => {
     }
     window.addEventListener('resize', resize)
     resize()
-    draw()
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('resize', resize)
-      cancelAnimationFrame(animationFrameId)
-    }
-    window.addEventListener('resize', resize)
-    resize()
     initParticles()
     draw()
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
+      if (!isMobile) {
+        window.removeEventListener('mousemove', handleMouseMove)
+        window.removeEventListener('mouseleave', handleMouseLeave)
+      }
       window.removeEventListener('resize', resize)
       cancelAnimationFrame(animationFrameId)
     }
