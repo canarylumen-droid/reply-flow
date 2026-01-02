@@ -57,7 +57,10 @@ const Hero = () => {
 
           {/* Left: Copy */}
           <motion.div
-            style={{ opacity: copyOpacity, y: copyY }}
+            style={{ 
+              opacity: copyOpacity, 
+              y: useTransform(smoothScroll, [0, 0.5], [0, -40]) // Subtle parallax rise
+            }}
             className='flex flex-col gap-6 text-left relative z-20'
           >
             {/* ... Content remains same ... */}
