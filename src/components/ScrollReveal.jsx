@@ -5,11 +5,11 @@ const Paragraph = ({ value }) => {
   const element = useRef(null)
   const { scrollYProgress } = useScroll({
     target: element,
-    offset: ['start 0.8', 'start 0.3'] // Tighter range for faster reveal
+    offset: ['start 0.85', 'start 0.15']
   })
 
   // Use a snappier spring for more "tactile" scroll typing
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 200, damping: 25, restDelta: 0.001 })
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 150, damping: 25, restDelta: 0.001 })
 
   const words = value.split(' ')
 
@@ -49,31 +49,37 @@ const Word = ({ children, progress, range }) => {
 
 const Character = ({ children, progress, range }) => {
   const opacity = useTransform(progress, range, [0, 1])
-  const y = useTransform(progress, range, [15, 0])
-  const scale = useTransform(progress, range, [0.8, 1])
+  const y = useTransform(progress, range, [20, 0])
+  const x = useTransform(progress, range, [-4, 0])
+  const scale = useTransform(progress, range, [0.4, 1])
   
-  // Highlight/Glow effect for the "current" character being "typed"
-  const glow = useTransform(progress, range, [0, 1])
+  // Cursor effect: only visible precisely while the character is "typing"
+  // It fades in at the start of the character's range and fades out at the end
+  const cursorOpacity = useTransform(
+    progress, 
+    [range[0], range[0] + (range[1]-range[0])*0.1, range[1] - (range[1]-range[0])*0.1, range[1]], 
+    [0, 1, 1, 0]
+  )
 
   return (
-    <span className="relative inline-block">
-      {/* 1. Base Layer (Faint) */}
-      <span className="opacity-10 text-gray-900 dark:text-white transition-colors">
+    <span className="grid place-items-center relative">
+      {/* 1. Ghost Layer (Layout stability) */}
+      <span className="opacity-10 text-gray-900 dark:text-white transition-colors cursor-default select-none pointer-events-none col-start-1 row-start-1">
         {children}
       </span>
       
       {/* 2. Highlight Layer (Typing Effect) */}
       <motion.span 
-        style={{ opacity, y, scale }} 
-        className="absolute inset-0 text-gray-900 dark:text-white z-10 transition-colors pointer-events-none"
+        style={{ opacity, y, x, scale }} 
+        className="text-gray-900 dark:text-white transition-colors pointer-events-none col-start-1 row-start-1 z-10 will-change-transform"
       >
         {children}
       </motion.span>
 
-      {/* 3. Typing Cursor/Sparkle (Active Character) */}
+      {/* 3. Typing Cursor (Glow trail) */}
       <motion.span
-        style={{ opacity: glow }}
-        className="absolute -bottom-1 left-0 right-0 h-[2px] bg-primary blur-[2px] z-20"
+        style={{ opacity: cursorOpacity }}
+        className="absolute -bottom-1 left-0 right-0 h-[2px] bg-primary blur-[2px] z-20 pointer-events-none"
       />
     </span>
   )
