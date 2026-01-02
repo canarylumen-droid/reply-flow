@@ -25,18 +25,20 @@ const Paragraph = ({ value }) => {
 
 const Word = ({ children, progress, range }) => {
   const opacity = useTransform(progress, range, [0, 1])
+  const y = useTransform(progress, range, [10, 0])
+  const blur = useTransform(progress, range, ['blur(4px)', 'blur(0px)'])
 
   return (
     <span className="relative mr-3 mt-3 lg:mr-5 lg:mt-5 inline-block">
-      {/* 1. Base Layer (Faint Shadow) */}
-      <span className="absolute opacity-10 text-gray-900 dark:text-white">
+      {/* 1. Base Layer (Faint Shadow - Layout Defining) */}
+      <span className="opacity-10 text-gray-900 dark:text-white select-none">
         {children}
       </span>
       
-      {/* 2. Highlight Layer (Animated Fill) */}
+      {/* 2. Highlight Layer (Animated Fill - Perfectly Overlaying) */}
       <motion.span 
-        style={{ opacity }} 
-        className="text-gray-900 dark:text-white relative z-10"
+        style={{ opacity, y, filter: blur }} 
+        className="text-gray-900 dark:text-white absolute inset-0 z-10"
       >
         {children}
       </motion.span>
