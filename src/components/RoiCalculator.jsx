@@ -17,8 +17,8 @@ const RoiCalculator = () => {
     const stats = useMemo(() => {
         const currentRevenue = leads * (closeRate / 100) * dealValue
         const lostRevenue = leads * (1 - (closeRate / 100)) * dealValue
-        // 15% recovery is conservative and professional for a high-end agency
-        const recoveredLeads = (leads * (1 - (closeRate / 100))) * 0.15
+        // 8% recovery is the industry "sweet spot" for automated multi-channel nurturing
+        const recoveredLeads = (leads * (1 - (closeRate / 100))) * 0.08
         const recoveredRevenue = recoveredLeads * dealValue
         const totalNewRevenue = currentRevenue + recoveredRevenue
 
@@ -86,7 +86,7 @@ const RoiCalculator = () => {
                                 </div>
                                 <input
                                     type="range"
-                                    min="500" max="15000" step="100"
+                                    min="500" max="5000" step="100"
                                     value={dealValue}
                                     onChange={(e) => setDealValue(Number(e.target.value))}
                                     className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
@@ -100,7 +100,7 @@ const RoiCalculator = () => {
                                 </div>
                                 <input
                                     type="range"
-                                    min="0.5" max="10" step="0.5"
+                                    min="0.5" max="8" step="0.5"
                                     value={closeRate}
                                     onChange={(e) => setCloseRate(Number(e.target.value))}
                                     className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
@@ -190,8 +190,8 @@ const RoiCalculator = () => {
                 {/* Footnote about realism */}
                 <div className='mt-12 text-center'>
                     <p className='text-gray-500 text-sm max-w-2xl mx-auto'>
-                        *This analysis uses a conservative 15% recovery rate of ignored leads. <br className='hidden sm:block' />
-                        Real-world results vary based on industry and current response times, but most clients see immediate uplift by capturing the "Speed To Lead" advantage.
+                        *This analysis uses a localized 8% recovery rate of ignored leads. <br className='hidden sm:block' />
+                        Real-world results vary based on industry and current response times, but most partners see immediate uplift by capturing the "Speed To Lead" advantage.
                     </p>
                 </div>
             </div>
