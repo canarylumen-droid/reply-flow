@@ -162,7 +162,7 @@ const Hero = () => {
                           <div className='flex items-start gap-2'>
                               <span className='text-zinc-600'>14:23:41</span>
                               <span className='text-green-400'>✓</span>
-                              <span className='text-zinc-300'>Lead <span className='text-blue-400'>Sarah M.</span> qualified.</span>
+                              <span className='text-zinc-300'>Lead <span className='text-blue-400'>Elena M.</span> qualified.</span>
                           </div>
                           <div className='flex items-start gap-2'>
                               <span className='text-zinc-600'>14:23:38</span>
