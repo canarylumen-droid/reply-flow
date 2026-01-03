@@ -56,6 +56,14 @@ const Navbar = ({ theme, setTheme }) => {
             Calculator
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
+          <div className="relative group/portal">
+            <span className="text-xs px-2 py-0.5 rounded-md bg-gray-100 dark:bg-zinc-800 text-gray-400 font-black uppercase tracking-tighter border border-gray-200 dark:border-white/5 cursor-not-allowed">
+              Portal
+            </span>
+            <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-zinc-900 text-white text-[8px] rounded opacity-0 group-hover/portal:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+              Client Login Coming Soon
+            </span>
+          </div>
         </div>
 
         {/* Right Side Controls */}
