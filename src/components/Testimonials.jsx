@@ -84,7 +84,7 @@ const Testimonials = () => {
                             delay={0.1}
                         />
                         <InstagramCard
-                            user="Sarah K."
+                            user="Debbie M."
                             message="Our biggest leak was the weekend gap. People would inquire Saturday and we'd reply Monday. Your AI now closes them in 30 seconds. We've recovered $4,200 this week alone."
                             revenue="$4,200 Recovered"
                             delay={0.2}

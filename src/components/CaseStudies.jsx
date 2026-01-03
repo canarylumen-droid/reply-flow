@@ -141,7 +141,7 @@ const CaseStudies = () => {
             solution: "24/7 Managed Infrastructure for instant lead qualification.",
             metric: "$8,900 Recovered",
             proofType: 'discord',
-            proofUser: 'Sarah L. (Lead)',
+            proofUser: 'Elena R. (Lead)',
             proofMessage: 'We are now the first to reply to every inquiry 24/7. Speed is everything and we just booked $8,900 in value.',
             delay: 0.5
         },

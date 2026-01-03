@@ -72,7 +72,7 @@ const RoiCalculator = () => {
                                 </div>
                                 <input
                                     type="range"
-                                    min="10" max="2000" step="10"
+                                    min="10" max="10000" step="10"
                                     value={leads}
                                     onChange={(e) => setLeads(Number(e.target.value))}
                                     className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
@@ -86,7 +86,7 @@ const RoiCalculator = () => {
                                 </div>
                                 <input
                                     type="range"
-                                    min="500" max="10000" step="100"
+                                    min="500" max="15000" step="100"
                                     value={dealValue}
                                     onChange={(e) => setDealValue(Number(e.target.value))}
                                     className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
@@ -100,7 +100,7 @@ const RoiCalculator = () => {
                                 </div>
                                 <input
                                     type="range"
-                                    min="1" max="50" step="1"
+                                    min="0.5" max="10" step="0.5"
                                     value={closeRate}
                                     onChange={(e) => setCloseRate(Number(e.target.value))}
                                     className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
