@@ -98,7 +98,7 @@ const CaseStudyCard = ({ industry, problem, solution, metric, delay, proofType, 
 const CaseStudies = () => {
     const studies = [
         {
-            industry: "High-Ticket Coaching",
+            industry: "Coaching Infrastructure",
             problem: "Losing 40% of leads due to 4+ hour response times.",
             solution: "Bespoke AI Nurture Layer with 90s response latency.",
             metric: "$9,450 Recovered",
@@ -108,11 +108,12 @@ const CaseStudies = () => {
             delay: 0.1
         },
         {
-            industry: "B2B Lead Gen",
+            industry: "B2B Lead Acquisition",
             problem: "Saturated inbox leading to missed discovery calls.",
             solution: "Intent-based AI Filtering & automated calendar scheduling.",
             metric: "$4,200 Recovered",
             proofType: 'dm',
+            proofUser: 'Alex G. (Partner)',
             proofMessage: 'I almost hired a call center. Glad I didn\'t. This recovered $4,200 this month without me managing a human.',
             delay: 0.2
         },
@@ -127,16 +128,17 @@ const CaseStudies = () => {
             delay: 0.3
         },
         {
-            industry: "Consulting Firm",
+            industry: "Consulting Operations",
             problem: "Cold leads going stagnant after initial inquiry.",
             solution: "AI-Driven Reactivation engine with dynamic personalization.",
-            metric: "3.5x Pipeline Velocity",
+            metric: "$5,200 Recovered",
             proofType: 'dm',
-            proofMessage: 'The objection handling is insane. It sounds more professional than my junior reps. Financing objections cleared!',
+            proofUser: 'Chloe B. (Manager)',
+            proofMessage: 'The objection handling is insane. It sounds more professional than my junior reps. Salvaged $5,200 from cold leads.',
             delay: 0.4
         },
         {
-            industry: "Real Estate Team",
+            industry: "Real Estate Ops",
             problem: "Weekend inquiries ignored until Monday morning.",
             solution: "24/7 Managed Infrastructure for instant lead qualification.",
             metric: "$8,900 Recovered",
@@ -146,11 +148,12 @@ const CaseStudies = () => {
             delay: 0.5
         },
         {
-            industry: "Growth Agency",
+            industry: "Agency Growth",
             problem: "Operationally heavy manual lead vetting process.",
             solution: "High-Fidelity AI Sales Closer for 1st-level qualification.",
             metric: "$7,200 Recovered",
             proofType: 'dm',
+            proofUser: 'Ryan K. (Ops)',
             proofMessage: 'We recovered $7,200 that would have decayed. Our show-up rate is up 30% from the AI qualification.',
             delay: 0.6
         }

@@ -78,7 +78,7 @@ const Testimonials = () => {
                     {/* Column 1 - Service Sectors */}
                     <div className='space-y-6 pt-10'>
                         <DiscordCard
-                            user="Jonathan D. (Ops)"
+                            user="Nathan S. (Partner)"
                             message="The reactivation workflow just pulled two high-intent leads from our 6-month old list. That's $7,800 in recovered revenue we completely gave up on."
                             revenue="$7,800 Recovered"
                             delay={0.1}
@@ -94,7 +94,7 @@ const Testimonials = () => {
                     {/* Column 2 - Agency & Founder Focus */}
                     <div className='space-y-6'>
                         <DiscordCard
-                            user="Marcus T. (Founder)"
+                            user="Olivia P. (Founder)"
                             message="I was worried about the AI sounding 'botty' for my clients. But it handles technical questions better than my junior staff. Recovered $8,400 in missed discovery calls this month."
                             revenue="$8,400 Recovered"
                             delay={0.3}

@@ -26,7 +26,7 @@ const AutomationFeatures = () => {
                             {[
                                 { day: 'Initial Contact', subject: 'Re: Your request', status: 'Immediate personal outreach' },
                                 { day: 'Day 2', subject: 'Re: Quick question?', status: 'Value-add follow-up if no reply' },
-                                { day: 'Day 5', subject: 'Case Study: 312% ROI', status: 'Social proof to build trust' },
+                                { day: 'Day 5', subject: 'Case Study: $8,900 Recovered', status: 'Social proof to build trust' },
                                 { day: 'Day 10', subject: 'Is this still a priority?', status: 'The "Breakup" email (Highest reply rate)' }
                             ].map((item, i) => (
                                 <motion.div
