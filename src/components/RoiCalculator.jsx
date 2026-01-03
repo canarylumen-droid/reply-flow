@@ -4,8 +4,8 @@ import { DollarSignIcon, ArrowRightIcon } from './Icons'
 
 const RoiCalculator = () => {
     // State for inputs
-    const [leads, setLeads] = useState(500)
-    const [dealValue, setDealValue] = useState(5000)
+    const [leads, setLeads] = useState(45)
+    const [dealValue, setDealValue] = useState(1200)
     const [closeRate, setCloseRate] = useState(10) // Percent
 
     // Professional Realistic Math:
@@ -72,7 +72,7 @@ const RoiCalculator = () => {
                                 </div>
                                 <input
                                     type="range"
-                                    min="10" max="20000" step="50"
+                                    min="10" max="2000" step="10"
                                     value={leads}
                                     onChange={(e) => setLeads(Number(e.target.value))}
                                     className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'
@@ -86,7 +86,7 @@ const RoiCalculator = () => {
                                 </div>
                                 <input
                                     type="range"
-                                    min="500" max="20000" step="500"
+                                    min="500" max="10000" step="100"
                                     value={dealValue}
                                     onChange={(e) => setDealValue(Number(e.target.value))}
                                     className='w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-blue-500'

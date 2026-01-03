@@ -78,15 +78,15 @@ const Testimonials = () => {
                     {/* Column 1 - Service Sectors */}
                     <div className='space-y-6 pt-10'>
                         <DiscordCard
-                            user="Modern Arc Realty (Manager)"
-                            message="The reactivation engine is insane. Just recovered two high-intent purchasers from a dead 2023 list. That's nearly $85k in commission equity back on the table."
-                            revenue="$85,000 Equity Recovered"
+                            user="Jonathan D. (Ops)"
+                            message="The reactivation workflow just pulled two high-intent leads from our 6-month old list. That's $7,800 in recovered revenue we completely gave up on."
+                            revenue="$7,800 Recovered"
                             delay={0.1}
                         />
                         <InstagramCard
-                            user="Elite Wellness Systems"
-                            message="Our biggest leak was the weekend gap. People would inquire Saturday and we'd reply Monday. Your AI now closes them in 30 seconds on Saturday night. Booking rates are up 40%."
-                            revenue="12 New Consults/Week"
+                            user="Sarah K."
+                            message="Our biggest leak was the weekend gap. People would inquire Saturday and we'd reply Monday. Your AI now closes them in 30 seconds. We've recovered $4,200 this week alone."
+                            revenue="$4,200 Recovered"
                             delay={0.2}
                         />
                     </div>
@@ -94,15 +94,15 @@ const Testimonials = () => {
                     {/* Column 2 - Agency & Founder Focus */}
                     <div className='space-y-6'>
                         <DiscordCard
-                            user="Growth Ops (Founder)"
-                            message="I was worried about the AI sounding 'botty' for a tech audience. But it handles the technical integration questions better than our junior SDRs. The 15% recovery model is a steal."
-                            revenue="$12k MRR Saved"
+                            user="Marcus T. (Founder)"
+                            message="I was worried about the AI sounding 'botty' for my clients. But it handles technical questions better than my junior staff. Recovered $8,400 in missed discovery calls this month."
+                            revenue="$8,400 Recovered"
                             delay={0.3}
                         />
                         <DiscordCard
-                            user="Scale Media Group"
-                            message="Client intake is now 100% autonomous. The speed-to-lead is actually 2 seconds. For a scaling agency, if you aren't first, you're last. This puts us first every single time."
-                            revenue="9 Retainers Signed"
+                            user="Jennifer W."
+                            message="Client intake is now 100% autonomous. The speed-to-lead is actually 2 seconds. We've already recovered $5,900 from leads that usually ghost us."
+                            revenue="$5,900 Recovered"
                             delay={0.4}
                         />
                     </div>
@@ -110,15 +110,15 @@ const Testimonials = () => {
                     {/* Column 3 - High-Intent Niche */}
                     <div className='space-y-6 pt-10 sm:pt-20'>
                         <InstagramCard
-                            user="Summit Solar Partners"
-                            message="We stopped buying new leads because we had 5,000 old ones sitting there. Your system has turned that 'trash' into 20 qualified site surveys in two weeks."
-                            revenue="20 Validated Surveys"
+                            user="David L."
+                            message="We stopped buying new leads because we had 5,000 old ones sitting there. Your system has turned that 'trash' into $9,200 in validated sales in just 14 days."
+                            revenue="$9,200 Recovered"
                             delay={0.5}
                         />
                         <DiscordCard
-                            user="Pro-Line Exterior Solutions"
-                            message="I don't have to manage my sales guys' follow-ups anymore. The AI does the heavy lifting of chasing. We only step in when the contract is ready to sign."
-                            revenue="$45k Pipeline Velocity"
+                            user="Mike R."
+                            message="I don't have to manage my sales guys' follow-ups anymore. The AI does the heavy lifting. Recovered $6,500 from leads we thought were tire-kickers."
+                            revenue="$6,500 Recovered"
                             delay={0.6}
                         />
                     </div>

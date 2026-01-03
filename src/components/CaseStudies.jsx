@@ -101,29 +101,29 @@ const CaseStudies = () => {
             industry: "High-Ticket Coaching",
             problem: "Losing 40% of leads due to 4+ hour response times.",
             solution: "Bespoke AI Nurture Layer with 90s response latency.",
-            metric: "140+ Hours Saved/Mo",
+            metric: "$9,450 Recovered",
             proofType: 'discord',
-            proofUser: 'Alex (Sales Director)',
-            proofMessage: 'The reactivation campaign is printing. show-up rates literally doubled and we salvaged $14,5k in commissions.',
+            proofUser: 'Jonathan D. (Ops)',
+            proofMessage: 'The reactivation campaign is printing. show-up rates literally doubled and we salvaged $9,450 in revenue.',
             delay: 0.1
         },
         {
-            industry: "B2B SaaS Agency",
+            industry: "B2B Lead Gen",
             problem: "Saturated inbox leading to missed discovery calls.",
             solution: "Intent-based AI Filtering & automated calendar scheduling.",
-            metric: "410% ROI Increase",
+            metric: "$4,200 Recovered",
             proofType: 'dm',
-            proofMessage: 'I almost hired a call center. Glad I didn\'t. This recovered $8.2k this month without me managing a human.',
+            proofMessage: 'I almost hired a call center. Glad I didn\'t. This recovered $4,200 this month without me managing a human.',
             delay: 0.2
         },
         {
-            industry: "E-commerce Agency",
-            problem: "Manual follow-up fatigue resulting in cart abandonment decay.",
+            industry: "E-commerce Support",
+            problem: "Manual follow-up fatigue resulting in abandoned decay.",
             solution: "Persistent Multi-Channel Automation (Email + DM).",
-            metric: "$12,400 Recovered",
+            metric: "$3,850 Recovered",
             proofType: 'discord',
-            proofUser: 'Mike (Founder)',
-            proofMessage: 'My guys are good at sales, not texting. Having this system filter tire-kickers has saved my sanity.',
+            proofUser: 'Marcus T. (Founder)',
+            proofMessage: 'My guys are good at sales, not texting. Having this system filter tire-kickers has salvaged $3,850 so far.',
             delay: 0.3
         },
         {
@@ -139,19 +139,19 @@ const CaseStudies = () => {
             industry: "Real Estate Team",
             problem: "Weekend inquiries ignored until Monday morning.",
             solution: "24/7 Managed Infrastructure for instant lead qualification.",
-            metric: "0% Lead Decay Rate",
+            metric: "$8,900 Recovered",
             proofType: 'discord',
-            proofUser: 'Sarah (Team Lead)',
-            proofMessage: 'We are now the first to reply to every inquiry 24/7. Speed is everything and Reply Flow delivers.',
+            proofUser: 'Sarah L. (Lead)',
+            proofMessage: 'We are now the first to reply to every inquiry 24/7. Speed is everything and we just booked $8,900 in value.',
             delay: 0.5
         },
         {
             industry: "Growth Agency",
             problem: "Operationally heavy manual lead vetting process.",
             solution: "High-Fidelity AI Sales Closer for 1st-level qualification.",
-            metric: "75% Op-Ex Reduction",
+            metric: "$7,200 Recovered",
             proofType: 'dm',
-            proofMessage: 'We recovered $11.2k that would have decayed. Our show-up rate is up 30% from the AI qualification alone.',
+            proofMessage: 'We recovered $7,200 that would have decayed. Our show-up rate is up 30% from the AI qualification.',
             delay: 0.6
         }
     ]
