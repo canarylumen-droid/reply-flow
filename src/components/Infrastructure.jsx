@@ -4,8 +4,13 @@ import { CheckIcon, ArrowRightIcon } from './Icons'
 
 const Infrastructure = () => {
     return (
-        <section className='py-32 px-6 md:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 overflow-hidden'>
-            <div className='max-w-7xl mx-auto'>
+        <section className='relative py-32 px-6 md:px-12 lg:px-24 bg-white dark:bg-black text-gray-900 dark:text-white overflow-hidden'>
+            {/* Net/Mesh Background Style */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-20 dark:opacity-10">
+                <div className="absolute inset-0 bg-[radial-gradient(#0069ff_1px,transparent_1px)] [background-size:32px_32px] [mask-image:linear-gradient(to_bottom,transparent,black,transparent)]"></div>
+            </div>
+
+            <div className='relative z-10 max-w-7xl mx-auto'>
 
                 {/* Section Header */}
                 <div className='mb-24 text-center'>

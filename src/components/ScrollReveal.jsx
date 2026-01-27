@@ -93,7 +93,12 @@ const ScrollReveal = () => {
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 20 })
 
   return (
-    <section ref={containerRef} className="bg-white dark:bg-black relative h-[200vh]">
+    <section ref={containerRef} className="relative bg-[#080808] text-white h-[200vh] overflow-hidden">
+      {/* Grid Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-10">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+      </div>
+
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
         
         {/* Background Animated Blobs - now linked to progress */}

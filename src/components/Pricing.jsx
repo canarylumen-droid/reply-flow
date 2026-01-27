@@ -5,7 +5,11 @@ import { TiltCard } from './TiltCard'
 
 const Pricing = () => {
     return (
-        <section id="pricing" className='py-32 px-6 sm:px-12 lg:px-24 bg-white dark:bg-black text-gray-900 dark:text-white relative overflow-hidden'>
+        <section id="pricing" className='relative py-32 px-6 sm:px-12 lg:px-24 bg-white dark:bg-black text-gray-900 dark:text-white overflow-hidden'>
+            {/* Mesh Background */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-20 dark:opacity-10">
+                <div className="absolute inset-0 bg-[radial-gradient(#0069ff_1px,transparent_1px)] [background-size:32px_32px]"></div>
+            </div>
 
             {/* Background Accent */}
             <div className='absolute top-0 right-0 w-1/3 h-1/3 bg-blue-500/5 blur-[120px] pointer-events-none' />
@@ -13,15 +17,14 @@ const Pricing = () => {
             <div className='max-w-7xl mx-auto relative z-10'>
                 <div className='text-center mb-16 md:mb-24'>
                     <div className='inline-block px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-black uppercase tracking-widest mb-6'>
-                        The 2026 Partnership Model
+                        The Audnix Partnership Model
                     </div>
-                    <h2 className='text-3xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tighter'>
-                        Real Offers. Real Solutions. <br />
-                        <span className='text-blue-600 underline decoration-blue-500/40 underline-offset-8 drop-shadow-[0_0_12px_rgba(37,99,235,0.4)]'>Zero Retainer Fluff.</span>
+                    <h2 className='text-3xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tighter uppercase font-syne'>
+                        Real Offers. <br />
+                        <span className='text-blue-600'>Zero Retainer Fluff.</span>
                     </h2>
                     <p className='text-lg sm:text-xl text-gray-500 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed'>
-                        We spent 2025 watching the "AI Hype" fail businesses with flashy tools that don't book calls. <br className='hidden md:block' />
-                        The era of chasing clout is over. <span className='font-bold text-gray-900 dark:text-white'>We charge a setup fee and a 15% success fee. We only win when you close.</span>
+                        The era of chasing "AI Hype" is over. <span className='font-bold text-gray-900 dark:text-white'>We charge a setup fee and a success fee. We only win when you close.</span>
                     </p>
                 </div>
 
