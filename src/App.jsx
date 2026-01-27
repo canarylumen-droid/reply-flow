@@ -135,7 +135,8 @@ const App = () => {
               className="flex flex-col items-center gap-2"
             >
               <span className="text-white font-syne font-black text-2xl tracking-tighter uppercase">ReplyFlow</span>
-              <div className="h-[2px] w-24 bg-zinc-800 relative overflow-hidden rounded-full">
+              <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Audnix AI</span>
+              <div className="h-[2px] w-24 bg-zinc-800 relative overflow-hidden rounded-full mt-2">
                 <motion.div 
                   initial={{ x: '-100%' }}
                   animate={{ x: '100%' }}

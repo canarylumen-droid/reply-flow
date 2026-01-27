@@ -24,11 +24,11 @@ const Footer = ({ theme }) => {
           </div>
 
           <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-            Premier AI Sales Infrastructure for High-Ticket Agencies.
+            The Autonomous Sales Engine for Elite High-Ticket Agencies.
           </p>
 
           <a 
-            href="mailto:team@replyflow.pro?subject=Inquiry%3A%20AI%20Infrastructure%20for%20my%20Business&body=Hi%20ReplyFlow%20Team%2C%0A%0AI%27m%20interested%20in%20automating%20our%20lead%20follow-up%20to%20recapture%20lost%20opportunities.%20We%20need%20a%20system%20that%20converts.%0A%0APlease%20send%20over%20details%20on%20how%20we%20can%20start.%0A%0ABest%2C%0A%0AName%3A%20%0ABusiness%20%2F%20Brand%3A%20%0AWebsite%20%28if%20any%29%3A%20"
+            href="mailto:team@replyflow.pro?subject=Inquiry%3A%20Audnix%20AI%20Infrastructure&body=Hi%20ReplyFlow%20Team%2C%0A%0AI%27m%20interested%20in%20Audnix%20AI%20Autonomous%20Sales%20Engine.%0A%0ABest%2C%0A%0AName%3A%20%0ABusiness%20%2F%20Brand%3A%20"
             className="inline-block text-primary font-semibold hover:underline"
           >
             team@replyflow.pro

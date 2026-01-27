@@ -43,173 +43,119 @@ const Hero = () => {
   const copyY = useTransform(smoothScroll, [0.3, 0.5], [0, -100]);
 
   return (
-    <section ref={containerRef} id='hero' className='relative h-[250vh] bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300'>
+    <section ref={containerRef} id='hero' className='relative h-[180vh] bg-white dark:bg-black text-gray-900 dark:text-white transition-colors duration-300'>
       
-      {/* Sticky Container - Pins content relative to viewport */}
-      <div className='sticky top-0 h-[100svh] flex flex-col items-center justify-start overflow-hidden p-6 sm:p-12 pt-6 lg:pt-8'>
+      {/* Mesh Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-30 dark:opacity-20">
+        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1f2937_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
+      </div>
 
-        {/* Background Elements */}
+      {/* Sticky Container */}
+      <div className='sticky top-0 h-[100svh] flex flex-col items-center justify-center overflow-hidden p-6 sm:p-12'>
+
+        {/* Background Gradients */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[120px] mix-blend-screen" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen" />
+          <div className="absolute top-[-10%] left-[20%] w-[60%] h-[40%] bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[120px] mix-blend-screen" />
+          <div className="absolute bottom-[-10%] right-[20%] w-[60%] h-[40%] bg-purple-500/10 dark:bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen" />
         </div>
 
-        <div className='max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-40 items-start z-10'>
+        <div className='max-w-5xl w-full flex flex-col items-center text-center z-10 space-y-8'>
 
-          {/* Left: Copy */}
+          {/* Center: Copy */}
           <motion.div
             style={{ 
               opacity: copyOpacity, 
-              y: useTransform(smoothScroll, [0, 0.5], [0, -40]) // Subtle parallax rise
+              y: useTransform(smoothScroll, [0, 0.5], [0, -40])
             }}
-            className='flex flex-col gap-6 text-left relative z-20'
+            className='flex flex-col items-center gap-6 relative z-20'
           >
-            {/* ... Content remains same ... */}
             <div className='flex items-center gap-3 text-primary font-bold uppercase text-[10px] tracking-[0.4em] font-syne opacity-80'>
               <div className='w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_rgba(0,105,255,0.8)]' />
               <span>ELITE SALES INFRASTRUCTURE</span>
             </div>
 
-            <h1 className='text-4xl sm:text-7xl lg:text-[9rem] font-extrablack leading-[0.8] tracking-tighter font-syne uppercase'>
-              The AI <br />
+            <h1 className='text-5xl sm:text-7xl lg:text-[7rem] font-extrablack leading-[0.9] tracking-tighter font-syne uppercase max-w-4xl'>
+              The Autonomous <br />
               <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-purple-500'>
-                Machine
+                Sales Engine
               </span> <br />
-              That Closes.
+              That Never Sleeps.
             </h1>
 
-            <p className='text-lg sm:text-2xl text-gray-500 dark:text-gray-400 max-w-xl leading-relaxed font-medium mt-4'>
-              We don't just sell software. We design, build, and manage high-fidelity AI Sales Departments for elite agencies.
+            <p className='text-lg sm:text-2xl text-gray-500 dark:text-gray-400 max-w-2xl leading-relaxed font-medium'>
+              We design, build, and manage high-fidelity AI Sales Departments for elite agencies. Capture every lead, handle every objection, book every meeting.
             </p>
 
-            <div className='flex flex-wrap gap-4 pt-4'>
+            <div className='flex flex-wrap justify-center gap-4 pt-4'>
               <a
                 href="https://calendly.com/replyflow"
                 target="_blank"
                 rel="noopener noreferrer"
-                className='px-8 py-4 bg-primary text-white rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all shadow-lg hover:shadow-primary/50 flex items-center gap-2'
+                className='px-10 py-5 bg-primary text-white rounded-full font-bold text-xl hover:bg-opacity-90 transition-all shadow-xl hover:shadow-primary/50 flex items-center gap-3'
               >
                 Get Your Free Audit
-                <ArrowRightIcon className="w-5 h-5" />
+                <ArrowRightIcon className="w-6 h-6" />
               </a>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById('testimonials').scrollIntoView({ behavior: 'smooth' })}
-                className='px-8 py-4 bg-transparent border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 rounded-full font-semibold text-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-all'
+                onClick={() => document.getElementById('casestudies').scrollIntoView({ behavior: 'smooth' })}
+                className='px-10 py-5 bg-transparent border border-gray-200 dark:border-white/10 text-gray-800 dark:text-gray-200 rounded-full font-bold text-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-all'
               >
                 View Case Studies
               </motion.button>
             </div>
 
-            <p className='text-xs sm:text-sm text-gray-500 dark:text-gray-500 mt-2'>
+            <p className='text-xs sm:text-sm text-gray-500 dark:text-gray-500 mt-2 font-semibold'>
               Performance-based options available. 100% Done-For-You.
             </p>
           </motion.div>
 
-          {/* Right: Dashboard Morphing Container */}
-          <div className='relative w-full h-[300px] sm:h-[450px] lg:h-[600px] flex items-center justify-center perspective-[1000px]'>
-              
-              {/* 1. Dashboard Visual (Fades Out) */}
-              <motion.div
-                  style={{ scale, opacity, y, rotateX, rotateZ }}
-                  className='absolute inset-0 z-10 origin-center will-change-transform will-change-opacity'
-              >
-              <div className='relative w-full max-w-lg h-full mx-auto'>
-                  <div className='absolute inset-0 bg-gradient-to-br from-zinc-900 to-black rounded-2xl border border-zinc-800 shadow-2xl overflow-hidden'>
-                  
-                  {/* Header Bar */}
-                  <div className='bg-zinc-800/50 border-b border-zinc-700 px-4 py-3 flex items-center justify-between'>
-                      <div className='flex items-center gap-2'>
-                        <div className='flex gap-1.5'>
-                            <div className='w-3 h-3 rounded-full bg-red-500/80'></div>
-                            <div className='w-3 h-3 rounded-full bg-yellow-500/80'></div>
-                            <div className='w-3 h-3 rounded-full bg-green-500/80'></div>
-                        </div>
-                        <span className='text-xs text-zinc-400 ml-3 font-mono'>reply-flow-agent.ai</span>
+          {/* Interactive Element (Shifted down/smaller) */}
+          <motion.div
+            style={{ scale: useTransform(smoothScroll, [0, 0.5], [0.8, 1]), opacity: brainOpacity }}
+            className='w-full max-w-4xl mt-12'
+          >
+            <div className='relative aspect-video w-full flex items-center justify-center perspective-[1000px]'>
+               <motion.div 
+                  style={{ rotateX, rotateZ }}
+                  className='w-full max-w-lg h-64 relative bg-gradient-to-br from-zinc-900 to-black rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden'
+               >
+                  {/* Minified Dashboard Preview */}
+                  <div className='bg-zinc-800/50 border-b border-zinc-700 px-4 py-2 flex items-center justify-between'>
+                      <div className='flex gap-1.5'>
+                          <div className='w-2 h-2 rounded-full bg-red-500/50'></div>
+                          <div className='w-2 h-2 rounded-full bg-yellow-500/50'></div>
+                          <div className='w-2 h-2 rounded-full bg-green-500/50'></div>
                       </div>
-                      <div className='flex items-center gap-2'>
-                        <div className='w-2 h-2 rounded-full bg-green-500 animate-pulse'></div>
-                        <span className='text-[10px] text-green-400 font-semibold'>LIVE</span>
-                      </div>
+                      <span className='text-[8px] text-zinc-500 font-mono'>audnix-engine.ai</span>
                   </div>
-
-                  {/* Content Area */}
-                  <div className='p-6 space-y-4 h-[calc(100%-56px)] overflow-hidden'>
-                      {/* Real-time Metrics */}
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 }}
-                        className='grid grid-cols-3 gap-3'
-                      >
-                        <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
-                            <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Active Leads</div>
-                            <div className='text-2xl font-bold text-white'>247</div>
-                        </div>
-                        <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
-                            <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Response</div>
-                            <div className='text-2xl font-bold text-green-400'>1.2s</div>
-                        </div>
-                        <div className='bg-zinc-800/50 rounded-lg p-3 border border-zinc-700/50'>
-                            <div className='text-[10px] text-zinc-500 uppercase tracking-wider mb-1'>Booked</div>
-                            <div className='text-2xl font-bold text-blue-400'>18</div>
-                        </div>
-                      </motion.div>
-
-                      {/* Terminal-style Activity Log */}
-                      <div className='bg-black/40 rounded-lg p-4 border border-zinc-800 font-mono text-xs space-y-2 h-44 overflow-hidden'>
-                          <div className='flex items-start gap-2'>
-                              <span className='text-zinc-600'>14:23:41</span>
-                              <span className='text-green-400'>✓</span>
-                              <span className='text-zinc-300'>Lead <span className='text-blue-400'>Elena M.</span> qualified.</span>
+                  <div className='p-4 space-y-3'>
+                      <div className='grid grid-cols-3 gap-2'>
+                          <div className='bg-zinc-800/30 rounded-lg p-2 border border-white/5'>
+                              <div className='text-[8px] text-zinc-500'>ROI</div>
+                              <div className='text-sm font-bold'>+420%</div>
                           </div>
-                          <div className='flex items-start gap-2'>
-                              <span className='text-zinc-600'>14:23:38</span>
-                              <span className='text-yellow-400'>⚡</span>
-                              <span className='text-zinc-300'>Objection: "Price concern" handled.</span>
+                          <div className='bg-zinc-800/30 rounded-lg p-2 border border-white/5'>
+                              <div className='text-[8px] text-zinc-500'>SPEED</div>
+                              <div className='text-sm font-bold'>0.8s</div>
                           </div>
-                          <div className='flex items-start gap-2'>
-                              <span className='text-zinc-600'>14:23:12</span>
-                              <span className='text-green-400'>✓</span>
-                              <span className='text-zinc-300'>Meeting booked: <span className='text-green-400'>John D.</span></span>
+                          <div className='bg-zinc-800/30 rounded-lg p-2 border border-white/5'>
+                              <div className='text-[8px] text-zinc-500'>CLOSED</div>
+                              <div className='text-sm font-bold'>12</div>
                           </div>
                       </div>
-
-                      {/* Live Conversation with Bot */}
-                      <div className='bg-zinc-800/30 rounded-lg p-3 border border-zinc-700/50 mt-2'>
-                          <div className='flex items-center gap-2 mb-2'>
-                              <BrainIcon className="w-3 h-3 text-primary" />
-                              <span className='text-[10px] text-zinc-400'>AI Agent replying...</span>
-                          </div>
-                          <div className='text-xs text-zinc-300 italic'>"I can show you a custom projection of your potential ROI..."</div>
+                      <div className='bg-black/20 rounded p-3 border border-white/5 font-mono text-[9px] text-zinc-400'>
+                         {">"} Objection handled: "Budget constraint" <br/>
+                         {">"} Analyzing lead sentiment... High Intent <br/>
+                         {">"} Meeting link sent to Prospect.
                       </div>
                   </div>
-                  </div>
-                  {/* Glow */}
-                  <div className='absolute -inset-4 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-3xl blur-2xl -z-10'></div>
-              </div>
-              </motion.div>
-
-              {/* 2. AI Brain Visual (Fades/Scales In + Moves to Center) */}
-              <motion.div 
-                  style={{ 
-                    opacity: brainOpacity, 
-                    scale: brainScale, 
-                    y: brainY,
-                    x: isDesktop ? brainX : 0 
-                  }}
-                  className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none will-change-transform will-change-opacity"
-              >
-                  <div className="w-[280px] h-[280px] sm:w-[450px] sm:h-[450px] lg:w-[700px] lg:h-[700px] relative">
-                      <AiBrain opacity={1} />
-                      {/* Central Core Glow - Reactive and proportional */}
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-blue-500/20 rounded-full blur-[60px]" />
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30%] h-[30%] bg-purple-500/20 rounded-full blur-[40px]" />
-                  </div>
-              </motion.div>
-
-          </div>
+               </motion.div>
+               {/* Ambient Glow */}
+               <div className='absolute -inset-10 bg-primary/20 blur-3xl rounded-full -z-10 animate-pulse'></div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>

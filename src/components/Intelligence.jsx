@@ -26,8 +26,13 @@ const Intelligence = () => {
     ]
 
     return (
-        <section className='py-32 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5'>
-            <div className='max-w-7xl mx-auto'>
+        <section className='relative py-32 px-6 sm:px-12 lg:px-24 bg-gray-50 dark:bg-zinc-900 text-gray-900 dark:text-white border-b border-gray-100 dark:border-white/5 overflow-hidden'>
+            {/* Mesh/Grid Background */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-20 dark:opacity-10">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+            </div>
+            
+            <div className='relative z-10 max-w-7xl mx-auto'>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-20 items-center'>
                     <div>
                         <div className='inline-block px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-600 dark:text-green-400 text-xs font-black uppercase tracking-widest mb-6'>

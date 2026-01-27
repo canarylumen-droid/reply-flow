@@ -96,6 +96,7 @@ const CaseStudyCard = ({ industry, problem, solution, metric, delay, proofType, 
 )
 
 const CaseStudies = () => {
+    const scrollRef = React.useRef(null);
     const studies = [
         {
             industry: "Coaching Infrastructure",
@@ -160,8 +161,8 @@ const CaseStudies = () => {
     ]
 
     return (
-        <section id='casestudies' className='py-24 px-6 bg-white dark:bg-[#050505] relative overflow-hidden'>
-            <div className='max-w-7xl mx-auto'>
+        <section id='casestudies' className='py-24 bg-white dark:bg-[#050505] relative overflow-hidden'>
+            <div className='max-w-7xl mx-auto px-6'>
                 {/* Header */}
                 <div className='flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20'>
                     <div className='max-w-2xl'>
@@ -178,14 +179,32 @@ const CaseStudies = () => {
                         </p>
                     </div>
                     
-                    <button className='px-8 py-4 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white rounded-full font-bold hover:bg-primary hover:text-white transition-all border border-gray-200 dark:border-white/10'>
-                        View All Performance Reports
-                    </button>
+                    <div className='flex gap-4'>
+                        <button 
+                            onClick={() => scrollRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}
+                            className='w-12 h-12 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all'
+                        >
+                            ←
+                        </button>
+                        <button 
+                            onClick={() => scrollRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}
+                            className='w-12 h-12 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all'
+                        >
+                            →
+                        </button>
+                    </div>
                 </div>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+                {/* Horizontal Scroll Container */}
+                <div 
+                    ref={scrollRef}
+                    className='flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory scrollbar-hide no-scrollbar'
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                >
                     {studies.map((study, idx) => (
-                        <CaseStudyCard key={idx} {...study} />
+                        <div key={idx} className='min-w-[320px] sm:min-w-[400px] snap-center'>
+                            <CaseStudyCard {...study} />
+                        </div>
                     ))}
                 </div>
 

@@ -34,7 +34,7 @@ const Navbar = ({ theme, setTheme }) => {
           </div>
           <div className="relative z-10">
             <h1 className="text-2xl font-[900] tracking-tighter leading-none font-syne uppercase text-gray-900 dark:text-white">REPLYFLOW</h1>
-            <p className="text-[9px] text-primary uppercase tracking-[0.3em] font-black mt-1">Infrastructure agency</p>
+            <p className="text-[9px] text-primary uppercase tracking-[0.3em] font-black mt-1">Autonomous Sales Engine</p>
           </div>
         </div>
 
