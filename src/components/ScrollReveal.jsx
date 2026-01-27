@@ -43,21 +43,15 @@ const Character = ({ children, progress, range }) => {
   const x = useTransform(progress, range, [-4, 0])
   const scale = useTransform(progress, range, [0.4, 1])
   
-  // Cursor effect: symmetrical reverse/forward
+  // High-speed typing effect
   const cursorOpacity = useTransform(
     progress, 
-    [range[0], range[0] + (range[1]-range[0])*0.1, range[1] - (range[1]-range[0])*0.1, range[1]], 
+    [range[0], range[0] + (range[1]-range[0])*0.05, range[1] - (range[1]-range[0])*0.05, range[1]], 
     [0, 1, 1, 0]
   )
 
   return (
     <motion.span 
-      whileHover={{ 
-        scale: 1.2,
-        color: "#0069ff",
-        textShadow: "0 0 20px rgba(0, 105, 255, 0.8)",
-        transition: { duration: 0.2 }
-      }}
       className="grid place-items-center relative group cursor-default"
     >
       {/* 1. Ghost Layer */}
@@ -72,12 +66,6 @@ const Character = ({ children, progress, range }) => {
       >
         {children}
       </motion.span>
-
-      {/* 3. Typing Cursor */}
-      <motion.span
-        style={{ opacity: cursorOpacity }}
-        className="absolute -bottom-1 left-0 right-0 h-[2px] bg-primary blur-[2px] z-20 pointer-events-none"
-      />
     </motion.span>
   )
 }
@@ -89,51 +77,17 @@ const ScrollReveal = () => {
     offset: ["start start", "end end"]
   })
 
-  // Smooth out the scroll for a liquid "slow" move feel
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 50, damping: 20 })
+  // Fast-reacting scroll
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 200, damping: 30 })
 
   return (
-    <section ref={containerRef} className="relative bg-[#080808] text-white h-[200vh] overflow-hidden">
+    <section ref={containerRef} className="relative bg-[#080808] text-white h-[120vh] overflow-hidden">
       {/* Grid Background */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-10">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <div className="absolute inset-0 bg-grid-dark [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
       </div>
 
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
-        
-        {/* Background Animated Blobs - now linked to progress */}
-        <motion.div 
-          style={{ 
-            scale: useTransform(smoothProgress, [0, 1], [1, 1.5]),
-            opacity: useTransform(smoothProgress, [0, 0.5, 1], [0.1, 0.2, 0.1])
-          }}
-          className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] -z-10"
-        />
-
-        {/* Digital Dust / Particles */}
-        <div className="absolute inset-0 pointer-events-none opacity-30">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ 
-                x: Math.random() * 100 + "%", 
-                y: Math.random() * 100 + "%",
-                scale: Math.random() * 0.5 + 0.5
-              }}
-              animate={{ 
-                y: [null, "-20%"],
-                opacity: [0, 1, 0]
-              }}
-              transition={{ 
-                duration: Math.random() * 5 + 5, 
-                repeat: Infinity, 
-                delay: Math.random() * 5 
-              }}
-              className="absolute w-1 h-1 bg-primary rounded-full"
-            />
-          ))}
-        </div>
-        
         <div className="container px-4 mx-auto relative z-10">
           <Paragraph 
             progress={smoothProgress}
@@ -142,6 +96,8 @@ const ScrollReveal = () => {
         </div>
       </div>
     </section>
+  )
+}
   )
 }
 

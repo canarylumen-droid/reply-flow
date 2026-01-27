@@ -52,43 +52,28 @@ const CaseStudyCard = ({ industry, problem, solution, metric, delay, proofType, 
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ delay: delay, duration: 0.8 }}
         viewport={{ once: true }}
-        className='group bg-white dark:bg-black border border-gray-100 dark:border-white/5 rounded-3xl p-8 hover:border-primary/50 transition-all shadow-2xl shadow-gray-200/50 dark:shadow-none relative overflow-hidden flex flex-col'
+        className='group bg-white dark:bg-zinc-900 border border-gray-100 dark:border-white/5 rounded-2xl p-8 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all shadow-sm flex flex-col min-h-[400px]'
     >
-        <div className='absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity'>
-            <BrainIcon className="w-24 h-24" />
-        </div>
-
         <div className='flex items-center gap-2 mb-6'>
-            <div className='px-3 py-1 bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-widest rounded-full border border-primary/20'>
+            <div className='px-3 py-1 bg-primary/5 dark:bg-blue-500/10 text-primary dark:text-blue-400 text-[10px] font-bold uppercase tracking-widest rounded-full'>
                 {industry}
             </div>
-            <div className='h-px flex-1 bg-gray-100 dark:bg-white/10' />
         </div>
 
-        <h3 className='text-lg font-bold text-gray-900 dark:text-white mb-4 group-hover:text-primary transition-colors leading-tight'>
+        <h3 className='text-2xl font-serif text-gray-900 dark:text-white mb-6 leading-tight'>
             {problem}
         </h3>
 
-        <div className='space-y-4 mb-2'>
-            <div className='flex items-start gap-3'>
-                <div className='w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0' />
-                <p className='text-sm text-gray-500 dark:text-gray-400'>
-                    <span className='text-gray-900 dark:text-white font-semibold'>Infrastructure:</span> {solution}
-                </p>
-            </div>
-        </div>
-
-        {/* Visual Proof Section */}
         <div className='flex-1'>
             <ProofMockup type={proofType} user={proofUser} message={proofMessage} delay={delay} />
         </div>
 
         <div className='pt-6 border-t border-gray-100 dark:border-white/10 flex items-center justify-between mt-auto'>
             <div>
-                <p className='text-[10px] text-gray-400 uppercase font-bold tracking-tighter mb-1'>Verified Outcome</p>
-                <p className='text-2xl font-black text-primary font-syne'>{metric}</p>
+                <p className='text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1'>Outcome</p>
+                <p className='text-3xl font-black text-primary dark:text-white font-syne'>{metric}</p>
             </div>
-            <div className='w-10 h-10 rounded-full bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-400 group-hover:bg-primary group-hover:text-white transition-all'>
+            <div className='w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all transform translate-x-4 group-hover:translate-x-0'>
                 <ArrowRightIcon className="w-5 h-5" />
             </div>
         </div>
@@ -96,117 +81,64 @@ const CaseStudyCard = ({ industry, problem, solution, metric, delay, proofType, 
 )
 
 const CaseStudies = () => {
-    const scrollRef = React.useRef(null);
     const studies = [
         {
-            industry: "Coaching Infrastructure",
+            industry: "Coaching",
             problem: "Losing 40% of leads due to 4+ hour response times.",
-            solution: "Bespoke AI Nurture Layer with 90s response latency.",
+            solution: "AI Nurture Layer with 90s response latency.",
             metric: "$9,450 Recovered",
             proofType: 'discord',
-            proofUser: 'Jonathan D. (Ops)',
+            proofUser: 'Jonathan D.',
             proofMessage: 'The reactivation campaign is printing. show-up rates literally doubled and we salvaged $9,450 in revenue.',
             delay: 0.1
         },
         {
-            industry: "B2B Lead Acquisition",
+            industry: "B2B Lead Gen",
             problem: "Saturated inbox leading to missed discovery calls.",
             solution: "Intent-based AI Filtering & automated calendar scheduling.",
             metric: "$4,200 Recovered",
             proofType: 'dm',
-            proofUser: 'Alex G. (Partner)',
+            proofUser: 'Alex G.',
             proofMessage: 'I almost hired a call center. Glad I didn\'t. This recovered $4,200 this month without me managing a human.',
             delay: 0.2
         },
         {
-            industry: "E-commerce Support",
+            industry: "E-commerce",
             problem: "Manual follow-up fatigue resulting in abandoned decay.",
             solution: "Persistent Multi-Channel Automation (Email + DM).",
             metric: "$3,850 Recovered",
             proofType: 'discord',
-            proofUser: 'Marcus T. (Founder)',
+            proofUser: 'Marcus T.',
             proofMessage: 'My guys are good at sales, not texting. Having this system filter tire-kickers has salvaged $3,850 so far.',
             delay: 0.3
-        },
-        {
-            industry: "Consulting Operations",
-            problem: "Cold leads going stagnant after initial inquiry.",
-            solution: "AI-Driven Reactivation engine with dynamic personalization.",
-            metric: "$5,200 Recovered",
-            proofType: 'dm',
-            proofUser: 'Chloe B. (Manager)',
-            proofMessage: 'The objection handling is insane. It sounds more professional than my junior reps. Salvaged $5,200 from cold leads.',
-            delay: 0.4
-        },
-        {
-            industry: "Real Estate Ops",
-            problem: "Weekend inquiries ignored until Monday morning.",
-            solution: "24/7 Managed Infrastructure for instant lead qualification.",
-            metric: "$8,900 Recovered",
-            proofType: 'discord',
-            proofUser: 'Elena R. (Lead)',
-            proofMessage: 'We are now the first to reply to every inquiry 24/7. Speed is everything and we just booked $8,900 in value.',
-            delay: 0.5
-        },
-        {
-            industry: "Agency Growth",
-            problem: "Operationally heavy manual lead vetting process.",
-            solution: "High-Fidelity AI Sales Closer for 1st-level qualification.",
-            metric: "$7,200 Recovered",
-            proofType: 'dm',
-            proofUser: 'Ryan K. (Ops)',
-            proofMessage: 'We recovered $7,200 that would have decayed. Our show-up rate is up 30% from the AI qualification.',
-            delay: 0.6
         }
     ]
 
     return (
-        <section id='casestudies' className='py-24 bg-white dark:bg-[#050505] relative overflow-hidden'>
-            <div className='max-w-7xl mx-auto px-6'>
-                {/* Header */}
-                <div className='flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20'>
-                    <div className='max-w-2xl'>
-                        <div className='flex items-center gap-3 text-primary font-bold uppercase text-[10px] tracking-[0.4em] font-syne mb-4'>
-                            <div className='w-2 h-2 rounded-full bg-primary' />
-                            <span>Proof of Infrastructure</span>
-                        </div>
-                        <h2 className='text-4xl sm:text-6xl font-black text-gray-900 dark:text-white uppercase font-syne leading-none mb-6'>
-                            Alpha Results <br />
-                            <span className='text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400'>Field Verified</span>
-                        </h2>
-                        <p className='text-lg text-gray-500 dark:text-gray-400'>
-                            Visual proof of our active sales machines. We don't sell theory—we deploy infrastructure that delivers measurable recovery across every channel.
-                        </p>
-                    </div>
-                    
-                    <div className='flex gap-4'>
-                        <button 
-                            onClick={() => scrollRef.current?.scrollBy({ left: -400, behavior: 'smooth' })}
-                            className='w-12 h-12 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all'
-                        >
-                            ←
-                        </button>
-                        <button 
-                            onClick={() => scrollRef.current?.scrollBy({ left: 400, behavior: 'smooth' })}
-                            className='w-12 h-12 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-all'
-                        >
-                            →
-                        </button>
-                    </div>
+        <section id='casestudies' className='py-32 bg-white dark:bg-black relative overflow-hidden'>
+             <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute inset-0 bg-grid-light dark:bg-grid-dark opacity-40"></div>
+            </div>
+            
+            <div className='max-w-7xl mx-auto px-6 relative z-10'>
+                <div className='text-center mb-20'>
+                    <h2 className='text-4xl sm:text-6xl font-serif text-gray-900 dark:text-white mb-6'>
+                        Alpha Results
+                    </h2>
+                    <p className='text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto'>
+                        Visual proof of our active sales machines. measurable recovery across every channel.
+                    </p>
                 </div>
 
-                {/* Horizontal Scroll Container */}
-                <div 
-                    ref={scrollRef}
-                    className='flex gap-8 overflow-x-auto pb-12 snap-x snap-mandatory scrollbar-hide no-scrollbar'
-                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                >
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
                     {studies.map((study, idx) => (
-                        <div key={idx} className='min-w-[320px] sm:min-w-[400px] snap-center'>
-                            <CaseStudyCard {...study} />
-                        </div>
+                        <CaseStudyCard key={idx} {...study} />
                     ))}
                 </div>
+            </div>
+        </section>
+    )
+}
 
                 {/* Performance Banner */}
                 <motion.div 
