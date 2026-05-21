@@ -98,7 +98,6 @@ const ScrollReveal = () => {
     </section>
   )
 }
-  )
-}
 
 export default ScrollReveal
+
