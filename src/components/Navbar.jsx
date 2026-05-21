@@ -52,6 +52,10 @@ const Navbar = ({ theme, setTheme }) => {
             Services
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
+          <a href="/blog" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
+            Blog
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
+          </a>
           <a href="#roi" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
             Calculator
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
@@ -140,6 +144,13 @@ const Navbar = ({ theme, setTheme }) => {
               className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
             >
               Services
+            </a>
+            <a 
+              onClick={() => setSidebarOpen(false)} 
+              href="/blog" 
+              className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
+            >
+              Blog
             </a>
             <a 
               onClick={() => setSidebarOpen(false)} 

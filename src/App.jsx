@@ -22,6 +22,8 @@ import ScrollingText from './components/ScrollingText'
 import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
 import { Toaster } from 'react-hot-toast'
+import BlogPost from './components/BlogPost'
+import BlogIndex from './components/BlogIndex'
 
 const getInitialTheme = () => {
   const saved = localStorage.getItem('theme')
@@ -115,6 +117,17 @@ const App = () => {
 
   return (
     <div className="relative bg-white dark:bg-black transition-colors min-h-screen lg:cursor-none">
+      {/* Simple client-side route: if path is /blog/:slug render BlogPost to keep main site styling */}
+      {typeof window !== 'undefined' && (window.location.pathname === '/blog' || window.location.pathname === '/blog/') ? (
+        <BlogIndex />
+      ) : typeof window !== 'undefined' && window.location.pathname.startsWith('/blog/') ? (
+        (() => {
+          const segs = window.location.pathname.split('/').filter(Boolean)
+          const slug = segs.length >= 2 ? segs.slice(1).join('/') : ''
+          return <BlogPost slug={slug} />
+        })()
+      ) : null}
+      {typeof window !== 'undefined' && window.location.pathname.startsWith('/blog/') ? null : (
       <AnimatePresence mode="wait">
         {isLoading ? (
           <motion.div
@@ -135,7 +148,7 @@ const App = () => {
               className="flex flex-col items-center gap-2"
             >
               <span className="text-white font-syne font-black text-2xl tracking-tighter uppercase">ReplyFlow</span>
-              <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Audnix AI</span>
+              <a href="https://audnixai.com" target="_blank" rel="noopener noreferrer" aria-label="Open Audnix AI (external)" className="text-primary text-[10px] font-bold tracking-widest uppercase">Audnix AI</a>
               <div className="h-[2px] w-24 bg-zinc-800 relative overflow-hidden rounded-full mt-2">
                 <motion.div 
                   initial={{ x: '-100%' }}

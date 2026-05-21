@@ -29,14 +29,32 @@ const TrustedBy = () => {
           transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
         >
           {[...brands, ...brands, ...brands].map((brand, index) => (
-            <div key={index} className='flex items-center gap-4 group cursor-default'>
-              <div className={`w-12 h-12 rounded-2xl bg-gray-50 dark:bg-zinc-900 flex items-center justify-center font-bold ${brand.color} text-xl shadow-sm border border-gray-100 dark:border-white/5 group-hover:scale-110 transition-transform`}>
-                {brand.name[0]}
+            brand.name === 'AUDNIX AI' ? (
+              <a
+                key={index}
+                href="https://audnixai.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Audnix.ai (external)"
+                className='flex items-center gap-4 group cursor-pointer'
+              >
+                <div className={`w-12 h-12 rounded-2xl bg-gray-50 dark:bg-zinc-900 flex items-center justify-center font-bold ${brand.color} text-xl shadow-sm border border-gray-100 dark:border-white/5 group-hover:scale-110 transition-transform`}>
+                  {brand.name[0]}
+                </div>
+                <span className='text-2xl sm:text-3xl font-black font-syne tracking-tighter text-gray-300 dark:text-zinc-800 group-hover:text-gray-900 dark:group-hover:text-white transition-colors'>
+                  {brand.name}
+                </span>
+              </a>
+            ) : (
+              <div key={index} className='flex items-center gap-4 group cursor-default'>
+                <div className={`w-12 h-12 rounded-2xl bg-gray-50 dark:bg-zinc-900 flex items-center justify-center font-bold ${brand.color} text-xl shadow-sm border border-gray-100 dark:border-white/5 group-hover:scale-110 transition-transform`}>
+                  {brand.name[0]}
+                </div>
+                <span className='text-2xl sm:text-3xl font-black font-syne tracking-tighter text-gray-300 dark:text-zinc-800 group-hover:text-gray-900 dark:group-hover:text-white transition-colors'>
+                  {brand.name}
+                </span>
               </div>
-              <span className='text-2xl sm:text-3xl font-black font-syne tracking-tighter text-gray-300 dark:text-zinc-800 group-hover:text-gray-900 dark:group-hover:text-white transition-colors'>
-                {brand.name}
-              </span>
-            </div>
+            )
           ))}
         </motion.div>
       </div>
