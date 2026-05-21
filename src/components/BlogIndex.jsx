@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { ArrowRightIcon } from './Icons'
 
+const API_BASE = import.meta.env.VITE_BLOG_API_URL || 'http://localhost:4000'
+
 const BlogIndex = () => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -9,7 +11,7 @@ const BlogIndex = () => {
     let mounted = true
     const fetchPosts = async () => {
       try {
-        const res = await fetch('http://localhost:4000/api/posts')
+        const res = await fetch(`${API_BASE}/api/posts`)
         const json = await res.json()
         if (mounted) setPosts(json.items || [])
       } catch (err) {
@@ -32,7 +34,6 @@ const BlogIndex = () => {
           {posts.map(p => (
             <article key={p.slug} className="border-b border-gray-100 pb-4">
               <a href={`/blog/${p.slug}`} className="text-xl font-bold text-primary hover:underline">{p.title}</a>
-              <div className="text-sm text-gray-500 mt-1 mb-2">{new Date(p.publishedAt).toLocaleDateString()}</div>
               <p className="text-gray-700 mb-2">{p.excerpt}</p>
               <a href={`/blog/${p.slug}`} className="inline-flex items-center gap-2 text-sm font-bold text-primary">Read article <ArrowRightIcon className="w-4 h-4" /></a>
             </article>

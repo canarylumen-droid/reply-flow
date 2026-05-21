@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { ArrowRightIcon } from './Icons'
 
+const API_BASE = import.meta.env.VITE_BLOG_API_URL || 'http://localhost:4000'
+
 const BlogPost = ({ slug }) => {
   const [post, setPost] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -11,8 +13,7 @@ const BlogPost = ({ slug }) => {
       setLoading(true)
       setError(null)
       try {
-        // Try fetching from local API (blog-backend). Adjust base if you proxy in production.
-        const res = await fetch(`http://localhost:4000/api/post/${encodeURIComponent(slug)}`)
+        const res = await fetch(`${API_BASE}/api/post/${encodeURIComponent(slug)}`)
         if (!res.ok) throw new Error('post_not_found')
         const data = await res.json()
         setPost(data)
@@ -29,7 +30,7 @@ const BlogPost = ({ slug }) => {
   if (error) return (
     <div className="px-6 py-12 max-w-3xl mx-auto text-center">
       <p className="mb-4">Could not load post.</p>
-      <a href={`/blog/${slug}`} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white font-bold">Open raw post <ArrowRightIcon className="w-4 h-4" /></a>
+      <a href="/blog" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary text-white font-bold">Back to blog <ArrowRightIcon className="w-4 h-4" /></a>
     </div>
   )
 

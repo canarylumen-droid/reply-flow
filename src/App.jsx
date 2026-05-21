@@ -21,9 +21,9 @@ import Booking from './components/Booking'
 import ScrollingText from './components/ScrollingText'
 import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
-import { Toaster } from 'react-hot-toast'
 import BlogPost from './components/BlogPost'
 import BlogIndex from './components/BlogIndex'
+import { Toaster } from 'react-hot-toast'
 
 const getInitialTheme = () => {
   const saved = localStorage.getItem('theme')
@@ -81,6 +81,11 @@ const App = () => {
   const dotPos = useRef({ x: 0, y: 0 })
   const trailPos = useRef({ x: 0, y: 0 })
 
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : ''
+  const isBlogIndex = currentPath === '/blog' || currentPath === '/blog/'
+  const isBlogPost = currentPath.startsWith('/blog/') && currentPath.split('/').filter(Boolean).length > 1
+  const blogSlug = isBlogPost ? currentPath.split('/').filter(Boolean).slice(1).join('/') : ''
+
   useEffect(() => {
     if (window.innerWidth < 1024 || isLoading) return;
 
@@ -115,15 +120,13 @@ const App = () => {
     }
   }, [isLoading])
 
-  const isBlogPath = typeof window !== 'undefined' && window.location.pathname.startsWith('/blog/')
-  const isBlogIndex = typeof window !== 'undefined' && (window.location.pathname === '/blog' || window.location.pathname === '/blog/')
-  const blogSlug = isBlogPath && !isBlogIndex ? window.location.pathname.split('/').filter(Boolean).slice(1).join('/') : ''
-
   return (
     <div className="relative bg-white dark:bg-black transition-colors min-h-screen lg:cursor-none">
-      {isBlogIndex && <BlogIndex />}
-      {!isBlogIndex && isBlogPath && <BlogPost slug={blogSlug} />}
-      {!isBlogPath && (
+      {isBlogIndex ? (
+        <BlogIndex />
+      ) : isBlogPost ? (
+        <BlogPost slug={blogSlug} />
+      ) : (
         <AnimatePresence mode="wait">
           {isLoading ? (
             <motion.div
@@ -144,7 +147,7 @@ const App = () => {
                 className="flex flex-col items-center gap-2"
               >
                 <span className="text-white font-syne font-black text-2xl tracking-tighter uppercase">ReplyFlow</span>
-                <a href="https://audnixai.com" target="_blank" rel="noopener noreferrer" aria-label="Open Audnix AI (external)" className="text-primary text-[10px] font-bold tracking-widest uppercase">Audnix AI</a>
+                <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Audnix AI</span>
                 <div className="h-[2px] w-24 bg-zinc-800 relative overflow-hidden rounded-full mt-2">
                   <motion.div 
                     initial={{ x: '-100%' }}
