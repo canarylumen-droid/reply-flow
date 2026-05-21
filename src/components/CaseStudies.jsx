@@ -135,10 +135,6 @@ const CaseStudies = () => {
                         <CaseStudyCard key={idx} {...study} />
                     ))}
                 </div>
-            </div>
-        </section>
-    )
-}
 
                 {/* Performance Banner */}
                 <motion.div 
