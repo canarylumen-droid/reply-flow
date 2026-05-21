@@ -23,12 +23,8 @@ const TrustedBy = () => {
         <div className='absolute top-0 left-0 h-full w-20 sm:w-40 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none' />
         <div className='absolute top-0 right-0 h-full w-20 sm:w-40 bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none' />
 
-        <motion.div
-          className='flex gap-16 sm:gap-32 whitespace-nowrap px-10'
-          animate={{ x: [0, -1200] }}
-          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
-        >
-          {[...brands, ...brands, ...brands].map((brand, index) => (
+        <div className='flex gap-16 sm:gap-32 flex-wrap justify-center px-10'>
+          {brands.map((brand, index) => (
             brand.name === 'AUDNIX AI' ? (
               <a
                 key={index}
@@ -56,7 +52,7 @@ const TrustedBy = () => {
               </div>
             )
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   )
