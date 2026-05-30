@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ArrowRightIcon } from './Icons'
 import Navbar from './Navbar'
 
-const API_BASE = import.meta.env.VITE_BLOG_API_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4000')
+const API_BASE = import.meta.env.VITE_BLOG_API_URL || (import.meta.env.DEV ? 'http://localhost:4000' : (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4000'))
 
 const BlogPost = ({ slug }) => {
   const [post, setPost] = useState(null)

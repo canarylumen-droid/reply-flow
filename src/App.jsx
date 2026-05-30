@@ -121,7 +121,7 @@ const App = () => {
   }, [isLoading])
 
   return (
-    <div className="relative bg-white dark:bg-black transition-colors min-h-screen lg:cursor-none">
+    <div className="relative bg-white dark:bg-black transition-colors min-h-screen lg:cursor-auto">
       {isBlogIndex ? (
         <BlogIndex />
       ) : isBlogPost ? (

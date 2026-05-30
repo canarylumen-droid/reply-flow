@@ -40,15 +40,15 @@ const Navbar = ({ theme, setTheme }) => {
 
         {/* Desktop Nav Links (Hidden on Mobile) */}
         <div className="hidden sm:flex items-center gap-8">
-          <a href="#hero" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
+          <a href="/#hero" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
             Home
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
-          <a href="#casestudies" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
+          <a href="/#casestudies" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
             Case Studies
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
-          <a href="#pricing" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
+          <a href="/#pricing" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
             Services
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
@@ -56,7 +56,7 @@ const Navbar = ({ theme, setTheme }) => {
             Blog
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
-          <a href="#roi" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
+          <a href="/#roi" className="text-sm text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-all font-bold relative group">
             Calculator
             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span>
           </a>
@@ -126,21 +126,21 @@ const Navbar = ({ theme, setTheme }) => {
           <nav className="flex flex-col items-center gap-8 w-full">
             <a 
               onClick={() => setSidebarOpen(false)} 
-              href="#hero" 
+              href="/#hero" 
               className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
             >
               Home
             </a>
             <a 
               onClick={() => setSidebarOpen(false)} 
-              href="#casestudies" 
+              href="/#casestudies" 
               className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
             >
               Case Studies
             </a>
             <a 
               onClick={() => setSidebarOpen(false)} 
-              href="#pricing" 
+              href="/#pricing" 
               className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
             >
               Services
@@ -154,7 +154,7 @@ const Navbar = ({ theme, setTheme }) => {
             </a>
             <a 
               onClick={() => setSidebarOpen(false)} 
-              href="#roi" 
+              href="/#roi" 
               className="text-4xl font-syne font-bold text-gray-900 dark:text-white hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition-all transform hover:scale-105"
             >
               Calculator
