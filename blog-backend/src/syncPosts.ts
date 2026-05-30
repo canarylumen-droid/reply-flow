@@ -3,15 +3,17 @@ import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
 import slugify from 'slugify'
-import PostModel from './models/Post'
-import { parseMarkdownFile } from './utils/markdown'
-import { notifyGoogleIndexing, notifyIndexNow } from './utils/indexing'
+import { fileURLToPath } from 'url'
+import PostModel from './models/Post.js'
+import { parseMarkdownFile } from './utils/markdown.js'
+import { notifyGoogleIndexing, notifyIndexNow } from './utils/indexing.js'
 import dotenv from 'dotenv'
 
 dotenv.config()
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const MONGO = process.env.MONGO_URI || 'mongodb://localhost:27017/replyflow-blog'
-const POSTS_DIR = path.join(process.cwd(), '..', 'content', 'posts')
+const POSTS_DIR = path.join(__dirname, '..', '..', 'content', 'posts')
 
 export async function connectDB() {
   return mongoose.connect(MONGO)
@@ -101,18 +103,4 @@ export function watchPosts() {
     }
   })
   console.log('Watching posts directory for changes:', postsPath)
-}
-
-if (require.main === module) {
-  ;(async () => {
-    try {
-      await connectDB()
-      await syncAll()
-      await disconnectDB()
-      process.exit(0)
-    } catch (err) {
-      console.error(err)
-      process.exit(1)
-    }
-  })()
 }

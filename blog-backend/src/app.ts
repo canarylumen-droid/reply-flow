@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express'
 import dotenv from 'dotenv'
-import PostModel from './models/Post'
+import PostModel from './models/Post.js'
 import { JSDOM } from 'jsdom'
 import createDOMPurify from 'dompurify'
-import { connectDB, syncAll, watchPosts } from './syncPosts'
+import { connectDB, syncAll, watchPosts } from './syncPosts.js'
 
 dotenv.config()
 
