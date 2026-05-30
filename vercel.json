@@ -1,0 +1,18 @@
+{
+  "rewrites": [
+    { "source": "/(.*\\.(css|js|map|png|jpg|jpeg|svg|ico|json|xml|txt))", "destination": "/$1" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "index, follow" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/", "destination": "https://www.replyflow.pro/", "permanent": true }
+  ]
+}

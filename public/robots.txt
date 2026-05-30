@@ -1,10 +1,4 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Google-InspectionTool
-Allow: /
-
 User-agent: *
 Allow: /
 
-Sitemap: https://www.replyflow.pro/sitemap.xml
+Sitemap: https://replyflow.pro/sitemap.xml
