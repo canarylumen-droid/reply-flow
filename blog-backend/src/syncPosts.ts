@@ -12,7 +12,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const MONGO = process.env.MONGO_URI || 'mongodb://localhost:27017/replyflow-blog'
+const MONGO = process.env.MONGO_URI || process.env.DATABASE_URL_MONGODB_URI || 'mongodb://localhost:27017/replyflow-blog'
 const POSTS_DIR = path.join(__dirname, '..', '..', 'content', 'posts')
 
 export async function connectDB() {

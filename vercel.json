@@ -11,8 +11,5 @@
         { "key": "X-Robots-Tag", "value": "index, follow" }
       ]
     }
-  ],
-  "redirects": [
-    { "source": "/", "destination": "https://www.replyflow.pro/", "permanent": true }
   ]
 }

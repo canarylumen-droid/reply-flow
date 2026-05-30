@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ArrowRightIcon } from './Icons'
 import Navbar from './Navbar'
 
-const API_BASE = import.meta.env.VITE_BLOG_API_URL || 'http://localhost:4000'
+const API_BASE = import.meta.env.VITE_BLOG_API_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4000')
 
 const BlogPost = ({ slug }) => {
   const [post, setPost] = useState(null)
@@ -51,7 +51,7 @@ const BlogPost = ({ slug }) => {
         <article className="max-w-3xl mx-auto px-6">
           <h1 className="text-4xl sm:text-5xl font-syne font-bold mb-4 text-white">{post.title}</h1>
           <div className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-800">
-            <img src="https://www.replyflow.pro/reply_flow_logo.png" alt="Reply Flow" className="h-12 w-auto rounded-md" />
+            <img src="https://replyflow.pro/reply_flow_logo.png" alt="Reply Flow" className="h-12 w-auto rounded-md" />
             <div>
               <div className="text-sm font-syne font-semibold text-white">Reply Flow</div>
               <div className="text-xs text-gray-500">Autonomous Sales Engine</div>

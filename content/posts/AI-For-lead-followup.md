@@ -3,9 +3,9 @@ title: "The Best AI for Lead Follow-Up and Recovery (And Why Most Businesses Are
 slug: "best-ai-lead-follow-up-recovery"
 date: "2026-05-20"
 description: "Recover lost revenue with AI-powered lead follow-up. How We automates re-engagement, objection handling, and speeds response to win more deals."
-canonical: "https://www.replyflow.pro/blog/best-ai-lead-follow-up-recovery"
+canonical: "https://replyflow.pro/blog/best-ai-lead-follow-up-recovery"
 tags: [" Best lead follow-up system","lost lead recovery","sales automation"]
-ogImage: "https://www.replyflow.pro/reply_flow_logo.png"
+ogImage: "https://replyflow.pro/reply_flow_logo.png"
 draft: false
 ---
 

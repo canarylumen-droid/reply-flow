@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express'
+import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import PostModel from './models/Post.js'
 import { JSDOM } from 'jsdom'
@@ -21,6 +22,17 @@ app.use((req: Request, res: Response, next: any) => {
     return res.sendStatus(200)
   }
   next()
+})
+
+app.get('/api/health', async (_req: Request, res: Response) => {
+  try {
+    const state = mongoose.connection.readyState
+    const status = state === 1 ? 'ok' : 'unavailable'
+    const uptime = process.uptime()
+    res.json({ status, readyState: state, uptime, mongoUri: process.env.MONGO_URI ? 'configured' : 'missing' })
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: (err as Error).message })
+  }
 })
 
 app.get('/api/post/:slug', async (req: Request, res: Response) => {

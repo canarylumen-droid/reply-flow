@@ -1,0 +1,21 @@
+name: Keepalive and Health Check
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' # every 4 hours
+  workflow_dispatch: {}
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping blog backend health endpoint
+        run: |
+          URL="${{ secrets.KEEPALIVE_URL || 'https://replyflow.pro/api/health' }}"
+          echo "Pinging $URL"
+          status=$(curl -s -o /dev/null -w '%{http_code}' "$URL")
+          echo "HTTP status: $status"
+          if [ "$status" != "200" ]; then
+            echo "Health check failed"
+            exit 1
+          fi

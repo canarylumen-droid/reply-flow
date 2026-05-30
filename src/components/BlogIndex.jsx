@@ -3,7 +3,7 @@ import { ArrowRightIcon } from './Icons'
 import Navbar from './Navbar'
 import ThemeToggleBtn from './ThemeToggleBtn'
 
-const API_BASE = import.meta.env.VITE_BLOG_API_URL || 'http://localhost:4000'
+const API_BASE = import.meta.env.VITE_BLOG_API_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:4000')
 
 const BlogIndex = () => {
   const [posts, setPosts] = useState([])
