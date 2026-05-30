@@ -1,56 +1,58 @@
 import React from 'react'
-import { motion } from "framer-motion"
+
+const brands = [
+  { name: "KREATEYO",     href: null,                    accent: "#3b82f6" },
+  { name: "KYNOX AI",     href: null,                    accent: "#a855f7" },
+  { name: "AUDNIX AI",    href: "https://audnixai.com",  accent: "#2563eb" },
+  { name: "ORBIEON",      href: null,                    accent: "#10b981" },
+  { name: "SAS REC",      href: null,                    accent: "#f43f5e" },
+  { name: "FANTASY LUXE", href: null,                    accent: "#f59e0b" },
+]
+
+const BrandItem = ({ name, href, accent }) => {
+  const inner = (
+    <div className="flex items-center gap-2.5 px-6 py-3 rounded-full border border-gray-200/70 dark:border-white/[0.06] bg-white dark:bg-zinc-900/60 hover:border-gray-300 dark:hover:border-white/10 transition-colors duration-300 group cursor-default select-none">
+      <span
+        className="w-1.5 h-1.5 rounded-full shrink-0"
+        style={{ backgroundColor: accent }}
+      />
+      <span className="text-sm font-semibold tracking-[0.12em] text-gray-400 dark:text-zinc-500 group-hover:text-gray-700 dark:group-hover:text-zinc-300 transition-colors duration-300 whitespace-nowrap font-syne">
+        {name}
+      </span>
+    </div>
+  )
+
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className="block cursor-pointer">
+        {inner}
+      </a>
+    )
+  }
+  return inner
+}
 
 const TrustedBy = () => {
-  const brands = [
-    { name: "KREATEYO", color: "text-blue-500" },
-    { name: "KYNOX AI", color: "text-purple-500" },
-    { name: "AUDNIX AI", color: "text-primary" },
-    { name: "ORBIEON", color: "text-emerald-500" },
-    { name: "SAS REC", color: "text-rose-500" },
-    { name: "FANTASY LUXE", color: "text-amber-500" },
-  ]
+  const doubled = [...brands, ...brands]
 
   return (
-    <section className='py-20 bg-white dark:bg-black border-y border-gray-100 dark:border-white/5 overflow-hidden'>
-      <div className='max-w-7xl mx-auto px-6 mb-12 text-center'>
-        <span className='text-[10px] font-black tracking-[0.4em] text-gray-400 dark:text-zinc-600 uppercase mb-4 block'>CLIENTS &amp; PARTNERS</span>
-        <div className='w-12 h-1 bg-primary/20 rounded-full mx-auto'></div>
-      </div>
-      
-      <div className='relative flex items-center overflow-hidden'>
-        {/* Gradient Masks */}
-        <div className='absolute top-0 left-0 h-full w-20 sm:w-40 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none' />
-        <div className='absolute top-0 right-0 h-full w-20 sm:w-40 bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none' />
+    <section className="py-14 bg-white dark:bg-black border-y border-gray-100 dark:border-white/[0.04] overflow-hidden">
+      <p className="text-center text-[10px] font-semibold tracking-[0.35em] text-gray-300 dark:text-zinc-700 uppercase mb-8 select-none">
+        Clients &amp; Partners
+      </p>
 
-        <div className='flex gap-16 sm:gap-32 flex-wrap justify-center px-10'>
-          {brands.map((brand, index) => (
-            brand.name === 'AUDNIX AI' ? (
-              <a
-                key={index}
-                href="https://audnixai.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open Audnix.ai (external)"
-                className='flex items-center gap-4 group cursor-pointer'
-              >
-                <div className={`w-12 h-12 rounded-2xl bg-gray-50 dark:bg-zinc-900 flex items-center justify-center font-bold ${brand.color} text-xl shadow-sm border border-gray-100 dark:border-white/5 group-hover:scale-110 transition-transform`}>
-                  {brand.name[0]}
-                </div>
-                <span className='text-2xl sm:text-3xl font-black font-syne tracking-tighter text-gray-300 dark:text-zinc-800 group-hover:text-gray-900 dark:group-hover:text-white transition-colors'>
-                  {brand.name}
-                </span>
-              </a>
-            ) : (
-              <div key={index} className='flex items-center gap-4 group cursor-default'>
-                <div className={`w-12 h-12 rounded-2xl bg-gray-50 dark:bg-zinc-900 flex items-center justify-center font-bold ${brand.color} text-xl shadow-sm border border-gray-100 dark:border-white/5 group-hover:scale-110 transition-transform`}>
-                  {brand.name[0]}
-                </div>
-                <span className='text-2xl sm:text-3xl font-black font-syne tracking-tighter text-gray-300 dark:text-zinc-800 group-hover:text-gray-900 dark:group-hover:text-white transition-colors'>
-                  {brand.name}
-                </span>
-              </div>
-            )
+      {/* Marquee */}
+      <div className="marquee-wrap relative">
+        {/* Left fade */}
+        <div className="absolute left-0 top-0 h-full w-24 sm:w-40 bg-gradient-to-r from-white dark:from-black to-transparent z-10 pointer-events-none" />
+        {/* Right fade */}
+        <div className="absolute right-0 top-0 h-full w-24 sm:w-40 bg-gradient-to-l from-white dark:from-black to-transparent z-10 pointer-events-none" />
+
+        <div className="marquee-track gap-4 px-4">
+          {doubled.map((brand, i) => (
+            <div key={i} className="px-2">
+              <BrandItem {...brand} />
+            </div>
           ))}
         </div>
       </div>

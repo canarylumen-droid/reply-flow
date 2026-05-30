@@ -1,7 +1,21 @@
 User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: https://replyflow.pro/sitemap.xml
+Sitemap: https://replyflow.pro/sitemap-news.xml
 
-User-agent: Gogglebot
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
 Allow: /

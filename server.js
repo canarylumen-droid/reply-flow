@@ -66,6 +66,53 @@ function mdToHtml(md) {
   return out.join('\n')
 }
 
+const SITE_URL = 'https://replyflow.pro'
+
+function generateSitemap(posts) {
+  const today = new Date().toISOString().split('T')[0]
+  const staticPages = [
+    { loc: `${SITE_URL}/`,             priority: '1.0', changefreq: 'weekly',  lastmod: today },
+    { loc: `${SITE_URL}/blog`,         priority: '0.9', changefreq: 'weekly',  lastmod: today },
+    { loc: `${SITE_URL}/#pricing`,     priority: '0.7', changefreq: 'monthly', lastmod: today },
+    { loc: `${SITE_URL}/#casestudies`, priority: '0.7', changefreq: 'monthly', lastmod: today },
+    { loc: `${SITE_URL}/#process`,     priority: '0.6', changefreq: 'monthly', lastmod: today },
+    { loc: `${SITE_URL}/#roi`,         priority: '0.6', changefreq: 'monthly', lastmod: today },
+  ]
+  const postUrls = posts.map(p => ({
+    loc: `${SITE_URL}/blog/${p.slug}`,
+    priority: '0.8',
+    changefreq: 'monthly',
+    lastmod: p.publishedAt || today
+  }))
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+${[...staticPages, ...postUrls].map(u => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${u.lastmod}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`
+}
+
+app.get('/sitemap.xml', (req, res) => {
+  try {
+    const posts = fs.existsSync(POSTS_DIR)
+      ? fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md')).map(f => {
+          const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
+          const { data } = parseFrontmatter(raw)
+          return { slug: data.slug || f.replace(/\.md$/, ''), publishedAt: data.date || null, draft: data.draft === 'true' }
+        }).filter(p => !p.draft)
+      : []
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8')
+    res.setHeader('Cache-Control', 'public, max-age=3600')
+    res.send(generateSitemap(posts))
+  } catch (err) { console.error(err); res.status(500).send('Error generating sitemap') }
+})
+
 if (fs.existsSync(POSTS_DIR)) {
   app.get('/api/posts', (req, res) => {
     try {

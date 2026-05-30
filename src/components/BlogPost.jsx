@@ -96,6 +96,21 @@ const BlogPost = ({ slug }) => {
         setMeta('meta[property="og:description"]',data.description)
         setMeta('meta[property="og:image"]',      data.ogImage || `${SITE}/reply_flow_logo.png`)
 
+        /* Keywords meta from post tags */
+        if (data.tags) {
+          let kwEl = document.querySelector('meta[name="keywords"]')
+          if (!kwEl) { kwEl = document.createElement('meta'); kwEl.name = 'keywords'; document.head.appendChild(kwEl) }
+          kwEl.setAttribute('content', data.tags)
+        }
+
+        /* Twitter card meta */
+        let twTitle = document.querySelector('meta[property="twitter:title"]')
+        if (!twTitle) { twTitle = document.createElement('meta'); twTitle.setAttribute('property','twitter:title'); document.head.appendChild(twTitle) }
+        twTitle.setAttribute('content', `${data.title} — ReplyFlow`)
+        let twDesc = document.querySelector('meta[property="twitter:description"]')
+        if (!twDesc) { twDesc = document.createElement('meta'); twDesc.setAttribute('property','twitter:description'); document.head.appendChild(twDesc) }
+        twDesc.setAttribute('content', data.description)
+
         const canonicalHref = data.canonicalUrl || `${SITE}/blog/${data.slug}`
         let canonical = document.querySelector('link[rel="canonical"]')
         if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }

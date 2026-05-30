@@ -37,6 +37,20 @@ html, body {
   --color-accent:  #1d4ed8;
 }
 
+/* Marquee animation for TrustedBy */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
 /* Grid backgrounds */
 .bg-grid-light {
   background-image:
