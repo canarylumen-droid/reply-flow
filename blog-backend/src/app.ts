@@ -12,6 +12,17 @@ const PORT = process.env.PORT || 4000
 
 app.use(express.json())
 
+// Enable CORS for development and production
+app.use((req: Request, res: Response, next: any) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200)
+  }
+  next()
+})
+
 app.get('/api/post/:slug', async (req: Request, res: Response) => {
   try {
     const slug = req.params.slug
