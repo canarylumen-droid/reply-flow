@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://replyflow.pro/sitemap.xml
+
+User-agent: Gogglebot
+Allow: /
