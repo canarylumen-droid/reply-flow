@@ -36,7 +36,7 @@ const FinalCta = () => {
                         </a>
 
                         <div className='flex flex-col items-center gap-2'>
-                            <p className='text-xs text-primary font-black uppercase tracking-[0.3em]'>Limited capacity for Q1 2026</p>
+                            <p className='text-xs text-primary font-black uppercase tracking-[0.3em]'>Limited capacity for Q3 2026</p>
                             <div className='h-px w-12 bg-primary/30' />
                         </div>
                     </div>

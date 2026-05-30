@@ -1,20 +1,16 @@
 import express from 'express'
 import path from 'path'
+import fs from 'fs'
 
 const app = express()
 const port = process.env.PORT || 3000
 const distDir = path.join(process.cwd(), 'dist')
-
-// Simple proxy for API requests (useful for local testing)
-const API_PROXY_TARGET = process.env.BLOG_BACKEND_URL || process.env.VITE_BLOG_API_URL || 'http://localhost:4000'
-app.use(express.json())
-// Local content-backed blog API (falls back when backend isn't running)
-import fs from 'fs'
-
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts')
 
+app.use(express.json())
+
 function parseFrontmatter(md) {
-  const m = md.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
+  const m = md.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
   if (!m) return { data: {}, content: md }
   const raw = m[1]
   const content = m[2]
@@ -32,26 +28,44 @@ function parseFrontmatter(md) {
 }
 
 function mdToHtml(md) {
-  // very small subset: headings and paragraphs and links
   const lines = md.split(/\r?\n/)
   const out = []
   let buf = []
-  const flush = () => { if (buf.length) { out.push(`<p>${buf.join(' ').trim()}</p>`); buf = [] } }
-  for (let line of lines) {
-    line = line.trim()
-    if (!line) { flush(); continue }
-    if (line.startsWith('### ')) { flush(); out.push(`<h3>${line.slice(4)}</h3>`); continue }
-    if (line.startsWith('## ')) { flush(); out.push(`<h2>${line.slice(3)}</h2>`); continue }
-    if (line.startsWith('# ')) { flush(); out.push(`<h1>${line.slice(2)}</h1>`); continue }
-    // links [text](url)
-    line = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-    buf.push(line)
+  let inList = false
+
+  const flushBuf = () => {
+    if (buf.length) { out.push(`<p>${buf.join(' ').trim()}</p>`); buf = [] }
   }
-  flush()
+  const closeList = () => {
+    if (inList) { out.push('</ul>'); inList = false }
+  }
+  const processInline = (str) => str
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+
+  for (let line of lines) {
+    const trimmed = line.trim()
+    if (!trimmed) { flushBuf(); closeList(); continue }
+    if (trimmed.startsWith('### ')) { flushBuf(); closeList(); out.push(`<h3>${processInline(trimmed.slice(4))}</h3>`); continue }
+    if (trimmed.startsWith('## ')) { flushBuf(); closeList(); out.push(`<h2>${processInline(trimmed.slice(3))}</h2>`); continue }
+    if (trimmed.startsWith('# ')) { flushBuf(); closeList(); out.push(`<h1>${processInline(trimmed.slice(2))}</h1>`); continue }
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+      flushBuf()
+      if (!inList) { out.push('<ul>'); inList = true }
+      out.push(`<li>${processInline(trimmed.slice(2))}</li>`)
+      continue
+    }
+    if (/^\d+\.\s/.test(trimmed)) { flushBuf(); closeList(); out.push(`<li>${processInline(trimmed.replace(/^\d+\.\s/, ''))}</li>`); continue }
+    if (trimmed.startsWith('> ')) { flushBuf(); closeList(); out.push(`<blockquote>${processInline(trimmed.slice(2))}</blockquote>`); continue }
+    closeList()
+    buf.push(processInline(trimmed))
+  }
+  flushBuf()
+  closeList()
   return out.join('\n')
 }
 
-// Serve local posts if content directory exists
 if (fs.existsSync(POSTS_DIR)) {
   app.get('/api/posts', (req, res) => {
     try {
@@ -59,7 +73,8 @@ if (fs.existsSync(POSTS_DIR)) {
       const items = files.map(f => {
         const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
         const { data, content } = parseFrontmatter(raw)
-        const excerpt = content.split(/\n\n/)[0].replace(/\n/g, ' ').slice(0, 220)
+        const clean = content.replace(/#+\s[^\n]*/g, '').replace(/\*\*/g, '').replace(/\*/g, '').trim()
+        const excerpt = clean.split(/\n\n/)[0].replace(/\n/g, ' ').slice(0, 240)
         return {
           title: data.title || f.replace(/\.md$/, ''),
           slug: data.slug || f.replace(/\.md$/, ''),
@@ -67,10 +82,16 @@ if (fs.existsSync(POSTS_DIR)) {
           publishedAt: data.date || null,
           ogImage: data.ogImage || '',
           canonicalUrl: data.canonical || '',
-          excerpt
+          tags: data.tags || '',
+          excerpt,
+          draft: data.draft === 'true'
         }
+      }).filter(p => !p.draft).sort((a, b) => {
+        if (!a.publishedAt) return 1
+        if (!b.publishedAt) return -1
+        return new Date(b.publishedAt) - new Date(a.publishedAt)
       })
-      return res.json({ items, total: items.length, page: 1, perPage: items.length })
+      res.json({ items, total: items.length, page: 1, perPage: items.length })
     } catch (err) { console.error(err); res.status(500).json({ error: 'server_error' }) }
   })
 
@@ -83,14 +104,17 @@ if (fs.existsSync(POSTS_DIR)) {
         const { data, content } = parseFrontmatter(raw)
         const fileSlug = data.slug || f.replace(/\.md$/, '')
         if (fileSlug === slug) {
+          const wordCount = content.trim().split(/\s+/).length
+          const readingTime = Math.max(1, Math.ceil(wordCount / 220))
           return res.json({
             title: data.title || fileSlug,
             slug: fileSlug,
             description: data.description || '',
-            keywords: data.tags || [],
+            tags: data.tags || '',
             ogImage: data.ogImage || '',
             canonicalUrl: data.canonical || '',
             publishedAt: data.date || null,
+            readingTime,
             content: mdToHtml(content)
           })
         }
@@ -100,42 +124,19 @@ if (fs.existsSync(POSTS_DIR)) {
   })
 }
 
-app.use('/api', async (req, res, next) => {
-  try {
-    const targetUrl = `${API_PROXY_TARGET}${req.originalUrl}`
-    const fetchOptions = {
-      method: req.method,
-      headers: { ...req.headers }
-    }
-    // Remove host header to avoid conflicts
-    delete fetchOptions.headers.host
-    if (req.method !== 'GET' && req.method !== 'HEAD') {
-      fetchOptions.body = JSON.stringify(req.body)
-      fetchOptions.headers['content-type'] = req.headers['content-type'] || 'application/json'
-    }
-    const proxied = await fetch(targetUrl, fetchOptions)
-    // copy headers
-    proxied.headers.forEach((v, k) => {
-      if (k.toLowerCase() === 'transfer-encoding') return
-      res.setHeader(k, v)
-    })
-    res.status(proxied.status)
-    const buf = await proxied.arrayBuffer()
-    return res.send(Buffer.from(buf))
-  } catch (err) {
-    console.error('API proxy error:', err)
-    return res.status(502).json({ error: 'bad_gateway', message: err.message })
-  }
-})
-
 // Serve static files
 app.use(express.static(distDir))
 
 // Fallback to index.html for SPA routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(distDir, 'index.html'))
+  const indexPath = path.join(distDir, 'index.html')
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath)
+  } else {
+    res.status(503).send('Build not found. Run npm run build.')
+  }
 })
 
 app.listen(port, () => {
-  console.log(`Static server running on port ${port}, serving ${distDir}`)
+  console.log(`Server running on port ${port}`)
 })
