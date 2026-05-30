@@ -14,7 +14,7 @@ const TrustedBy = () => {
   return (
     <section className='py-20 bg-white dark:bg-black border-y border-gray-100 dark:border-white/5 overflow-hidden'>
       <div className='max-w-7xl mx-auto px-6 mb-12 text-center'>
-        <span className='text-[10px] font-black tracking-[0.4em] text-gray-400 dark:text-zinc-600 uppercase mb-4 block'>PARTNERING WITH INDUSTRY LEADERS</span>
+        <span className='text-[10px] font-black tracking-[0.4em] text-gray-400 dark:text-zinc-600 uppercase mb-4 block'>CLIENTS &amp; PARTNERS</span>
         <div className='w-12 h-1 bg-primary/20 rounded-full mx-auto'></div>
       </div>
       
