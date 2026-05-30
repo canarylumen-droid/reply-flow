@@ -7,4 +7,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://replyflow.pro/sitemap.xml
+Sitemap: https://www.replyflow.pro/sitemap.xml

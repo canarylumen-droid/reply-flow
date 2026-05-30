@@ -39,7 +39,7 @@ const BlogPost = ({ slug }) => {
       <div className="max-w-3xl mx-auto px-6">
         <header className="flex items-center gap-4 mb-4">
           <a href="/" className="flex items-center gap-3">
-            <img src="https://replyflow.pro/reply_flow_logo.png" alt="Reply Flow" className="h-10 w-auto rounded-md" />
+            <img src="https://www.replyflow.pro/reply_flow_logo.png" alt="Reply Flow" className="h-10 w-auto rounded-md" />
             <div>
               <div className="text-sm font-syne font-bold tracking-tight">Reply Flow</div>
               <div className="text-[11px] text-gray-500">Autonomous Sales Engine</div>
