@@ -2,6 +2,9 @@ import express, { Request, Response } from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import PostModel from './models/Post.js'
+import fs from 'fs'
+import path from 'path'
+import { parseMarkdownFile } from './utils/markdown.js'
 import { JSDOM } from 'jsdom'
 import createDOMPurify from 'dompurify'
 import { connectDB, syncAll, watchPosts } from './syncPosts.js'
@@ -10,6 +13,7 @@ dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 4000
+let useFilesystem = false
 
 app.use(express.json())
 
@@ -38,18 +42,45 @@ app.get('/api/health', async (_req: Request, res: Response) => {
 app.get('/api/post/:slug', async (req: Request, res: Response) => {
   try {
     const slug = req.params.slug
-    const post: any = await PostModel.findOne({ slug }).lean()
-    if (!post) return res.status(404).json({ error: 'not_found' })
-    res.json({
-      title: post.title,
-      slug: post.slug,
-      content: post.content,
-      description: post.description,
-      keywords: post.keywords,
-      ogImage: post.ogImage,
-      canonicalUrl: post.canonicalUrl,
-      publishedAt: post.publishedAt
-    })
+    if (mongoose.connection.readyState === 1 && !useFilesystem) {
+      const post: any = await PostModel.findOne({ slug }).lean()
+      if (!post) return res.status(404).json({ error: 'not_found' })
+
+      return res.json({
+        title: post.title,
+        slug: post.slug,
+        content: post.content,
+        description: post.description,
+        keywords: post.keywords,
+        ogImage: post.ogImage,
+        canonicalUrl: post.canonicalUrl,
+        publishedAt: post.publishedAt
+      })
+    }
+
+    // Filesystem fallback
+    const postsPath = path.join(process.cwd(), 'content', 'posts')
+    if (!fs.existsSync(postsPath)) return res.status(404).json({ error: 'not_found' })
+    const files = fs.readdirSync(postsPath).filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
+    for (const f of files) {
+      try {
+        const parsed = await parseMarkdownFile(path.join(postsPath, f))
+        const fileSlug = parsed.data.slug || f.replace(/\.mdx?$/, '')
+        if (fileSlug === slug) {
+          return res.json({
+            title: parsed.data.title || fileSlug,
+            slug: fileSlug,
+            content: parsed.html,
+            description: parsed.data.description || '',
+            keywords: parsed.data.keywords || parsed.data.tags || [],
+            ogImage: parsed.data.ogImage || '',
+            canonicalUrl: parsed.data.canonicalUrl || '',
+            publishedAt: parsed.data.date || null
+          })
+        }
+      } catch (e) { continue }
+    }
+    return res.status(404).json({ error: 'not_found' })
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'server_error' })
@@ -62,20 +93,44 @@ app.get('/api/posts', async (req: Request, res: Response) => {
     const page = Math.max(1, parseInt(String(req.query.page || '1'), 10))
     const perPage = Math.min(50, parseInt(String(req.query.perPage || '10'), 10))
     const skip = (page - 1) * perPage
-    const [items, total] = await Promise.all([
-      PostModel.find().sort({ publishedAt: -1 }).skip(skip).limit(perPage).lean(),
-      PostModel.countDocuments()
-    ])
-    const mapped = items.map(p => ({
-      title: p.title,
-      slug: p.slug,
-      description: p.description,
-      publishedAt: p.publishedAt,
-      ogImage: p.ogImage,
-      canonicalUrl: p.canonicalUrl,
-      excerpt: stripHtml(p.content).slice(0, 220)
+    if (mongoose.connection.readyState === 1 && !useFilesystem) {
+      const [items, total] = await Promise.all([
+        PostModel.find().sort({ publishedAt: -1 }).skip(skip).limit(perPage).lean(),
+        PostModel.countDocuments()
+      ])
+      const mapped = items.map(p => ({
+        title: p.title,
+        slug: p.slug,
+        description: p.description,
+        publishedAt: p.publishedAt,
+        ogImage: p.ogImage,
+        canonicalUrl: p.canonicalUrl,
+        excerpt: stripHtml(p.content).slice(0, 220)
+      }))
+      return res.json({ items: mapped, total, page, perPage })
+    }
+
+    // Filesystem fallback
+    const postsPath = path.join(process.cwd(), 'content', 'posts')
+    if (!fs.existsSync(postsPath)) return res.json({ items: [], total: 0, page, perPage })
+    const files = fs.readdirSync(postsPath).filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
+    const items = await Promise.all(files.map(async f => {
+      try {
+        const parsed = await parseMarkdownFile(path.join(postsPath, f))
+        const slug = parsed.data.slug || f.replace(/\.mdx?$/, '')
+        return {
+          title: parsed.data.title || slug,
+          slug,
+          description: parsed.data.description || '',
+          publishedAt: parsed.data.date || null,
+          ogImage: parsed.data.ogImage || '',
+          canonicalUrl: parsed.data.canonicalUrl || '',
+          excerpt: stripHtml(parsed.html).slice(0, 220)
+        }
+      } catch (e) { return null }
     }))
-    res.json({ items: mapped, total, page, perPage })
+    const filtered = items.filter(Boolean)
+    return res.json({ items: filtered.slice(skip, skip + perPage), total: filtered.length, page, perPage })
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'server_error' })
@@ -235,7 +290,19 @@ app.get('/blog/:slug', async (req: Request, res: Response) => {
 })
 
 async function main() {
-  await connectDB()
+  try {
+    await connectDB()
+  } catch (err) {
+    console.error('DB connect failed:', (err as Error).message)
+    // In production, fail fast so we don't serve stale filesystem content
+    if (process.env.NODE_ENV === 'production') {
+      console.error('Production environment requires a working DB. Exiting.')
+      process.exit(1)
+    }
+    // For development, allow filesystem fallback to keep local dev working
+    useFilesystem = true
+  }
+
   // ensure posts are synced from repo on startup
   try {
     await syncAll()

@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "env": {
+    "NODE_ENV": "production",
+    "MONGO_URI": "@mongo_uri",
+    "PORT": "4000"
+  },
+  "functions": {
+    "dist/app.js": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/app.js"
+    }
+  ]
+}

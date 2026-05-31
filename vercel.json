@@ -1,14 +1,10 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "env": {
+    "VITE_BLOG_API_URL": "@blog_api_url"
+  },
   "routes": [
     { "src": "/robots.txt", "dest": "/robots.txt" },
     { "src": "/(.*\\.(css|js|map|png|jpg|jpeg|svg|ico|json|xml|txt))", "dest": "/$1" },
@@ -18,7 +14,8 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "index, follow" }
+        { "key": "X-Robots-Tag", "value": "index, follow" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
     }
   ]
