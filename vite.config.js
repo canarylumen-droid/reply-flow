@@ -218,8 +218,34 @@ function blogApiPlugin() {
   }
 }
 
+function staticSitemapPlugin() {
+  const POSTS_DIR = path.resolve('content/posts')
+  return {
+    name: 'static-sitemap',
+    closeBundle() {
+      try {
+        const posts = fs.existsSync(POSTS_DIR)
+          ? fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md')).map(f => {
+              const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
+              const { data } = parseFrontmatter(raw)
+              return { slug: data.slug || f.replace(/\.md$/, ''), publishedAt: data.date || null, draft: data.draft }
+            }).filter(p => p.draft !== 'true')
+          : []
+        const xml = generateSitemap(posts)
+        const outDir = path.resolve('dist')
+        if (fs.existsSync(outDir)) {
+          fs.writeFileSync(path.join(outDir, 'sitemap.xml'), xml, 'utf8')
+          console.log(`\u2713 Generated dist/sitemap.xml (${posts.length + 6} URLs)`)
+        }
+      } catch (e) {
+        console.warn('sitemap generation skipped:', e.message)
+      }
+    }
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss(), blogApiPlugin()],
+  plugins: [react(), tailwindcss(), blogApiPlugin(), staticSitemapPlugin()],
   server: {
     host: '0.0.0.0',
     port: 5000,
