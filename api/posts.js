@@ -1,7 +1,9 @@
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 
-const POSTS_DIR = path.join(process.cwd(), 'content', 'posts')
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const POSTS_DIR = path.resolve(__dirname, '..', 'content', 'posts')
 
 function parseFrontmatter(md) {
   const m = md.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
@@ -29,9 +31,12 @@ export default function handler(req, res) {
 
   try {
     if (!fs.existsSync(POSTS_DIR)) {
-      return res.status(200).json({ items: [], total: 0, page: 1, perPage: 10 })
+      console.error('[api/posts] POSTS_DIR not found:', POSTS_DIR)
+      return res.status(200).json({ items: [], total: 0, page: 1, perPage: 20 })
     }
+
     const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'))
+
     const items = files.map(f => {
       const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
       const { data, content } = parseFrontmatter(raw)
@@ -61,7 +66,7 @@ export default function handler(req, res) {
 
     res.status(200).json({ items: paged, total: items.length, page, perPage })
   } catch (err) {
-    console.error('[api/posts]', err)
-    res.status(500).json({ error: 'server_error' })
+    console.error('[api/posts] error:', err.message)
+    res.status(500).json({ error: 'server_error', detail: err.message })
   }
 }
