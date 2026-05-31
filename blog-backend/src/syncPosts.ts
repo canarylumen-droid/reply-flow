@@ -16,7 +16,30 @@ const MONGO = process.env.MONGO_URI || process.env.DATABASE_URL_MONGODB_URI || '
 const POSTS_DIR = path.join(__dirname, '..', '..', 'content', 'posts')
 
 export async function connectDB() {
-  return mongoose.connect(MONGO)
+  const maxAttempts = 5
+  let attempt = 0
+  const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+  // Log non-sensitive connection info (hostnames only)
+  try {
+    const masked = MONGO.replace(/^[^@]+@/, '')
+    console.log('Attempting MongoDB connect to', masked.split('/')[0])
+  } catch (e) { /* ignore */ }
+
+  while (attempt < maxAttempts) {
+    try {
+      attempt++
+      await mongoose.connect(MONGO)
+      console.log('MongoDB connected')
+      return
+    } catch (err) {
+      console.error(`MongoDB connect attempt ${attempt} failed:`, (err as Error).message)
+      if (attempt >= maxAttempts) throw err
+      const backoff = 1000 * Math.pow(2, attempt - 1)
+      console.log(`Retrying MongoDB connect in ${backoff}ms...`)
+      await wait(backoff)
+    }
+  }
 }
 
 export async function disconnectDB() {
