@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { getDb } from '../db.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const POSTS_DIR = path.resolve(__dirname, '..', '..', 'content', 'posts')
@@ -88,27 +87,6 @@ function readFromFilesystem(slug) {
   return null
 }
 
-async function readFromDb(slug) {
-  const db = await getDb()
-  if (!db) return null
-  try {
-    const [rows] = await db.execute('SELECT title, slug, description, keywords as tags, ogImage, canonicalUrl, publishedAt, content FROM posts WHERE slug = ?', [slug])
-    if (rows.length === 0) return null
-    const r = rows[0]
-    return {
-      title: r.title,
-      slug: r.slug,
-      description: r.description || '',
-      tags: r.tags || '',
-      ogImage: r.ogImage || '',
-      canonicalUrl: r.canonicalUrl || '',
-      publishedAt: r.publishedAt || null,
-      readingTime: Math.max(1, Math.ceil((r.content || '').split(/\s+/).length / 220)),
-      content: r.content
-    }
-  } catch { return null }
-}
-
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
@@ -119,17 +97,12 @@ export default async function handler(req, res) {
     const slug = req.query.slug
     if (!slug) return res.status(400).json({ error: 'missing_slug' })
 
-    let post = null
-    if (req.query?.db !== 'false') post = await readFromDb(slug)
-    if (!post) post = readFromFilesystem(slug)
+    const post = readFromFilesystem(slug)
     if (!post) return res.status(404).json({ error: 'not_found' })
 
     res.status(200).json(post)
   } catch (err) {
     console.error('[api/post/[slug]] error:', err.message)
-    const slug = req.query.slug
-    const post = slug ? readFromFilesystem(slug) : null
-    if (!post) return res.status(404).json({ error: 'not_found' })
-    res.status(200).json(post)
+    res.status(500).json({ error: 'server_error' })
   }
 }
