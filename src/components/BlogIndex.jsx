@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowRightIcon } from './Icons'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import SeoMeta from './SeoMeta'
 
 const API_BASE = import.meta.env.VITE_BLOG_API_URL ||
   (typeof window !== 'undefined' ? window.location.origin : '')
@@ -37,11 +38,7 @@ const BlogIndex = () => {
     localStorage.setItem('theme', theme)
   }, [theme])
 
-  useEffect(() => {
-    document.title = 'Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation'
-    const metaDesc = document.querySelector('meta[name="description"]')
-    if (metaDesc) metaDesc.setAttribute('content', 'Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies.')
-  }, [])
+  const blogIndexKeywords = "AI lead follow-up blog, sales automation insights, B2B lead generation tips, cold email strategy guide, AI appointment setting, lead nurture system, agency sales development, lost lead recovery, sales response time, AI SDR best practices, outbound sales automation, lead conversion optimization, sales technology 2026"
 
   useEffect(() => {
     let mounted = true
@@ -65,6 +62,12 @@ const BlogIndex = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors">
+      <SeoMeta
+        title="Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights"
+        description="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses."
+        canonicalUrl="https://replyflow.pro/blog"
+        keywords={blogIndexKeywords}
+      />
       <Navbar theme={theme} setTheme={setTheme} />
 
       {/* Hero banner */}

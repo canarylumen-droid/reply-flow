@@ -1,27 +1,50 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import { DataTypes, Model, Sequelize } from 'sequelize'
 
-export interface IPost extends Document {
+export interface IPost {
+  id?: number
   title: string
   slug: string
-  content: string // HTML
+  content: string
   description?: string
-  keywords?: string[]
+  keywords?: string
   ogImage?: string
   canonicalUrl?: string
   publishedAt?: Date
   hash?: string
+  createdAt?: Date
+  updatedAt?: Date
 }
 
-const PostSchema = new Schema<IPost>({
-  title: { type: String, required: true },
-  slug: { type: String, required: true, unique: true, index: true },
-  content: { type: String, required: true },
-  description: { type: String },
-  keywords: { type: [String], default: [] },
-  ogImage: { type: String },
-  canonicalUrl: { type: String },
-  publishedAt: { type: Date },
-  hash: { type: String, index: true }
-}, { timestamps: true })
+export class Post extends Model<IPost> {
+  declare id: number
+  declare title: string
+  declare slug: string
+  declare content: string
+  declare description: string
+  declare keywords: string
+  declare ogImage: string
+  declare canonicalUrl: string
+  declare publishedAt: Date
+  declare hash: string
+}
 
-export default mongoose.models.Post || mongoose.model<IPost>('Post', PostSchema)
+export function initPostModel(sequelize: Sequelize): void {
+  Post.init({
+    id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    title: { type: DataTypes.STRING(500), allowNull: false },
+    slug: { type: DataTypes.STRING(255), allowNull: false, unique: true },
+    content: { type: DataTypes.TEXT('long'), allowNull: false },
+    description: { type: DataTypes.TEXT },
+    keywords: { type: DataTypes.TEXT, defaultValue: '' },
+    ogImage: { type: DataTypes.STRING(500) },
+    canonicalUrl: { type: DataTypes.STRING(500) },
+    publishedAt: { type: DataTypes.DATE },
+    hash: { type: DataTypes.STRING(64) },
+  }, {
+    sequelize,
+    modelName: 'post',
+    tableName: 'posts',
+    timestamps: true,
+    indexes: [{ unique: true, fields: ['slug'] }, { fields: ['hash'] }],
+  })
+}

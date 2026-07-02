@@ -1,10 +1,10 @@
-import mongoose from 'mongoose'
+import { Sequelize } from 'sequelize'
 import fs from 'fs'
 import path from 'path'
 import crypto from 'crypto'
 import slugify from 'slugify'
 import { fileURLToPath } from 'url'
-import PostModel from './models/Post.js'
+import { Post, initPostModel } from './models/Post.js'
 import { parseMarkdownFile } from './utils/markdown.js'
 import { notifyGoogleIndexing, notifyIndexNow } from './utils/indexing.js'
 import dotenv from 'dotenv'
@@ -12,38 +12,69 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const MONGO = process.env.MONGO_URI || process.env.DATABASE_URL_MONGODB_URI || 'mongodb://localhost:27017/replyflow-blog'
 const POSTS_DIR = path.join(__dirname, '..', '..', 'content', 'posts')
 
-export async function connectDB() {
+export let sequelize: Sequelize
+
+export async function connectDB(): Promise<Sequelize> {
+  const dbUrl = process.env.DATABASE_URL || process.env.MYSQL_URL || 'mysql://root:root@localhost:3306/replyflow'
   const maxAttempts = 5
   let attempt = 0
-  const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
-  // Log non-sensitive connection info (hostnames only)
   try {
-    const masked = MONGO.replace(/^[^@]+@/, '')
-    console.log('Attempting MongoDB connect to', masked.split('/')[0])
+    const masked = dbUrl.replace(/\/\/[^:]+:[^@]+@/, '//***:***@')
+    console.log('Connecting to MySQL:', masked.split('?')[0])
   } catch (e) { /* ignore */ }
+
+  async function tryConnect(url: string): Promise<Sequelize> {
+    const s = new Sequelize(url, { dialect: 'mysql', logging: false, pool: { max: 5, min: 0, acquire: 30000, idle: 10000 } })
+    await s.authenticate()
+    return s
+  }
 
   while (attempt < maxAttempts) {
     try {
       attempt++
-      await mongoose.connect(MONGO)
-      console.log('MongoDB connected')
-      return
-    } catch (err) {
-      console.error(`MongoDB connect attempt ${attempt} failed:`, (err as Error).message)
+      sequelize = await tryConnect(dbUrl)
+      console.log('MySQL connected')
+      initPostModel(sequelize)
+      await sequelize.sync()
+      console.log('MySQL tables synced')
+      return sequelize
+    } catch (err: any) {
+      const msg = (err as Error).message.toLowerCase()
+      if (msg.includes('unknown database') || msg.includes('database doesn\'t exist')) {
+        console.log('Database does not exist — creating it...')
+        try {
+          const noDbUrl = dbUrl.replace(/\/\d+$/, '').replace(/\/[^/]+$/, '/mysql')
+          const tempSeq = new Sequelize(noDbUrl, { dialect: 'mysql', logging: false })
+          await tempSeq.authenticate()
+          const dbName = dbUrl.split('/').pop()!.split('?')[0]
+          await tempSeq.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`)
+          await tempSeq.close()
+          sequelize = await tryConnect(dbUrl)
+          console.log('MySQL connected after creating database')
+          initPostModel(sequelize)
+          await sequelize.sync()
+          console.log('MySQL tables synced')
+          return sequelize
+        } catch (createErr) {
+          console.error('Failed to create database:', (createErr as Error).message)
+          throw createErr
+        }
+      }
+      console.error(`MySQL connect attempt ${attempt} failed:`, msg)
       if (attempt >= maxAttempts) throw err
       const backoff = 1000 * Math.pow(2, attempt - 1)
-      console.log(`Retrying MongoDB connect in ${backoff}ms...`)
-      await wait(backoff)
+      console.log(`Retrying in ${backoff}ms...`)
+      await new Promise(resolve => setTimeout(resolve, backoff))
     }
   }
+  throw new Error('Could not connect to MySQL')
 }
 
 export async function disconnectDB() {
-  return mongoose.disconnect()
+  if (sequelize) await sequelize.close()
 }
 
 function sha256(text: string) {
@@ -61,32 +92,43 @@ async function syncOne(filePath: string) {
   const fileHash = sha256(parsed.data.title + '\n' + parsed.content)
   const slug = makeSlug(parsed.data, path.basename(filePath))
 
-  const existing: any = await PostModel.findOne({ slug }).lean()
+  const existing = await Post.findOne({ where: { slug } })
   const shouldNotify = !existing || existing.hash !== fileHash
+
+  const keywords = parsed.data.keywords || parsed.data.tags || ''
+  const kwStr = Array.isArray(keywords) ? keywords.join(', ') : String(keywords)
 
   const doc = {
     title: parsed.data.title || slug,
     slug,
     content: parsed.html,
     description: parsed.data.description || parsed.content.slice(0, 160),
-    keywords: parsed.data.keywords || parsed.data.tags || [],
-    ogImage: parsed.data.ogImage,
-    canonicalUrl: parsed.data.canonicalUrl,
+    keywords: kwStr,
+    ogImage: parsed.data.ogImage || '',
+    canonicalUrl: parsed.data.canonicalUrl || '',
     publishedAt: parsed.data.date ? new Date(parsed.data.date) : new Date(),
-    hash: fileHash
+    hash: fileHash,
   }
 
-  await PostModel.findOneAndUpdate({ slug }, doc, { upsert: true, new: true })
+  if (existing) {
+    await Post.update(doc, { where: { slug } })
+  } else {
+    await Post.create(doc)
+  }
 
-  if (shouldNotify && doc.canonicalUrl) {
-    // fire-and-forget
-    notifyGoogleIndexing(doc.canonicalUrl).catch(() => {})
-    notifyIndexNow(doc.canonicalUrl).catch(() => {})
+  const canonical = doc.canonicalUrl || `https://replyflow.pro/blog/${slug}`
+  if (shouldNotify && canonical) {
+    notifyGoogleIndexing(canonical).catch(() => {})
+    notifyIndexNow(canonical).catch(() => {})
   }
 }
 
 export async function syncAll() {
   const postsPath = POSTS_DIR
+  if (!fs.existsSync(postsPath)) {
+    console.log('No posts directory found at', postsPath)
+    return
+  }
   const files = fs.readdirSync(postsPath).filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
   for (const file of files) {
     try {
@@ -118,12 +160,8 @@ export function watchPosts() {
   }
 
   fs.watch(postsPath, { persistent: true }, (eventType, filename) => {
-    // filename can be null on some platforms
-    if (filename) {
-      debouncedSync(filename)
-    } else {
-      debouncedSync()
-    }
+    if (filename) debouncedSync(filename)
+    else debouncedSync()
   })
   console.log('Watching posts directory for changes:', postsPath)
 }

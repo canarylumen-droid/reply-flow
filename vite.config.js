@@ -244,8 +244,114 @@ function staticSitemapPlugin() {
   }
 }
 
+function prerenderBlogPlugin() {
+  const POSTS_DIR = path.resolve('content/posts')
+  const SITE = 'https://replyflow.pro'
+
+  function escapeHtml(s) {
+    if (!s) return ''
+    return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;')
+  }
+
+  return {
+    name: 'prerender-blog',
+    closeBundle() {
+      const outDir = path.resolve('dist')
+      const indexPath = path.join(outDir, 'index.html')
+      if (!fs.existsSync(indexPath)) return
+      if (!fs.existsSync(POSTS_DIR)) { console.log('  prerender skipped (no posts dir)'); return }
+
+      const template = fs.readFileSync(indexPath, 'utf8')
+      const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'))
+      let count = 0
+
+      for (const f of files) {
+        try {
+          const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
+          const { data, content } = parseFrontmatter(raw)
+          if (data.draft === 'true') continue
+
+          const slug = data.slug || f.replace(/\.md$/, '')
+          const title = data.title || slug
+          const description = data.description || ''
+          const tags = data.tags || ''
+          const ogImage = data.ogImage || `${SITE}/reply_flow_logo.png`
+          const canonicalUrl = data.canonical || `${SITE}/blog/${slug}`
+          const publishedAt = data.date || ''
+          const htmlContent = mdToHtml(content)
+          const wordCount = content.trim().split(/\s+/).length
+          const readingTime = Math.max(1, Math.ceil(wordCount / 220))
+          const formattedDate = publishedAt ? new Date(publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : ''
+
+          const breadcrumbJson = JSON.stringify({
+            '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Blog', item: `${SITE}/blog` },
+              { '@type': 'ListItem', position: 2, name: title, item: canonicalUrl },
+            ],
+          })
+
+          const blogPostingJson = JSON.stringify({
+            '@context': 'https://schema.org', '@type': 'BlogPosting',
+            headline: title, description, datePublished: publishedAt, image: ogImage, url: canonicalUrl,
+            author: { '@type': 'Organization', name: 'ReplyFlow Agency', url: SITE },
+            publisher: { '@type': 'Organization', name: 'ReplyFlow Agency', logo: { '@type': 'ImageObject', url: `${SITE}/reply_flow_logo.png` } },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+          })
+
+          const rootContent = `<div class="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors">
+      <article class="max-w-2xl mx-auto px-5 sm:px-8 py-20">
+        <a href="/blog" class="inline-flex items-center gap-1.5 text-[13px] text-gray-400 hover:text-primary transition-colors font-medium mb-7">← Blog</a>
+        <div class="flex flex-wrap items-center gap-3 mb-5 text-[13px] text-gray-400">
+          ${formattedDate ? `<span>${escapeHtml(formattedDate)}</span>` : ''}
+          <span>· ${readingTime} min read</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-syne font-bold leading-[1.18] text-gray-900 dark:text-white mb-5">${escapeHtml(title)}</h1>
+        ${description ? `<p class="text-[15px] sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed mb-8">${escapeHtml(description)}</p>` : ''}
+        <div class="blog-prose">${htmlContent}</div>
+      </article>
+    </div>`
+
+          const metaTags = `
+    <meta name="description" content="${escapeHtml(description)}" />
+    <meta name="keywords" content="${escapeHtml(tags)}" />
+    <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="${escapeHtml(title)} — ReplyFlow" />
+    <meta property="og:description" content="${escapeHtml(description)}" />
+    <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
+    <meta property="og:image" content="${escapeHtml(ogImage)}" />
+    <meta property="article:published_time" content="${escapeHtml(publishedAt)}" />
+    <meta name="twitter:title" content="${escapeHtml(title)} — ReplyFlow" />
+    <meta name="twitter:description" content="${escapeHtml(description)}" />
+    <meta name="twitter:image" content="${escapeHtml(ogImage)}" />
+    <script type="application/ld+json">${breadcrumbJson}</script>
+    <script type="application/ld+json">${blogPostingJson}</script>`
+
+          let page = template
+            .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)} — ReplyFlow</title>`)
+            .replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${rootContent}</div>`)
+            .replace(/<meta name="description"[^>]*\/>/, '')
+            .replace(/<link rel="canonical"[^>]*\/>/, '')
+            .replace(/<meta (name|property)="(og|article|twitter):[^>]*\/>/g, '')
+            .replace(/<\/head>/, `${metaTags}\n</head>`)
+
+          const slugDir = path.join(outDir, 'blog', slug)
+          fs.mkdirSync(slugDir, { recursive: true })
+          fs.writeFileSync(path.join(slugDir, 'index.html'), page, 'utf8')
+          count++
+        } catch (e) {
+          console.warn('  prerender failed for', f, e.message)
+        }
+      }
+
+      console.log(`\u2713 Prerendered ${count} blog posts to dist/blog/*/index.html`)
+    }
+  }
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss(), blogApiPlugin(), staticSitemapPlugin()],
+  plugins: [react(), tailwindcss(), blogApiPlugin(), staticSitemapPlugin(), prerenderBlogPlugin()],
   server: {
     host: '0.0.0.0',
     port: 5000,

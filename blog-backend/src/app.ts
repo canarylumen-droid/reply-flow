@@ -1,9 +1,10 @@
 import express, { Request, Response } from 'express'
-import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import PostModel from './models/Post.js'
+import { Sequelize } from 'sequelize'
 import fs from 'fs'
 import path from 'path'
+import { Op } from 'sequelize'
+import { Post } from './models/Post.js'
 import { parseMarkdownFile } from './utils/markdown.js'
 import { JSDOM } from 'jsdom'
 import createDOMPurify from 'dompurify'
@@ -13,52 +14,62 @@ dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 4000
-let useFilesystem = false
+const SITE = process.env.SITE_HOST || 'https://replyflow.pro'
+let db: Sequelize | null = null
 
 app.use(express.json())
-
-// Enable CORS for development and production
 app.use((req: Request, res: Response, next: any) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'GET, OPTIONS')
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200)
-  }
+  if (req.method === 'OPTIONS') return res.sendStatus(200)
   next()
 })
 
+function stripHtml(html: string) {
+  if (!html) return ''
+  return String(html).replace(/<[^>]*>/g, '')
+}
+
+function escapeHtml(s: any) {
+  if (!s) return ''
+  return String(s)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;')
+}
+
 app.get('/api/health', async (_req: Request, res: Response) => {
   try {
-    const state = mongoose.connection.readyState
-    const status = state === 1 ? 'ok' : 'unavailable'
-    const uptime = process.uptime()
-    res.json({ status, readyState: state, uptime, mongoUri: process.env.MONGO_URI ? 'configured' : 'missing' })
-  } catch (err) {
-    res.status(500).json({ status: 'error', message: (err as Error).message })
+    if (db) await db.authenticate()
+    res.json({ status: db ? 'ok' : 'unavailable', uptime: process.uptime() })
+  } catch {
+    res.status(500).json({ status: 'unavailable', error: 'database connection failed' })
   }
 })
 
 app.get('/api/post/:slug', async (req: Request, res: Response) => {
   try {
     const slug = req.params.slug
-    if (mongoose.connection.readyState === 1 && !useFilesystem) {
-      const post: any = await PostModel.findOne({ slug }).lean()
-      if (!post) return res.status(404).json({ error: 'not_found' })
-
-      return res.json({
-        title: post.title,
-        slug: post.slug,
-        content: post.content,
-        description: post.description,
-        keywords: post.keywords,
-        ogImage: post.ogImage,
-        canonicalUrl: post.canonicalUrl,
-        publishedAt: post.publishedAt
-      })
+    if (db) {
+      const post: any = await Post.findOne({ where: { slug }, raw: true })
+      if (post) {
+        return res.json({
+          title: post.title,
+          slug: post.slug,
+          content: post.content,
+          description: post.description,
+          tags: post.keywords || '',
+          ogImage: post.ogImage || '',
+          canonicalUrl: post.canonicalUrl || '',
+          publishedAt: post.publishedAt || null,
+          readingTime: Math.max(1, Math.ceil((post.content?.split(/\s+/).length || 0) / 220)),
+        })
+      }
     }
 
-    // Filesystem fallback
     const postsPath = path.join(process.cwd(), 'content', 'posts')
     if (!fs.existsSync(postsPath)) return res.status(404).json({ error: 'not_found' })
     const files = fs.readdirSync(postsPath).filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
@@ -67,15 +78,17 @@ app.get('/api/post/:slug', async (req: Request, res: Response) => {
         const parsed = await parseMarkdownFile(path.join(postsPath, f))
         const fileSlug = parsed.data.slug || f.replace(/\.mdx?$/, '')
         if (fileSlug === slug) {
+          const kws = parsed.data.keywords || parsed.data.tags || []
           return res.json({
             title: parsed.data.title || fileSlug,
             slug: fileSlug,
             content: parsed.html,
             description: parsed.data.description || '',
-            keywords: parsed.data.keywords || parsed.data.tags || [],
+            tags: Array.isArray(kws) ? kws.join(', ') : String(kws),
             ogImage: parsed.data.ogImage || '',
             canonicalUrl: parsed.data.canonicalUrl || '',
-            publishedAt: parsed.data.date || null
+            publishedAt: parsed.data.date || null,
+            readingTime: Math.max(1, Math.ceil(parsed.html.split(/\s+/).length / 220)),
           })
         }
       } catch (e) { continue }
@@ -87,34 +100,36 @@ app.get('/api/post/:slug', async (req: Request, res: Response) => {
   }
 })
 
-// List posts with pagination (server-side) - returns minimal fields for index pages
 app.get('/api/posts', async (req: Request, res: Response) => {
   try {
     const page = Math.max(1, parseInt(String(req.query.page || '1'), 10))
     const perPage = Math.min(50, parseInt(String(req.query.perPage || '10'), 10))
     const skip = (page - 1) * perPage
-    if (mongoose.connection.readyState === 1 && !useFilesystem) {
-      const [items, total] = await Promise.all([
-        PostModel.find().sort({ publishedAt: -1 }).skip(skip).limit(perPage).lean(),
-        PostModel.countDocuments()
-      ])
-      const mapped = items.map(p => ({
+
+    if (db) {
+      const { rows, count } = await Post.findAndCountAll({
+        order: [['publishedAt', 'DESC']],
+        offset: skip,
+        limit: perPage,
+        raw: true,
+      })
+      const items = rows.map((p: any) => ({
         title: p.title,
         slug: p.slug,
         description: p.description,
         publishedAt: p.publishedAt,
-        ogImage: p.ogImage,
-        canonicalUrl: p.canonicalUrl,
-        excerpt: stripHtml(p.content).slice(0, 220)
+        ogImage: p.ogImage || '',
+        canonicalUrl: p.canonicalUrl || '',
+        excerpt: stripHtml(p.content).slice(0, 220),
+        readingTime: Math.max(1, Math.ceil((p.content?.split(/\s+/).length || 0) / 220)),
       }))
-      return res.json({ items: mapped, total, page, perPage })
+      return res.json({ items, total: count, page, perPage })
     }
 
-    // Filesystem fallback
     const postsPath = path.join(process.cwd(), 'content', 'posts')
     if (!fs.existsSync(postsPath)) return res.json({ items: [], total: 0, page, perPage })
     const files = fs.readdirSync(postsPath).filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
-    const items = await Promise.all(files.map(async f => {
+    const items = (await Promise.all(files.map(async f => {
       try {
         const parsed = await parseMarkdownFile(path.join(postsPath, f))
         const slug = parsed.data.slug || f.replace(/\.mdx?$/, '')
@@ -125,39 +140,44 @@ app.get('/api/posts', async (req: Request, res: Response) => {
           publishedAt: parsed.data.date || null,
           ogImage: parsed.data.ogImage || '',
           canonicalUrl: parsed.data.canonicalUrl || '',
-          excerpt: stripHtml(parsed.html).slice(0, 220)
+          excerpt: stripHtml(parsed.html).slice(0, 220),
+          readingTime: Math.max(1, Math.ceil(parsed.html.split(/\s+/).length / 220)),
         }
       } catch (e) { return null }
-    }))
-    const filtered = items.filter(Boolean)
-    return res.json({ items: filtered.slice(skip, skip + perPage), total: filtered.length, page, perPage })
+    }))).filter(Boolean)
+    return res.json({ items: items.slice(skip, skip + perPage), total: items.length, page, perPage })
   } catch (err) {
     console.error(err)
     res.status(500).json({ error: 'server_error' })
   }
 })
 
-// RSS feed
 app.get('/rss.xml', async (req: Request, res: Response) => {
   try {
-    const posts = await PostModel.find().sort({ publishedAt: -1 }).limit(50).lean()
-    const site = process.env.SITE_HOST || 'http://localhost:4000'
-    const items = posts.map(p => `
-      <item>
-        <title>${escapeHtml(p.title)}</title>
-        <link>${escapeHtml(p.canonicalUrl || `${site}/blog/${p.slug}`)}</link>
-        <guid>${escapeHtml(p.canonicalUrl || `${site}/blog/${p.slug}`)}</guid>
-        <pubDate>${new Date(p.publishedAt).toUTCString()}</pubDate>
-        <description>${escapeHtml(p.description || stripHtml(p.content).slice(0,200))}</description>
-      </item>
-    `).join('\n')
+    let items: any[] = []
+    if (db) {
+      const rows = await Post.findAll({ order: [['publishedAt', 'DESC']], limit: 50, raw: true })
+      items = rows.map((p: any) => ({
+        title: p.title,
+        url: p.canonicalUrl || `${SITE}/blog/${p.slug}`,
+        date: p.publishedAt,
+        desc: p.description || stripHtml(p.content).slice(0, 200),
+      }))
+    }
     const feed = `<?xml version="1.0" encoding="UTF-8" ?>
       <rss version="2.0">
         <channel>
-          <title>Blog</title>
-          <link>${site}</link>
-          <description>Latest posts</description>
-          ${items}
+          <title>ReplyFlow Blog</title>
+          <link>${SITE}</link>
+          <description>AI Lead Follow-Up & Sales Automation Insights</description>
+          ${items.map(p => `
+          <item>
+            <title>${escapeHtml(p.title)}</title>
+            <link>${escapeHtml(p.url)}</link>
+            <guid>${escapeHtml(p.url)}</guid>
+            <pubDate>${new Date(p.date).toUTCString()}</pubDate>
+            <description>${escapeHtml(p.desc)}</description>
+          </item>`).join('\n')}
         </channel>
       </rss>`
     res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8')
@@ -168,20 +188,20 @@ app.get('/rss.xml', async (req: Request, res: Response) => {
   }
 })
 
-// Sitemap
 app.get('/sitemap.xml', async (req: Request, res: Response) => {
   try {
-    const posts = await PostModel.find().sort({ publishedAt: -1 }).lean()
-    const site = process.env.SITE_HOST || 'http://localhost:4000'
-    const urls = posts.map(p => `
-      <url>
-        <loc>${escapeHtml(p.canonicalUrl || `${site}/blog/${p.slug}`)}</loc>
-        <lastmod>${new Date(p.publishedAt).toISOString()}</lastmod>
-      </url>
-    `).join('\n')
+    let urls: string[] = []
+    if (db) {
+      const rows = await Post.findAll({ order: [['publishedAt', 'DESC']], raw: true })
+      urls = rows.map((p: any) => {
+        const loc = p.canonicalUrl || `${SITE}/blog/${p.slug}`
+        const lastmod = p.publishedAt ? new Date(p.publishedAt).toISOString() : new Date().toISOString()
+        return `<url><loc>${escapeHtml(loc)}</loc><lastmod>${lastmod}</lastmod></url>`
+      })
+    }
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-        ${urls}
+        ${urls.join('\n')}
       </urlset>`
     res.setHeader('Content-Type', 'application/xml; charset=utf-8')
     res.send(xml)
@@ -191,87 +211,104 @@ app.get('/sitemap.xml', async (req: Request, res: Response) => {
   }
 })
 
-// Server-rendered blog page with mobile-first responsive styles and good typography
 app.get('/blog/:slug', async (req: Request, res: Response) => {
   try {
     const slug = req.params.slug
-    const post: any = await PostModel.findOne({ slug }).lean()
+    let post: any = null
+
+    if (db) {
+      post = await Post.findOne({ where: { slug }, raw: true })
+    }
+
+    if (!post) {
+      const postsPath = path.join(process.cwd(), 'content', 'posts')
+      if (fs.existsSync(postsPath)) {
+        const files = fs.readdirSync(postsPath).filter(f => f.endsWith('.md') || f.endsWith('.mdx'))
+        for (const f of files) {
+          try {
+            const parsed = await parseMarkdownFile(path.join(postsPath, f))
+            const fileSlug = parsed.data.slug || f.replace(/\.mdx?$/, '')
+            if (fileSlug === slug) {
+              const window = new JSDOM('').window as any
+              const DOMPurify = createDOMPurify(window)
+              post = {
+                title: parsed.data.title || fileSlug,
+                content: DOMPurify.sanitize(parsed.html),
+                description: parsed.data.description || '',
+                slug: fileSlug,
+                canonicalUrl: parsed.data.canonicalUrl || '',
+                ogImage: parsed.data.ogImage || '',
+                publishedAt: parsed.data.date || null,
+                keywords: parsed.data.keywords || parsed.data.tags || '',
+              }
+              break
+            }
+          } catch (e) { continue }
+        }
+      }
+    }
+
     if (!post) return res.status(404).send('Not found')
 
     const window = new JSDOM('').window as any
     const DOMPurify = createDOMPurify(window)
     const safeHtml = DOMPurify.sanitize(post.content)
+    const canonicalUrl = post.canonicalUrl || `${SITE}/blog/${post.slug}`
+    const publishedAt = post.publishedAt ? new Date(post.publishedAt).toISOString() : new Date().toISOString()
+    const kws = post.keywords || ''
 
-    const jsonLd = {
+    const jsonLd = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": post.title,
       "description": post.description || '',
-      "url": post.canonicalUrl || `${process.env.SITE_HOST || ''}/blog/${post.slug}`,
-      "datePublished": post.publishedAt ? new Date(post.publishedAt).toISOString() : new Date().toISOString(),
-      "image": post.ogImage || ''
-    }
+      "url": canonicalUrl,
+      "datePublished": publishedAt,
+      "image": post.ogImage || `${SITE}/reply_flow_logo.png`,
+    })
 
     const head = `
-      <title>${escapeHtml(post.title)}</title>
+      <title>${escapeHtml(post.title)} — ReplyFlow</title>
       <meta name="description" content="${escapeHtml(post.description || '')}" />
-      <meta name="keywords" content="${(post.keywords || []).map(escapeHtml).join(',')}" />
-      <link rel="canonical" href="${escapeHtml(post.canonicalUrl || `${process.env.SITE_HOST || ''}/blog/${post.slug}`)}" />
-      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-
-      <!-- Open Graph -->
+      <meta name="keywords" content="${escapeHtml(kws)}" />
+      <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
       <meta property="og:type" content="article" />
-      <meta property="og:site_name" content="Reply Flow" />
-      <meta property="og:title" content="${escapeHtml(post.title)}" />
+      <meta property="og:title" content="${escapeHtml(post.title)} — ReplyFlow" />
       <meta property="og:description" content="${escapeHtml(post.description || '')}" />
-      <meta property="og:url" content="${escapeHtml(post.canonicalUrl || `${process.env.SITE_HOST || ''}/blog/${post.slug}`)}" />
-      <meta property="og:image" content="${escapeHtml(post.ogImage || '')}" />
-      <meta property="og:image:alt" content="Reply Flow logo" />
-
-      <!-- Twitter -->
+      <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
+      <meta property="og:image" content="${escapeHtml(post.ogImage || `${SITE}/reply_flow_logo.png`)}" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:image:alt" content="Reply Flow logo" />
-      <meta name="twitter:title" content="${escapeHtml(post.title)}" />
+      <meta name="twitter:title" content="${escapeHtml(post.title)} — ReplyFlow" />
       <meta name="twitter:description" content="${escapeHtml(post.description || '')}" />
-      <meta name="twitter:image" content="${escapeHtml(post.ogImage || '')}" />
-      <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
-    `
+      <meta name="twitter:image" content="${escapeHtml(post.ogImage || `${SITE}/reply_flow_logo.png`)}" />
+      <script type="application/ld+json">${jsonLd}</script>`
 
     const styles = `
       :root{--max-w:760px;--accent:#0ea5e9}
       html,body{height:100%}
-      body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;line-height:1.65;color:#0f172a;margin:0;padding:18px;background:#fff;-webkit-font-smoothing:antialiased}
+      body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;line-height:1.65;color:#0f172a;margin:0;padding:18px;background:#fff}
       .wrap{max-width:var(--max-w);margin:0 auto}
       header.site-header{display:flex;align-items:center;gap:12px;padding:12px 0 8px}
       header.site-header img{height:42px;width:auto;border-radius:6px}
       header.site-header a{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
       header.site-header h2{margin:0;font-size:1rem;letter-spacing:0.08em}
       article{padding:8px 0}
-      h1{font-size:clamp(1.6rem,3.2vw,2.6rem);margin:0 0 8px;font-family:Playfair Display,serif}
+      h1{font-size:clamp(1.6rem,3.2vw,2.6rem);margin:0 0 8px}
       time{color:#64748b;font-size:0.9rem}
-      .content{margin-top:18px;font-size:clamp(1rem,1.6vw,1.125rem);color:#0f172a;word-break:break-word}
+      .content{margin-top:18px;font-size:clamp(1rem,1.6vw,1.125rem);color:#0f172a}
       img{max-width:100%;height:auto;border-radius:8px}
       pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:8px;overflow:auto}
       code{background:#f1f5f9;padding:2px 6px;border-radius:6px}
       @media (prefers-color-scheme:dark){body{background:#000;color:#e6edf3}.content{color:#dbeafe}}
-      @media (min-width:900px){body{padding:36px}.wrap{padding:0 20px}}
-    `
+      @media (min-width:900px){body{padding:36px}.wrap{padding:0 20px}}`
 
     const html = `<!doctype html>
     <html lang="en">
-      <head>
-        ${head}
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style>${styles}</style>
-      </head>
+      <head>${head}<meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><style>${styles}</style></head>
       <body>
         <div class="wrap">
           <header class="site-header">
-            <a href="/">
-              <img src="https://replyflow.pro/reply_flow_logo.png" alt="Reply Flow logo" />
-              <h2>Reply Flow — Autonomous Sales Engine</h2>
-            </a>
+            <a href="/"><img src="https://replyflow.pro/reply_flow_logo.png" alt="ReplyFlow" /><h2>ReplyFlow — Autonomous Sales Engine</h2></a>
           </header>
           <article>
             <h1>${escapeHtml(post.title)}</h1>
@@ -289,48 +326,37 @@ app.get('/blog/:slug', async (req: Request, res: Response) => {
   }
 })
 
-async function main() {
-  try {
-    await connectDB()
-  } catch (err) {
-    console.error('DB connect failed:', (err as Error).message)
-    // In production, fail fast so we don't serve stale filesystem content
-    if (process.env.NODE_ENV === 'production') {
-      console.error('Production environment requires a working DB. Exiting.')
-      process.exit(1)
+let initPromise: Promise<void> | null = null
+
+async function ensureInit() {
+  if (initPromise) return initPromise
+  initPromise = (async () => {
+    try {
+      db = await connectDB()
+      await syncAll()
+      console.log('DB initialized and posts synced')
+    } catch (err) {
+      console.error('DB init failed:', (err as Error).message)
     }
-    // For development, allow filesystem fallback to keep local dev working
-    useFilesystem = true
-  }
+  })()
+  return initPromise
+}
 
-  // ensure posts are synced from repo on startup
-  try {
-    await syncAll()
-  } catch (err) {
-    console.error('Initial sync failed:', (err as Error).message)
-  }
+app.use((req, res, next) => {
+  if (req.url.startsWith('/api/health')) return next()
+  ensureInit().finally(() => next())
+})
 
-  // Optionally watch for file changes during development
+async function main() {
+  await ensureInit()
   if (process.env.DEV_WATCH === 'true' || process.env.NODE_ENV === 'development') {
     try { watchPosts() } catch (e) { console.error('watchPosts failed', (e as Error).message) }
   }
-
   app.listen(PORT, () => console.log(`Blog server running on http://localhost:${PORT}`))
 }
 
-function escapeHtml(s: any) {
-  if (!s) return ''
-  return String(s)
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;')
+if (!process.env.VERCEL) {
+  main().catch(err => { console.error(err); process.exit(1) })
 }
 
-function stripHtml(html: string) {
-  if (!html) return ''
-  return String(html).replace(/<[^>]*>/g, '')
-}
-
-main().catch(err => { console.error(err); process.exit(1) })
+export default app

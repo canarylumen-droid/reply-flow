@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowRightIcon } from './Icons'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import SeoMeta from './SeoMeta'
 
 const API_BASE = import.meta.env.VITE_BLOG_API_URL ||
   (typeof window !== 'undefined' ? window.location.origin : '')
@@ -63,6 +64,7 @@ const BlogPost = ({ slug }) => {
   const [theme, setTheme]     = useState(getInitialTheme)
   const [copied, setCopied]   = useState(false)
   const [views, setViews]     = useState(0)
+  const [seoProps, setSeoProps] = useState(null)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
@@ -89,50 +91,33 @@ const BlogPost = ({ slug }) => {
         const data = await res.json()
         setPost(data)
 
-        document.title = `${data.title} — ReplyFlow`
-        const setMeta = (sel, val) => { const el = document.querySelector(sel); if (el && val) el.setAttribute('content', val) }
-        setMeta('meta[name="description"]',       data.description)
-        setMeta('meta[property="og:title"]',      `${data.title} — ReplyFlow`)
-        setMeta('meta[property="og:description"]',data.description)
-        setMeta('meta[property="og:image"]',      data.ogImage || `${SITE}/reply_flow_logo.png`)
-
-        /* Keywords meta from post tags */
-        if (data.tags) {
-          let kwEl = document.querySelector('meta[name="keywords"]')
-          if (!kwEl) { kwEl = document.createElement('meta'); kwEl.name = 'keywords'; document.head.appendChild(kwEl) }
-          kwEl.setAttribute('content', data.tags)
-        }
-
-        /* Twitter card meta */
-        let twTitle = document.querySelector('meta[property="twitter:title"]')
-        if (!twTitle) { twTitle = document.createElement('meta'); twTitle.setAttribute('property','twitter:title'); document.head.appendChild(twTitle) }
-        twTitle.setAttribute('content', `${data.title} — ReplyFlow`)
-        let twDesc = document.querySelector('meta[property="twitter:description"]')
-        if (!twDesc) { twDesc = document.createElement('meta'); twDesc.setAttribute('property','twitter:description'); document.head.appendChild(twDesc) }
-        twDesc.setAttribute('content', data.description)
-
-        const canonicalHref = data.canonicalUrl || `${SITE}/blog/${data.slug}`
-        let canonical = document.querySelector('link[rel="canonical"]')
-        if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical) }
-        canonical.href = canonicalHref
-
-        document.querySelector('script[data-blog-post]')?.remove()
-        const ld = document.createElement('script')
-        ld.type = 'application/ld+json'
-        ld.dataset.blogPost = '1'
-        ld.text = JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'BlogPosting',
-          headline: data.title,
+        const canonicalUrl = data.canonicalUrl || `${SITE}/blog/${data.slug}`
+        setSeoProps({
+          title: `${data.title} — ReplyFlow`,
           description: data.description,
-          datePublished: data.publishedAt,
-          image: data.ogImage || `${SITE}/reply_flow_logo.png`,
-          url: canonicalHref,
-          author:    { '@type': 'Organization', name: 'ReplyFlow Agency', url: SITE },
-          publisher: { '@type': 'Organization', name: 'ReplyFlow Agency', logo: { '@type': 'ImageObject', url: `${SITE}/reply_flow_logo.png` } },
-          mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalHref }
+          canonicalUrl,
+          ogImage: data.ogImage || `${SITE}/reply_flow_logo.png`,
+          ogType: 'article',
+          keywords: data.tags || '',
+          publishedTime: data.publishedAt,
+          tags: data.tags || '',
+          breadcrumbs: [
+            { name: 'Blog', item: `${SITE}/blog` },
+            { name: data.title, item: canonicalUrl },
+          ],
+          jsonLd: {
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: data.title,
+            description: data.description,
+            datePublished: data.publishedAt,
+            image: data.ogImage || `${SITE}/reply_flow_logo.png`,
+            url: canonicalUrl,
+            author: { '@type': 'Organization', name: 'ReplyFlow Agency', url: SITE },
+            publisher: { '@type': 'Organization', name: 'ReplyFlow Agency', logo: { '@type': 'ImageObject', url: `${SITE}/reply_flow_logo.png` } },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+          },
         })
-        document.head.appendChild(ld)
       } catch (err) {
         setError(err.message || 'fetch_error')
       } finally {
@@ -140,7 +125,6 @@ const BlogPost = ({ slug }) => {
       }
     }
     fetchPost()
-    return () => { document.querySelector('script[data-blog-post]')?.remove() }
   }, [slug])
 
   const postUrl = `${SITE}/blog/${slug}`
@@ -189,6 +173,7 @@ const BlogPost = ({ slug }) => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white transition-colors">
+      {seoProps && <SeoMeta {...seoProps} />}
       <Navbar theme={theme} setTheme={setTheme} />
 
       {/* ── Article header ── */}

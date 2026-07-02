@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { getDb } from '../db.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const POSTS_DIR = path.resolve(__dirname, '..', '..', 'content', 'posts')
@@ -29,49 +30,86 @@ function mdToHtml(md) {
   let buf = []
   let inList = false
   let inOl = false
-
-  const flushBuf = () => {
-    if (buf.length) { out.push(`<p>${buf.join(' ').trim()}</p>`); buf = [] }
-  }
-  const closeList = () => {
+  const flush = () => { if (buf.length) { out.push(`<p>${buf.join(' ').trim()}</p>`); buf = [] } }
+  const close = () => {
     if (inList) { out.push('</ul>'); inList = false }
     if (inOl) { out.push('</ol>'); inOl = false }
   }
-  const inline = (str) => str
+  const inline = (s) => s
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
-
   for (const line of lines) {
     const t = line.trim()
-    if (!t || t === '---') { flushBuf(); closeList(); continue }
-    if (t.startsWith('#### ')) { flushBuf(); closeList(); out.push(`<h4>${inline(t.slice(5))}</h4>`); continue }
-    if (t.startsWith('### '))  { flushBuf(); closeList(); out.push(`<h3>${inline(t.slice(4))}</h3>`); continue }
-    if (t.startsWith('## '))   { flushBuf(); closeList(); out.push(`<h2>${inline(t.slice(3))}</h2>`); continue }
-    if (t.startsWith('# '))    { flushBuf(); closeList(); out.push(`<h1>${inline(t.slice(2))}</h1>`); continue }
-    if (t.startsWith('> '))    { flushBuf(); closeList(); out.push(`<blockquote>${inline(t.slice(2))}</blockquote>`); continue }
+    if (!t || t === '---') { flush(); close(); continue }
+    if (t.startsWith('#### ')) { flush(); close(); out.push(`<h4>${inline(t.slice(5))}</h4>`); continue }
+    if (t.startsWith('### ')) { flush(); close(); out.push(`<h3>${inline(t.slice(4))}</h3>`); continue }
+    if (t.startsWith('## ')) { flush(); close(); out.push(`<h2>${inline(t.slice(3))}</h2>`); continue }
+    if (t.startsWith('# ')) { flush(); close(); out.push(`<h1>${inline(t.slice(2))}</h1>`); continue }
+    if (t.startsWith('> ')) { flush(); close(); out.push(`<blockquote>${inline(t.slice(2))}</blockquote>`); continue }
     if (t.startsWith('- ') || t.startsWith('* ')) {
-      flushBuf()
-      if (!inList) { closeList(); out.push('<ul>'); inList = true }
-      out.push(`<li>${inline(t.slice(2))}</li>`)
-      continue
+      flush(); if (!inList) { close(); out.push('<ul>'); inList = true }
+      out.push(`<li>${inline(t.slice(2))}</li>`); continue
     }
     if (/^\d+\.\s/.test(t)) {
-      flushBuf()
-      if (!inOl) { closeList(); out.push('<ol>'); inOl = true }
-      out.push(`<li>${inline(t.replace(/^\d+\.\s/, ''))}</li>`)
-      continue
+      flush(); if (!inOl) { close(); out.push('<ol>'); inOl = true }
+      out.push(`<li>${inline(t.replace(/^\d+\.\s/, ''))}</li>`); continue
     }
-    closeList()
-    buf.push(inline(t))
+    close(); buf.push(inline(t))
   }
-  flushBuf()
-  closeList()
+  flush(); close()
   return out.join('\n')
 }
 
-export default function handler(req, res) {
+function readFromFilesystem(slug) {
+  if (!fs.existsSync(POSTS_DIR)) return null
+  const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'))
+  for (const f of files) {
+    const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
+    const { data, content } = parseFrontmatter(raw)
+    const fileSlug = data.slug || f.replace(/\.md$/, '')
+    if (fileSlug === slug) {
+      if (data.draft === 'true') return null
+      const wordCount = content.trim().split(/\s+/).length
+      return {
+        title: data.title || fileSlug,
+        slug: fileSlug,
+        description: data.description || '',
+        tags: data.tags || '',
+        ogImage: data.ogImage || '',
+        canonicalUrl: data.canonical || '',
+        publishedAt: data.date || null,
+        readingTime: Math.max(1, Math.ceil(wordCount / 220)),
+        content: mdToHtml(content)
+      }
+    }
+  }
+  return null
+}
+
+async function readFromDb(slug) {
+  const db = await getDb()
+  if (!db) return null
+  try {
+    const [rows] = await db.execute('SELECT title, slug, description, keywords as tags, ogImage, canonicalUrl, publishedAt, content FROM posts WHERE slug = ?', [slug])
+    if (rows.length === 0) return null
+    const r = rows[0]
+    return {
+      title: r.title,
+      slug: r.slug,
+      description: r.description || '',
+      tags: r.tags || '',
+      ogImage: r.ogImage || '',
+      canonicalUrl: r.canonicalUrl || '',
+      publishedAt: r.publishedAt || null,
+      readingTime: Math.max(1, Math.ceil((r.content || '').split(/\s+/).length / 220)),
+      content: r.content
+    }
+  } catch { return null }
+}
+
+export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS')
   if (req.method === 'OPTIONS') return res.status(200).end()
@@ -81,38 +119,17 @@ export default function handler(req, res) {
     const slug = req.query.slug
     if (!slug) return res.status(400).json({ error: 'missing_slug' })
 
-    if (!fs.existsSync(POSTS_DIR)) {
-      console.error('[api/post/[slug]] POSTS_DIR not found:', POSTS_DIR)
-      return res.status(404).json({ error: 'not_found' })
-    }
+    let post = null
+    if (req.query?.db !== 'false') post = await readFromDb(slug)
+    if (!post) post = readFromFilesystem(slug)
+    if (!post) return res.status(404).json({ error: 'not_found' })
 
-    const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'))
-
-    for (const f of files) {
-      const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
-      const { data, content } = parseFrontmatter(raw)
-      const fileSlug = data.slug || f.replace(/\.md$/, '')
-      if (fileSlug === slug) {
-        if (data.draft === 'true') return res.status(404).json({ error: 'not_found' })
-        const wordCount = content.trim().split(/\s+/).length
-        const readingTime = Math.max(1, Math.ceil(wordCount / 220))
-        return res.status(200).json({
-          title: data.title || fileSlug,
-          slug: fileSlug,
-          description: data.description || '',
-          tags: data.tags || '',
-          ogImage: data.ogImage || '',
-          canonicalUrl: data.canonical || '',
-          publishedAt: data.date || null,
-          readingTime,
-          content: mdToHtml(content)
-        })
-      }
-    }
-
-    return res.status(404).json({ error: 'not_found' })
+    res.status(200).json(post)
   } catch (err) {
     console.error('[api/post/[slug]] error:', err.message)
-    res.status(500).json({ error: 'server_error', detail: err.message })
+    const slug = req.query.slug
+    const post = slug ? readFromFilesystem(slug) : null
+    if (!post) return res.status(404).json({ error: 'not_found' })
+    res.status(200).json(post)
   }
 }
