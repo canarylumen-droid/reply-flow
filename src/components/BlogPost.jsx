@@ -59,7 +59,7 @@ const CopyIcon = ({ checked }) => checked ? (
 
 const BlogPost = ({ slug }) => {
   const [post, setPost]       = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(!slug)
   const [error, setError]     = useState(null)
   const [theme, setTheme]     = useState(getInitialTheme)
   const [copied, setCopied]   = useState(false)
@@ -84,6 +84,7 @@ const BlogPost = ({ slug }) => {
   /* Fetch post + inject SEO */
   useEffect(() => {
     const fetchPost = async () => {
+      if (!slug) { setLoading(false); setError('post_not_found'); return }
       setLoading(true); setError(null)
       try {
         const res = await fetch(`${API_BASE}/api/post/${encodeURIComponent(slug)}`)

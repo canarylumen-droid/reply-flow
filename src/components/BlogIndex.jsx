@@ -40,16 +40,21 @@ const BlogIndex = () => {
 
   const blogIndexKeywords = "AI lead follow-up blog, sales automation insights, B2B lead generation tips, cold email strategy guide, AI appointment setting, lead nurture system, agency sales development, lost lead recovery, sales response time, AI SDR best practices, outbound sales automation, lead conversion optimization, sales technology 2026"
 
+  const [fetchError, setFetchError] = useState(null)
+
   useEffect(() => {
     let mounted = true
     const fetch_ = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/posts`)
-        if (!res.ok) throw new Error('fetch_failed')
+        const url = `${API_BASE}/api/posts`
+        console.log('[BlogIndex] fetching from:', url)
+        const res = await fetch(url)
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const json = await res.json()
         if (mounted) setPosts(json.items || json || [])
       } catch (err) {
-        console.error('Blog fetch error:', err)
+        console.error('[BlogIndex] fetch error:', err.message)
+        if (mounted) setFetchError(err.message)
       } finally {
         if (mounted) setLoading(false)
       }
@@ -101,7 +106,7 @@ const BlogIndex = () => {
         ) : posts.length === 0 ? (
           <div className="text-center py-20 text-gray-400">
             <p className="text-base font-medium mb-1">No posts yet</p>
-            <p className="text-sm">Check back soon.</p>
+            <p className="text-sm">{fetchError ? `Fetch error: ${fetchError}` : 'Check back soon.'}</p>
           </div>
         ) : (
           <>

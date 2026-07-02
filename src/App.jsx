@@ -85,6 +85,7 @@ const App = () => {
   const isBlogIndex = currentPath === '/blog' || currentPath === '/blog/'
   const isBlogPost = currentPath.startsWith('/blog/') && currentPath.split('/').filter(Boolean).length > 1
   const blogSlug = isBlogPost ? currentPath.split('/').filter(Boolean).slice(1).join('/') : ''
+  console.log('[App] path:', currentPath, 'isBlogIndex:', isBlogIndex, 'isBlogPost:', isBlogPost, 'slug:', blogSlug)
 
   useEffect(() => {
     if (window.innerWidth < 1024 || isLoading) return;
@@ -124,7 +125,7 @@ const App = () => {
     <div className="relative bg-white dark:bg-black transition-colors min-h-screen lg:cursor-auto">
       {isBlogIndex ? (
         <BlogIndex />
-      ) : isBlogPost ? (
+      ) : isBlogPost && blogSlug ? (
         <BlogPost slug={blogSlug} />
       ) : (
         <AnimatePresence mode="wait">
