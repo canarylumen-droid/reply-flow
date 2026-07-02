@@ -9,12 +9,6 @@
       "includeFiles": "content/posts/**"
     }
   },
-  "crons": [
-    {
-      "path": "/api/posts?wakeup=true",
-      "schedule": "*/10 * * * *"
-    }
-  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
