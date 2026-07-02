@@ -15,8 +15,9 @@ export async function getDb() {
       password: decodeURIComponent(parsed.password),
       database: parsed.pathname.replace(/^\//, ''),
       waitForConnections: true,
-      connectionLimit: 5,
+      connectionLimit: 3,
       queueLimit: 0,
+      connectTimeout: 5000,
     })
     await pool.execute('SELECT 1')
     return pool
