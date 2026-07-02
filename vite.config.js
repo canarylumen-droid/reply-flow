@@ -312,6 +312,11 @@ function prerenderBlogPlugin() {
       </article>
     </div>`
 
+          const blogPost = {
+            title, slug, description, tags, ogImage, canonicalUrl, publishedAt, readingTime,
+            content: htmlContent,
+          }
+
           const metaTags = `
     <meta name="description" content="${escapeHtml(description)}" />
     <meta name="keywords" content="${escapeHtml(tags)}" />
@@ -326,7 +331,8 @@ function prerenderBlogPlugin() {
     <meta name="twitter:description" content="${escapeHtml(description)}" />
     <meta name="twitter:image" content="${escapeHtml(ogImage)}" />
     <script type="application/ld+json">${breadcrumbJson}</script>
-    <script type="application/ld+json">${blogPostingJson}</script>`
+    <script type="application/ld+json">${blogPostingJson}</script>
+    <script>window.__INITIAL_STATE__ = ${JSON.stringify(blogPost)}</script>`
 
           let page = template
             .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(title)} — ReplyFlow</title>`)

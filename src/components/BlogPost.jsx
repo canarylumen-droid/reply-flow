@@ -83,8 +83,18 @@ const BlogPost = ({ slug }) => {
 
   /* Fetch post + inject SEO */
   useEffect(() => {
+    if (!slug) { setLoading(false); setError('post_not_found'); return }
+
+    const initial = typeof window !== 'undefined' ? window.__INITIAL_STATE__ : null
+    const needsFetch = !initial || initial.slug !== slug
+
+    if (!needsFetch) {
+      setPost(initial)
+      setLoading(false)
+      return
+    }
+
     const fetchPost = async () => {
-      if (!slug) { setLoading(false); setError('post_not_found'); return }
       setLoading(true); setError(null)
       try {
         const res = await fetch(`${API_BASE}/api/post/${encodeURIComponent(slug)}`)
