@@ -1,0 +1,13 @@
+name: Keep Warm
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping wakeup endpoint
+        run: |
+          curl -sSf "${{ secrets.PRODUCTION_URL }}/api/posts?wakeup=true" \
+            -o /dev/null -w "HTTP %{http_code}\n" || echo "Warm ping skipped (not deployed yet)"
