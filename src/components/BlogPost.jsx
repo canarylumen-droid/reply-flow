@@ -59,7 +59,7 @@ const CopyIcon = ({ checked }) => checked ? (
 
 const BlogPost = ({ slug }) => {
   const [post, setPost]       = useState(null)
-  const [loading, setLoading] = useState(!slug)
+  const [loading, setLoading] = useState(true)
   const [error, setError]     = useState(null)
   const [theme, setTheme]     = useState(getInitialTheme)
   const [copied, setCopied]   = useState(false)
