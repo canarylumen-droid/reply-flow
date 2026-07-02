@@ -351,6 +351,77 @@ function prerenderBlogPlugin() {
         }
       }
 
+      /* ── Prerender /blog index ── */
+      try {
+        const posts = files.map(f => {
+          const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
+          const { data, content } = parseFrontmatter(raw)
+          if (data.draft === 'true') return null
+          const slug = data.slug || f.replace(/\.md$/, '')
+          const clean = s => s.replace(/#+\s[^\n]*/g, '').replace(/\*\*/g, '').replace(/\*/g, '').trim()
+          const md = content || ''
+          const excerpt = clean(md).split(/\n\n/)[0].replace(/\n/g, ' ').slice(0, 240)
+          return { slug, title: data.title || slug, description: data.description || '', excerpt, publishedAt: data.date || null, readingTime: Math.max(1, Math.ceil(md.trim().split(/\s+/).length / 220)) }
+        }).filter(Boolean).sort((a, b) => {
+          if (!a.publishedAt) return 1; if (!b.publishedAt) return -1
+          return new Date(b.publishedAt) - new Date(a.publishedAt)
+        })
+
+        let listHtml = ''
+        if (posts.length > 0) {
+          const f = posts[0]
+          listHtml += `<div class="mb-10"><p class="text-[10px] font-bold uppercase tracking-[0.3em] text-primary mb-4">Latest Article</p><a href="/blog/${escapeHtml(f.slug)}" class="group block rounded-2xl border border-gray-100 bg-gray-50 p-6 sm:p-8 hover:border-primary/25 transition-all duration-300"><div class="flex flex-wrap items-center gap-2.5 mb-4">${f.publishedAt ? `<span class="text-[12px] text-gray-400">${new Date(f.publishedAt).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}</span>` : ''}<span class="text-[11px] px-2 py-0.5 bg-primary/10 text-primary rounded-full font-semibold">Latest</span></div><h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-snug mb-3">${escapeHtml(f.title)}</h2><p class="text-[14px] text-gray-500 leading-relaxed mb-5 line-clamp-2">${escapeHtml(f.excerpt)}</p><span class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary">Read article →</span></a></div>`
+
+          if (posts.length > 1) {
+            listHtml += '<p class="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400 mb-4">More Articles</p><div class="grid grid-cols-1 sm:grid-cols-2 gap-4">'
+            for (let i = 1; i < posts.length; i++) {
+              const p = posts[i]
+              listHtml += `<a href="/blog/${escapeHtml(p.slug)}" class="group block rounded-2xl border border-gray-100 bg-white p-5 hover:border-primary/25 transition-all duration-300"><div class="flex items-center gap-2 mb-3">${p.publishedAt ? `<span class="text-[11px] text-gray-400">${new Date(p.publishedAt).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'})}</span>` : ''}${p.readingTime ? `<span class="text-[11px] text-gray-400">· ${p.readingTime} min</span>` : ''}</div><h3 class="text-base font-bold text-gray-800 group-hover:text-primary transition-colors leading-snug mb-2">${escapeHtml(p.title)}</h3><p class="text-[13px] text-gray-500 leading-relaxed mb-4 line-clamp-2">${escapeHtml(p.description || p.excerpt)}</p><span class="inline-flex items-center gap-1 text-[12px] font-semibold text-primary">Read →</span></a>`
+            }
+            listHtml += '</div>'
+          }
+        }
+
+        const blogIndexContent = `<div class="min-h-screen bg-white text-gray-900 transition-colors">
+      <div class="relative border-b border-gray-100 overflow-hidden"><div class="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 pt-16 pb-14 text-center"><div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[10px] font-bold uppercase tracking-[0.3em] mb-5"><span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse inline-block"></span>ReplyFlow Blog</div><h1 class="text-3xl sm:text-5xl font-bold tracking-tight mb-4 text-gray-900 leading-[1.15]">Insights That <span class="text-primary">Close Deals</span></h1><p class="text-[15px] sm:text-base text-gray-500 max-w-xl mx-auto leading-relaxed">Deep-dives on AI lead follow-up, response time, lost lead recovery, and sales systems that actually convert for agencies.</p></div></div>
+      <div class="max-w-4xl mx-auto px-5 sm:px-8 py-14">${listHtml}
+        <div class="mt-16 p-8 sm:p-10 rounded-3xl bg-gray-900 text-white text-center relative overflow-hidden"><div class="relative z-10"><p class="text-[10px] font-bold uppercase tracking-[0.3em] text-primary mb-4">Built for Agencies</p><h3 class="text-xl sm:text-2xl font-bold mb-3">Install an AI Follow-Up System in 72 Hours</h3><p class="text-gray-400 mb-7 max-w-md mx-auto text-sm leading-relaxed">Fully managed. Done for you. We handle setup, optimisation, and ongoing performance — you just close the meetings we book.</p><a href="https://calendly.com/replyflow" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-primary text-white px-7 py-3.5 rounded-full font-semibold text-sm hover:bg-primary/90 transition-all">Book a Free Strategy Call →</a></div></div>
+      </div>
+    </div>`
+
+        const blogIndexJsonLd = JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'Blog',
+          name: 'ReplyFlow Blog — AI Lead Follow-Up & Sales Automation Insights',
+          description: 'Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses.',
+          url: 'https://replyflow.pro/blog',
+          publisher: { '@type': 'Organization', name: 'ReplyFlow Agency', logo: { '@type': 'ImageObject', url: 'https://replyflow.pro/reply_flow_logo.png' } },
+          blogPost: posts.map(p => ({
+            '@type': 'BlogPosting',
+            headline: p.title,
+            url: `https://replyflow.pro/blog/${p.slug}`,
+            datePublished: p.publishedAt || undefined,
+          })),
+        })
+
+        const blogIndexMeta = `\n    <meta name="description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <link rel="canonical" href="https://replyflow.pro/blog" />\n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights" />\n    <meta property="og:description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <meta property="og:url" content="https://replyflow.pro/blog" />\n    <meta property="og:image" content="https://replyflow.pro/reply_flow_logo.png" />\n    <meta name="twitter:title" content="Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights" />\n    <meta name="twitter:description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <meta name="twitter:image" content="https://replyflow.pro/reply_flow_logo.png" />\n    <script type="application/ld+json">${blogIndexJsonLd}</script>`
+
+        let blogIndexPage = template
+          .replace(/<title>[^<]*<\/title>/, '<title>Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights</title>')
+          .replace(/<div id="root">[\s\S]*?<\/div>/, `<div id="root">${blogIndexContent}</div>`)
+          .replace(/<meta name="description"[^>]*\/>/, '')
+          .replace(/<link rel="canonical"[^>]*\/>/, '')
+          .replace(/<meta (name|property)="(og|article|twitter):[^>]*\/>/g, '')
+          .replace(/<\/head>/, `${blogIndexMeta}\n</head>`)
+
+        const blogDir = path.join(outDir, 'blog')
+        fs.mkdirSync(blogDir, { recursive: true })
+        fs.writeFileSync(path.join(blogDir, 'index.html'), blogIndexPage, 'utf8')
+        console.log('\u2713 Prerendered /blog/index.html')
+      } catch (e) {
+        console.warn('  prerender blog index failed:', e.message)
+      }
+
       console.log(`\u2713 Prerendered ${count} blog posts to dist/blog/*/index.html`)
     }
   }

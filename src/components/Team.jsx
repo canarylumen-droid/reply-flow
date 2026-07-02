@@ -1,8 +1,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { TiltCard } from './TiltCard'
-import team_member_treasure from '../assets/team_member_treasure.png'
-import team_member_marcus from '../assets/team_member_marcus.png'
+import team_member_treasure from '../assets/team_member_treasure@800.webp'
+import team_member_treasure_400 from '../assets/team_member_treasure@400.webp'
+import team_member_marcus from '../assets/team_member_marcus@800.webp'
+import team_member_marcus_400 from '../assets/team_member_marcus@400.webp'
 
 const Team = () => {
     const team = [
@@ -10,12 +12,14 @@ const Team = () => {
             name: "Nleanya Treasure",
             role: "Founder & Visionary",
             image: team_member_treasure,
+            imageSmall: team_member_treasure_400,
             color: "from-purple-500 to-indigo-500"
         },
         {
             name: "Marcus Vector",
             role: "Creative Director",
             image: team_member_marcus,
+            imageSmall: team_member_marcus_400,
             color: "from-emerald-500 to-teal-500"
         }
     ]
@@ -55,9 +59,15 @@ const Team = () => {
                                 <div className='relative h-96 w-full overflow-hidden'>
                                     <div className={`absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10`} />
 
-                                    <motion.img
-                                        src={member.image}
+                                    <img
+                                        src={member.imageSmall}
+                                        srcSet={`${member.imageSmall} 400w, ${member.image} 800w`}
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                         alt={member.name}
+                                        loading="lazy"
+                                        decoding="async"
+                                        width="400"
+                                        height="600"
                                         className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'
                                     />
 

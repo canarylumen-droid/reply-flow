@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useEffect, useRef, useState, lazy, Suspense } from 'react'
+import { motion } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import TrustedBy from './components/TrustedBy'
@@ -21,9 +21,9 @@ import Booking from './components/Booking'
 import ScrollingText from './components/ScrollingText'
 import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
-import BlogPost from './components/BlogPost'
-import BlogIndex from './components/BlogIndex'
-import { Toaster } from 'react-hot-toast'
+
+const BlogIndex = lazy(() => import('./components/BlogIndex'))
+const BlogPost = lazy(() => import('./components/BlogPost'))
 
 const getInitialTheme = () => {
   const saved = localStorage.getItem('theme')
@@ -36,44 +36,11 @@ const getInitialTheme = () => {
 
 const App = () => {
   const [theme, setTheme] = useState(getInitialTheme)
-  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
     localStorage.setItem('theme', theme)
   }, [theme])
-
-  useEffect(() => {
-    let subLoaded = false;
-    let timerDone = false;
-
-    const checkReady = () => {
-      if (subLoaded && timerDone) {
-        setIsLoading(false);
-      }
-    };
-
-    const timer = setTimeout(() => {
-      timerDone = true;
-      checkReady();
-    }, 2200); // 2.2s for a truly premium, confident reveal
-    
-    const handleLoad = () => {
-      subLoaded = true;
-      checkReady();
-    };
-
-    if (document.readyState === 'complete') {
-      subLoaded = true;
-    } else {
-      window.addEventListener('load', handleLoad);
-    }
-    
-    return () => {
-      window.removeEventListener('load', handleLoad);
-      clearTimeout(timer);
-    };
-  }, [])
 
   const dotRef = useRef(null)
   const trailRef = useRef(null)
@@ -88,7 +55,7 @@ const App = () => {
   console.log('[App] path:', currentPath, 'isBlogIndex:', isBlogIndex, 'isBlogPost:', isBlogPost, 'slug:', blogSlug)
 
   useEffect(() => {
-    if (window.innerWidth < 1024 || isLoading) return;
+    if (window.innerWidth < 1024) return;
 
     const handleMouseMove = (e) => {
       mouse.current.x = e.clientX
@@ -123,95 +90,59 @@ const App = () => {
 
   return (
     <div className="relative bg-white dark:bg-black transition-colors min-h-screen lg:cursor-auto">
+      <ScrollProgress />
       {isBlogIndex ? (
-        <BlogIndex />
+        <Suspense fallback={<div className="min-h-screen bg-white dark:bg-black" />}>
+          <BlogIndex />
+        </Suspense>
       ) : isBlogPost && blogSlug ? (
-        <BlogPost slug={blogSlug} />
+        <Suspense fallback={<div className="min-h-screen bg-white dark:bg-black" />}>
+          <BlogPost slug={blogSlug} />
+        </Suspense>
       ) : (
-        <AnimatePresence mode="wait">
-          {isLoading ? (
-            <motion.div
-              key="loader"
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.8, ease: "circIn" } }}
-              className="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center gap-6"
-            >
-              <motion.div 
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-                className="w-16 h-16 bg-primary rounded-full blur-[20px] opacity-50"
-              />
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex flex-col items-center gap-2"
-              >
-                <span className="text-white font-syne font-black text-2xl tracking-tighter uppercase">ReplyFlow</span>
-                <span className="text-primary text-[10px] font-bold tracking-widest uppercase">Autonomous Sales Engine</span>
-                <div className="h-[2px] w-24 bg-zinc-800 relative overflow-hidden rounded-full mt-2">
-                  <motion.div 
-                    initial={{ x: '-100%' }}
-                    animate={{ x: '100%' }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute inset-0 bg-primary"
-                  />
-                </div>
-              </motion.div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <ScrollProgress />
-              <Toaster />
-              <Navbar theme={theme} setTheme={setTheme} />
+        <>
+          <Navbar theme={theme} setTheme={setTheme} />
 
-              <main>
-                <Hero />
-                <TrustedBy />
-                <WhyLosingMoney />
-                <ScrollReveal />
-                <ComparisonTable />
-                <Intelligence />
-                <Infrastructure />
-                <AutomationFeatures />
-                <CaseStudies />
-                <SimpleSetup />
-                <div id="roi">
-                  <RoiCalculator />
-                </div>
-                <div id="pricing">
-                  <Pricing />
-                </div>
-                <Guarantees />
-                <FAQ />
-                <ScrollingText />
-                <div id="book">
-                  <FinalCta />
-                  <Booking />
-                </div>
-              </main>
+          <main>
+            <Hero />
+            <TrustedBy />
+            <WhyLosingMoney />
+            <ScrollReveal />
+            <ComparisonTable />
+            <Intelligence />
+            <Infrastructure />
+            <AutomationFeatures />
+            <CaseStudies />
+            <SimpleSetup />
+            <div id="roi">
+              <RoiCalculator />
+            </div>
+            <div id="pricing">
+              <Pricing />
+            </div>
+            <Guarantees />
+            <FAQ />
+            <ScrollingText />
+            <div id="book">
+              <FinalCta />
+              <Booking />
+            </div>
+          </main>
 
-              <Footer theme={theme} />
+          <Footer theme={theme} />
 
-              {/* Primary Dot */}
-              <div
-                ref={dotRef}
-                className="fixed top-0 left-0 h-1 w-1 rounded-full bg-primary pointer-events-none z-[9999] hidden lg:block"
-              />
+          {/* Primary Dot */}
+          <div
+            ref={dotRef}
+            className="fixed top-0 left-0 h-1 w-1 rounded-full bg-primary pointer-events-none z-[9999] hidden lg:block"
+          />
 
-              {/* Follower Ring */}
-              <div
-                ref={trailRef}
-                className="fixed top-0 left-0 h-10 w-10 rounded-full border border-primary/50 pointer-events-none z-[9998] hidden lg:block mix-blend-difference shadow-[0_0_15px_rgba(0,105,255,0.1)]"
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+          {/* Follower Ring */}
+          <div
+            ref={trailRef}
+            className="fixed top-0 left-0 h-10 w-10 rounded-full border border-primary/50 pointer-events-none z-[9998] hidden lg:block mix-blend-difference shadow-[0_0_15px_rgba(0,105,255,0.1)]"
+          />
+        </>
       )}
     </div>
   )
