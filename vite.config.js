@@ -265,6 +265,14 @@ function prerenderBlogPlugin() {
       const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md'))
       let count = 0
 
+      function stripSection(text, startMarker, endMarker) {
+        const s = text.indexOf(startMarker)
+        if (s === -1) return text
+        const e = text.indexOf(endMarker, s + startMarker.length)
+        if (e === -1) return text
+        return text.slice(0, s) + text.slice(e)
+      }
+
       for (const f of files) {
         try {
           const raw = fs.readFileSync(path.join(POSTS_DIR, f), 'utf8')
@@ -340,7 +348,11 @@ function prerenderBlogPlugin() {
             .replace(/<meta name="description"[^>]*\/>/, '')
             .replace(/<link rel="canonical"[^>]*\/>/, '')
             .replace(/<meta (name|property)="(og|article|twitter):[^>]*\/>/g, '')
-            .replace(/<\/head>/, `${metaTags}\n</head>`)
+          page = stripSection(page, '<!-- Primary Keywords -->', '<!-- Schema.org Organization -->')
+          page = stripSection(page, '<!-- Schema.org Organization -->', '<!-- Schema.org WebSite')
+          page = stripSection(page, '<!-- Schema.org WebSite', '<!-- Schema.org FAQ')
+          page = stripSection(page, '<!-- Schema.org FAQ', '</head>')
+          page = page.replace(/<\/head>/, `${metaTags}\n</head>`)
 
           const slugDir = path.join(outDir, 'blog', slug)
           fs.mkdirSync(slugDir, { recursive: true })
@@ -412,7 +424,11 @@ function prerenderBlogPlugin() {
           .replace(/<meta name="description"[^>]*\/>/, '')
           .replace(/<link rel="canonical"[^>]*\/>/, '')
           .replace(/<meta (name|property)="(og|article|twitter):[^>]*\/>/g, '')
-          .replace(/<\/head>/, `${blogIndexMeta}\n</head>`)
+        blogIndexPage = stripSection(blogIndexPage, '<!-- Primary Keywords -->', '<!-- Schema.org Organization -->')
+        blogIndexPage = stripSection(blogIndexPage, '<!-- Schema.org Organization -->', '<!-- Schema.org WebSite')
+        blogIndexPage = stripSection(blogIndexPage, '<!-- Schema.org WebSite', '<!-- Schema.org FAQ')
+        blogIndexPage = stripSection(blogIndexPage, '<!-- Schema.org FAQ', '</head>')
+        blogIndexPage = blogIndexPage.replace(/<\/head>/, `${blogIndexMeta}\n</head>`)
 
         const blogDir = path.join(outDir, 'blog')
         fs.mkdirSync(blogDir, { recursive: true })
