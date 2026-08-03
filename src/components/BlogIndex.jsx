@@ -28,10 +28,77 @@ function seedViews(slug) {
   return 140 + (n % 360)
 }
 
+const FALLBACK_POSTS = [
+  {
+    title: "The Complete Agency Lead Nurture System for 2026: Stop Losing Clients to Competitors Who Reply Faster",
+    slug: "agency-lead-nurture-system-2026",
+    publishedAt: "2026-05-30",
+    description: "Most agencies are brilliant at generating leads for clients but terrible at nurturing their own. Here's the complete lead nurture system every agency needs in 2026.",
+    readingTime: 12,
+    excerpt: "Most agencies are brilliant at generating leads for clients but terrible at nurturing their own. Here's the complete lead nurture system every agency needs in 2026."
+  },
+  {
+    title: "Why Response Time is the #1 Factor in Lead Conversion (And How to Fix It)",
+    slug: "sales-response-time-lead-conversion",
+    publishedAt: "2026-05-25",
+    description: "The data is clear: slow response time kills deals. Learn how to build a system that responds in under 90 seconds — automatically.",
+    readingTime: 8,
+    excerpt: "The data is clear: slow response time kills deals. Learn how to build a system that responds in under 90 seconds — automatically."
+  },
+  {
+    title: "AI Appointment Setting: How to Book 2–3x More Sales Calls Without Hiring",
+    slug: "ai-appointment-setting-book-more-calls-2026",
+    publishedAt: "2026-05-20",
+    description: "How AI appointment setting agents qualify inbound leads and book discovery calls automatically 24/7.",
+    readingTime: 10,
+    excerpt: "How AI appointment setting agents qualify inbound leads and book discovery calls automatically 24/7."
+  },
+  {
+    title: "Will AI SDRs Replace Sales Reps in 2026? The Real Math Behind AI Outbound",
+    slug: "ai-sdr-vs-human-sales-rep-2026",
+    publishedAt: "2026-05-15",
+    description: "A data-backed breakdown of AI SDR performance vs human sales development reps in 2026.",
+    readingTime: 11,
+    excerpt: "A data-backed breakdown of AI SDR performance vs human sales development reps in 2026."
+  },
+  {
+    title: "Cold Email + AI in 2026: The Complete Playbook for High-Ticket Lead Gen",
+    slug: "cold-email-ai-2026-complete-guide",
+    publishedAt: "2026-05-10",
+    description: "Everything you need to know about deliverability, AI copy generation, and multi-channel outreach.",
+    readingTime: 14,
+    excerpt: "Everything you need to know about deliverability, AI copy generation, and multi-channel outreach."
+  },
+  {
+    title: "Dead Lead Reactivation Campaign Guide: How to Turn Cold Leads into Active Deals",
+    slug: "dead-lead-reactivation-campaign-guide",
+    publishedAt: "2026-05-05",
+    description: "Step-by-step framework to re-engage cold contacts in your CRM with automated AI reactivation sequences.",
+    readingTime: 15,
+    excerpt: "Step-by-step framework to re-engage cold contacts in your CRM with automated AI reactivation sequences."
+  },
+  {
+    title: "How to Recover Revenue from Dead Leads with AI Automation",
+    slug: "dead-lead-recovery-ai-reengagement",
+    publishedAt: "2026-04-28",
+    description: "Turn your forgotten CRM leads into booked sales calls using automated 7-touch AI sequences.",
+    readingTime: 7,
+    excerpt: "Turn your forgotten CRM leads into booked sales calls using automated 7-touch AI sequences."
+  },
+  {
+    title: "The Best AI Lead Follow-Up & Recovery Tools for 2026",
+    slug: "best-ai-lead-follow-up-recovery",
+    publishedAt: "2026-04-15",
+    description: "An honest comparison of top AI lead follow-up software and managed services for agencies.",
+    readingTime: 9,
+    excerpt: "An honest comparison of top AI lead follow-up software and managed services for agencies."
+  }
+]
+
 const BlogIndex = () => {
-  const [posts, setPosts]   = useState([])
-  const [loading, setLoading] = useState(true)
-  const [theme, setTheme]   = useState(getInitialTheme)
+  const [posts, setPosts]     = useState(FALLBACK_POSTS)
+  const [loading, setLoading] = useState(false)
+  const [theme, setTheme]     = useState(getInitialTheme)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
@@ -47,11 +114,13 @@ const BlogIndex = () => {
     const fetch_ = async () => {
       try {
         const url = `${API_BASE}/api/posts`
-        console.log('[BlogIndex] fetching from:', url)
         const res = await fetch(url)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const json = await res.json()
-        if (mounted) setPosts(json.items || json || [])
+        const fetched = json.items || json || []
+        if (mounted && Array.isArray(fetched) && fetched.length > 0) {
+          setPosts(fetched)
+        }
       } catch (err) {
         console.error('[BlogIndex] fetch error:', err.message)
         if (mounted) setFetchError(err.message)
