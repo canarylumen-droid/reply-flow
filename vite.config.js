@@ -354,8 +354,8 @@ function prerenderBlogPlugin() {
           page = stripSection(page, '<!-- Primary Keywords -->', '<!-- Schema.org Organization -->')
           page = stripSection(page, '<!-- Schema.org Organization -->', '<!-- Schema.org WebSite')
           page = stripSection(page, '<!-- Schema.org WebSite', '<!-- Schema.org FAQ')
-          page = stripSection(page, '<!-- Schema.org FAQ', '</head>')
-          page = page.replace(/<\/head>/, `${metaTags}\n</head>`)
+          page = stripSection(page, '<!-- Schema.org FAQ', '<!-- End SEO Meta -->')
+          page = page.replace(/<!-- End SEO Meta -->/, `${metaTags}\n  <!-- End SEO Meta -->`)
 
           const slugDir = path.join(outDir, 'blog', slug)
           fs.mkdirSync(slugDir, { recursive: true })
@@ -430,8 +430,8 @@ function prerenderBlogPlugin() {
         blogIndexPage = stripSection(blogIndexPage, '<!-- Primary Keywords -->', '<!-- Schema.org Organization -->')
         blogIndexPage = stripSection(blogIndexPage, '<!-- Schema.org Organization -->', '<!-- Schema.org WebSite')
         blogIndexPage = stripSection(blogIndexPage, '<!-- Schema.org WebSite', '<!-- Schema.org FAQ')
-        blogIndexPage = stripSection(blogIndexPage, '<!-- Schema.org FAQ', '</head>')
-        blogIndexPage = blogIndexPage.replace(/<\/head>/, `${blogIndexMeta}\n</head>`)
+        blogIndexPage = stripSection(blogIndexPage, '<!-- Schema.org FAQ', '<!-- End SEO Meta -->')
+        blogIndexPage = blogIndexPage.replace(/<!-- End SEO Meta -->/, `${blogIndexMeta}\n  <!-- End SEO Meta -->`)
 
         const blogDir = path.join(outDir, 'blog')
         fs.mkdirSync(blogDir, { recursive: true })
