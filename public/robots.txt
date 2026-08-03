@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://replyflow.pro/sitemap.xml
+Sitemap: https://www.replyflow.pro/sitemap.xml
 
 User-agent: Googlebot
 Allow: /

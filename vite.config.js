@@ -74,7 +74,7 @@ function mdToHtml(md) {
   return out.join('\n')
 }
 
-const SITE_URL = 'https://replyflow.pro'
+const SITE_URL = 'https://www.replyflow.pro'
 
 function generateSitemap(posts) {
   const today = new Date().toISOString().split('T')[0]
@@ -249,7 +249,7 @@ function staticSitemapPlugin() {
 
 function prerenderBlogPlugin() {
   const POSTS_DIR = path.resolve('content/posts')
-  const SITE = 'https://replyflow.pro'
+  const SITE = 'https://www.replyflow.pro'
 
   function escapeHtml(s) {
     if (!s) return ''
@@ -409,17 +409,17 @@ function prerenderBlogPlugin() {
           '@type': 'Blog',
           name: 'ReplyFlow Blog — AI Lead Follow-Up & Sales Automation Insights',
           description: 'Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses.',
-          url: 'https://replyflow.pro/blog',
-          publisher: { '@type': 'Organization', name: 'ReplyFlow Agency', logo: { '@type': 'ImageObject', url: 'https://replyflow.pro/reply_flow_logo.png' } },
+          url: 'https://www.replyflow.pro/blog',
+          publisher: { '@type': 'Organization', name: 'ReplyFlow Agency', logo: { '@type': 'ImageObject', url: 'https://www.replyflow.pro/reply_flow_logo.png' } },
           blogPost: posts.map(p => ({
             '@type': 'BlogPosting',
             headline: p.title,
-            url: `https://replyflow.pro/blog/${p.slug}`,
+            url: `https://www.replyflow.pro/blog/${p.slug}`,
             datePublished: p.publishedAt || undefined,
           })),
         })
 
-        const blogIndexMeta = `\n    <meta name="description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <link rel="canonical" href="https://replyflow.pro/blog" />\n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights" />\n    <meta property="og:description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <meta property="og:url" content="https://replyflow.pro/blog" />\n    <meta property="og:image" content="https://replyflow.pro/reply_flow_logo.png" />\n    <meta name="twitter:title" content="Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights" />\n    <meta name="twitter:description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <meta name="twitter:image" content="https://replyflow.pro/reply_flow_logo.png" />\n    <script type="application/ld+json">${blogIndexJsonLd}</script>`
+        const blogIndexMeta = `\n    <meta name="description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <link rel="canonical" href="https://www.replyflow.pro/blog" />\n    <meta property="og:type" content="website" />\n    <meta property="og:title" content="Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights" />\n    <meta property="og:description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <meta property="og:url" content="https://www.replyflow.pro/blog" />\n    <meta property="og:image" content="https://www.replyflow.pro/reply_flow_logo.png" />\n    <meta name="twitter:title" content="Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights" />\n    <meta name="twitter:description" content="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses." />\n    <meta name="twitter:image" content="https://www.replyflow.pro/reply_flow_logo.png" />\n    <script type="application/ld+json">${blogIndexJsonLd}</script>`
 
         let blogIndexPage = template
           .replace(/<title>[^<]*<\/title>/, '<title>Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights</title>')

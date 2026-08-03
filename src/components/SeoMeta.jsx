@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const SITE = 'https://replyflow.pro'
+const SITE = 'https://www.replyflow.pro'
 const DEFAULT_OG_IMAGE = `${SITE}/reply_flow_logo.png`
 
 function upsertMeta(name, property, content) {

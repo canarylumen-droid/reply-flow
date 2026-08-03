@@ -139,7 +139,7 @@ const BlogIndex = () => {
       <SeoMeta
         title="Blog — ReplyFlow | AI Lead Follow-Up & Sales Automation Insights"
         description="Expert insights on AI lead follow-up automation, sales response time, lost lead recovery, and revenue systems for agencies and B2B businesses."
-        canonicalUrl="https://replyflow.pro/blog"
+        canonicalUrl="https://www.replyflow.pro/blog"
         keywords={blogIndexKeywords}
       />
       <Navbar theme={theme} setTheme={setTheme} />

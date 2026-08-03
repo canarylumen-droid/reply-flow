@@ -66,7 +66,7 @@ function mdToHtml(md) {
   return out.join('\n')
 }
 
-const SITE_URL = 'https://replyflow.pro'
+const SITE_URL = 'https://www.replyflow.pro'
 
 function generateSitemap(posts) {
   const today = new Date().toISOString().split('T')[0]

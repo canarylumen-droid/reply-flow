@@ -8,7 +8,7 @@ import SeoMeta from './SeoMeta'
 const API_BASE = import.meta.env.VITE_BLOG_API_URL ||
   (typeof window !== 'undefined' ? window.location.origin : '')
 
-const SITE = 'https://replyflow.pro'
+const SITE = 'https://www.replyflow.pro'
 
 const getInitialTheme = () => {
   try {
