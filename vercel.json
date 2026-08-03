@@ -9,6 +9,19 @@
       "includeFiles": "content/posts/**"
     }
   },
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "replyflow.pro"
+        }
+      ],
+      "destination": "https://www.replyflow.pro/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/blog/:slug", "destination": "/blog/:slug/index.html" },
     { "source": "/blog", "destination": "/blog/index.html" },
