@@ -79,25 +79,28 @@ const SITE_URL = 'https://replyflow.pro'
 function generateSitemap(posts) {
   const today = new Date().toISOString().split('T')[0]
   const staticPages = [
-    { loc: `${SITE_URL}/`,              priority: '1.0', changefreq: 'weekly',  lastmod: today },
-    { loc: `${SITE_URL}/blog`,          priority: '0.9', changefreq: 'weekly',  lastmod: today },
-    { loc: `${SITE_URL}/#pricing`,      priority: '0.7', changefreq: 'monthly', lastmod: today },
-    { loc: `${SITE_URL}/#casestudies`,  priority: '0.7', changefreq: 'monthly', lastmod: today },
-    { loc: `${SITE_URL}/#process`,      priority: '0.6', changefreq: 'monthly', lastmod: today },
-    { loc: `${SITE_URL}/#roi`,          priority: '0.6', changefreq: 'monthly', lastmod: today },
+    { loc: `${SITE_URL}/`,     priority: '1.0', changefreq: 'daily', lastmod: today },
+    { loc: `${SITE_URL}/blog`, priority: '0.9', changefreq: 'daily', lastmod: today },
   ]
-  const postUrls = posts.map(p => ({
-    loc: `${SITE_URL}/blog/${p.slug}`,
-    priority: '0.8',
-    changefreq: 'monthly',
-    lastmod: p.publishedAt || today
-  }))
+  const postUrls = posts.map(p => {
+    let dateStr = today
+    if (p.publishedAt) {
+      try {
+        dateStr = new Date(p.publishedAt).toISOString().split('T')[0]
+      } catch (e) {
+        dateStr = p.publishedAt
+      }
+    }
+    return {
+      loc: `${SITE_URL}/blog/${p.slug}`,
+      priority: '0.8',
+      changefreq: 'weekly',
+      lastmod: dateStr
+    }
+  })
   const urls = [...staticPages, ...postUrls]
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(u => `  <url>
     <loc>${u.loc}</loc>
     <lastmod>${u.lastmod}</lastmod>

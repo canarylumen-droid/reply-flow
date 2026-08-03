@@ -36,7 +36,10 @@ function mdToHtml(md) {
   let inList = false
   const flush = () => { if (buf.length) { out.push(`<p>${buf.join(' ').trim()}</p>`); buf = [] } }
   const close = () => { if (inList) { out.push('</ul>'); inList = false } }
-  const inline = (s) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>').replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+  const inline = (s) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>').replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, text, href) => {
+    const isInternal = href.startsWith('/') || href.includes('replyflow.pro')
+    return `<a href="${href}"${isInternal ? '' : ' target="_blank" rel="noopener noreferrer"'}>${text}</a>`
+  })
   for (const line of lines) {
     const t = line.trim()
     if (!t) { flush(); close(); continue }
