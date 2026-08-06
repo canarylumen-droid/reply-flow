@@ -3,9 +3,9 @@ title: "Why Response Time is the #1 Factor in Lead Conversion (And How to Fix It
 slug: "sales-response-time-lead-conversion"
 date: "2026-05-25"
 description: "The data is clear: slow response time kills deals. Here's what the research says, what the real cost is, and how to build a system that responds in under 90 seconds — automatically."
-canonical: "https://replyflow.pro/blog/sales-response-time-lead-conversion"
+canonical: "https://www.replyflow.pro/blog/sales-response-time-lead-conversion"
 tags: "sales response time,lead response time,lead conversion rate,follow up speed,AI sales"
-ogImage: "https://replyflow.pro/reply_flow_logo.png"
+ogImage: "https://www.replyflow.pro/reply_flow_logo.png"
 draft: false
 ---
 

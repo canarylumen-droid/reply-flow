@@ -3,9 +3,9 @@ title: "AI Appointment Setting in 2026: How to Book 3x More Sales Calls Without 
 slug: "ai-appointment-setting-book-more-calls-2026"
 date: "2026-05-30"
 description: "AI appointment setting is one of the most direct ways to add revenue without adding headcount. Here's exactly how it works, what the ROI looks like, and how to set it up for your business."
-canonical: "https://replyflow.pro/blog/ai-appointment-setting-book-more-calls-2026"
+canonical: "https://www.replyflow.pro/blog/ai-appointment-setting-book-more-calls-2026"
 tags: "AI appointment setting,automated appointment booking,AI calendar booking,sales call automation,book more sales calls,appointment setter AI,AI booking system,automated discovery calls,AI sales scheduling,book more clients,increase call bookings,reduce no shows,AI qualification bot,calendar automation,sales meeting automation,appointment setting software 2026,best AI appointment setter,conversational AI booking,automated sales calendar,AI lead qualification and booking"
-ogImage: "https://replyflow.pro/reply_flow_logo.png"
+ogImage: "https://www.replyflow.pro/reply_flow_logo.png"
 draft: false
 ---
 

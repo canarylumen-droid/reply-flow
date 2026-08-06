@@ -3,9 +3,9 @@ title: "The Complete Agency Lead Nurture System for 2026: Stop Losing Clients to
 slug: "agency-lead-nurture-system-2026"
 date: "2026-05-30"
 description: "Most agencies are brilliant at generating leads for clients but terrible at nurturing their own. Here's the complete lead nurture system every agency needs in 2026 — including AI automation, multi-channel follow-up, and reactivation campaigns."
-canonical: "https://replyflow.pro/blog/agency-lead-nurture-system-2026"
+canonical: "https://www.replyflow.pro/blog/agency-lead-nurture-system-2026"
 tags: "agency lead nurture,marketing agency lead generation,agency client acquisition,B2B lead nurture 2026,agency sales system,marketing agency new business,agency CRM automation,lead nurture sequence,automated lead nurture,agency sales funnel,B2B nurture campaign,agency pipeline management,client acquisition system,how to get agency clients,agency follow-up system,agency outreach automation,lead nurture email sequence,B2B email nurture,digital agency sales,agency growth system 2026"
-ogImage: "https://replyflow.pro/reply_flow_logo.png"
+ogImage: "https://www.replyflow.pro/reply_flow_logo.png"
 draft: false
 ---
 

@@ -3,9 +3,9 @@ title: "Dead Lead Reactivation: How to Mine $50,000+ in Revenue From Leads You'v
 slug: "dead-lead-reactivation-campaign-guide"
 date: "2026-05-30"
 description: "Your cold lead database is probably your biggest untapped revenue source. Here's the complete playbook for reactivating dead leads with AI — including sequence templates, segmentation strategy, and real recovery numbers."
-canonical: "https://replyflow.pro/blog/dead-lead-reactivation-campaign-guide"
+canonical: "https://www.replyflow.pro/blog/dead-lead-reactivation-campaign-guide"
 tags: "dead lead reactivation,cold lead recovery,reactivate cold leads,lead reactivation campaign,lost lead recovery,database reactivation,win back cold leads,re-engage old leads,lost client recovery,B2B reactivation email,reactivate old prospects,follow up cold leads,cold database campaign,lead recovery system,win back campaign,inactive lead reactivation,how to reactivate leads,lost deal recovery,prospect reactivation strategy,mine old leads for revenue"
-ogImage: "https://replyflow.pro/reply_flow_logo.png"
+ogImage: "https://www.replyflow.pro/reply_flow_logo.png"
 draft: false
 ---
 

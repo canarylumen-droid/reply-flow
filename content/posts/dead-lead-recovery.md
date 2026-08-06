@@ -3,9 +3,9 @@ title: "How to Recover Dead Leads: A Complete Guide to AI-Powered Re-Engagement"
 slug: "dead-lead-recovery-ai-reengagement"
 date: "2026-05-28"
 description: "Your dead leads database is a goldmine most businesses ignore. Here's a proven framework for recovering revenue from cold and lost leads using AI-powered re-engagement campaigns."
-canonical: "https://replyflow.pro/blog/dead-lead-recovery-ai-reengagement"
+canonical: "https://www.replyflow.pro/blog/dead-lead-recovery-ai-reengagement"
 tags: "dead lead recovery,lost lead reactivation,lead re-engagement,database reactivation,sales automation"
-ogImage: "https://replyflow.pro/reply_flow_logo.png"
+ogImage: "https://www.replyflow.pro/reply_flow_logo.png"
 draft: false
 ---
 

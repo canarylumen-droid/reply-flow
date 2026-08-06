@@ -67,7 +67,7 @@ const Footer = () => {
           <div className="flex items-center gap-4">
             <a href="mailto:team@replyflow.pro" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">team@replyflow.pro</a>
             <span>·</span>
-            <a href="https://replyflow.pro" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">replyflow.pro</a>
+            <a href="https://www.replyflow.pro" className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors">replyflow.pro</a>
           </div>
         </div>
       </div>

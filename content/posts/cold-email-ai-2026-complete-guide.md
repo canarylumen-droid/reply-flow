@@ -3,9 +3,9 @@ title: "Cold Email in 2026: Why It's Not Dead (And How AI Makes It More Powerful
 slug: "cold-email-ai-2026-complete-guide"
 date: "2026-05-30"
 description: "Everyone said cold email was dying. They were wrong. Here's why cold email in 2026 is more effective than ever when done with AI — covering deliverability, personalization, sequences, and what actually converts."
-canonical: "https://replyflow.pro/blog/cold-email-ai-2026-complete-guide"
+canonical: "https://www.replyflow.pro/blog/cold-email-ai-2026-complete-guide"
 tags: "cold email 2026,AI cold email,cold email deliverability,B2B cold email,cold email strategy,does cold email still work,cold email outreach,cold email tips 2026,best cold email tools,cold email automation software,cold email personalization,cold email reply rate,cold email open rate,cold email sequence,cold email follow-up,outbound email strategy,email deliverability 2026,SPF DKIM DMARC setup,B2B outreach 2026,cold email vs LinkedIn"
-ogImage: "https://replyflow.pro/reply_flow_logo.png"
+ogImage: "https://www.replyflow.pro/reply_flow_logo.png"
 draft: false
 ---
 

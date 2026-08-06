@@ -14,7 +14,7 @@ dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 4000
-const SITE = process.env.SITE_HOST || 'https://replyflow.pro'
+const SITE = process.env.SITE_HOST || 'https://www.replyflow.pro'
 let db: Sequelize | null = null
 
 app.use(express.json())

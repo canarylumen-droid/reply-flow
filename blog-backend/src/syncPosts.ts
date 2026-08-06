@@ -116,7 +116,7 @@ async function syncOne(filePath: string) {
     await Post.create(doc)
   }
 
-  const canonical = doc.canonicalUrl || `https://replyflow.pro/blog/${slug}`
+  const canonical = doc.canonicalUrl || `https://www.replyflow.pro/blog/${slug}`
   if (shouldNotify && canonical) {
     notifyGoogleIndexing(canonical).catch(() => {})
     notifyIndexNow(canonical).catch(() => {})
