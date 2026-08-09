@@ -1,20 +1,132 @@
-User-agent: *
-Allow: /
-Disallow: /api/
+# ============================================================
+# ReplyFlow robots.txt
+# Canonical site: https://www.replyflow.pro/
+# We explicitly ALLOW all major AI crawlers so our content is
+# referenced and cited by AI assistants (Gemini, ChatGPT, Claude,
+# Perplexity, Copilot, Apple Intelligence, etc.).
+# ============================================================
 
 Sitemap: https://www.replyflow.pro/sitemap.xml
 
+# ------------------- Search engines --------------------------
 User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
+User-agent: YandexBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Google AI / Gemini training + AI Overviews (Googlebot crawls)
+User-agent: Google-Extended
+Allow: /
+
+# Google's LLM reader bot
+User-agent: GoogleOther
+Allow: /
+
+# ------------------- OpenAI / ChatGPT -------------------------
+# GPTBot = trains OpenAI models (ChatGPT)
 User-agent: GPTBot
+Allow: /
+
+# OAI-SearchBot = powers ChatGPT Search citations
+User-agent: OAI-SearchBot
+Allow: /
+
+# ChatGPT-User = fetches pages a user explicitly asks about
+User-agent: ChatGPT-User
+Allow: /
+
+# ------------------- Anthropic / Claude -----------------------
+User-agent: ClaudeBot
 Allow: /
 
 User-agent: Claude-Web
 Allow: /
 
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# ------------------- Perplexity -------------------------------
 User-agent: PerplexityBot
 Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ------------------- Microsoft / Copilot ----------------------
+User-agent: CopilotBot
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+# ------------------- Meta AI ----------------------------------
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# ------------------- Apple Intelligence -----------------------
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ------------------- xAI / Grok -------------------------------
+User-agent: GrokBot
+Allow: /
+
+User-agent: xAI
+Allow: /
+
+# ------------------- Cohere AI --------------------------------
+User-agent: cohere-ai
+Allow: /
+
+# ------------------- Amazon ------------------------------------
+User-agent: Amazonbot
+Allow: /
+
+# ------------------- Generic crawlers -------------------------
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: ai2bot
+Allow: /
+
+User-agent: Ai2Bot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: OmgiliBot
+Allow: /
+
+User-agent: AwarioBot
+Allow: /
+
+# ------------------- Everything else --------------------------
+User-agent: *
+Allow: /
+Disallow: /api/
