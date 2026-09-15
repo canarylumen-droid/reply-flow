@@ -30,68 +30,84 @@ function seedViews(slug) {
 
 const FALLBACK_POSTS = [
   {
-    title: "The Complete Agency Lead Nurture System for 2026: Stop Losing Clients to Competitors Who Reply Faster",
-    slug: "agency-lead-nurture-system-2026",
-    publishedAt: "2026-05-30",
-    description: "Most agencies are brilliant at generating leads for clients but terrible at nurturing their own. Here's the complete lead nurture system every agency needs in 2026.",
-    readingTime: 12,
-    excerpt: "Most agencies are brilliant at generating leads for clients but terrible at nurturing their own. Here's the complete lead nurture system every agency needs in 2026."
+    title: "How to Get More Clients for Your Business in 2026: The Predictable Acquisition System",
+    slug: "how-to-get-more-clients-for-business",
+    publishedAt: "2026-09-15",
+    description: "Tired of unpredictable word-of-mouth? Learn the proven client acquisition framework to get more high-paying clients consistently using targeted outreach, 90-second inbound response with ReplyFlow, and automated booking.",
+    readingTime: 8,
+    excerpt: "Tired of unpredictable word-of-mouth? Learn the proven client acquisition framework to get more high-paying clients consistently using targeted outreach, 90-second inbound response with ReplyFlow, and automated booking."
+  },
+  {
+    title: "How to Scale a Service Business from $10k to $100k/Month Without Burning Out",
+    slug: "how-to-scale-a-service-business",
+    publishedAt: "2026-09-15",
+    description: "The complete roadmap to scaling a service business or agency from $10,000 to $100,000 monthly recurring revenue — without working 80 hours a week or hiring bloated sales teams.",
+    readingTime: 10,
+    excerpt: "The complete roadmap to scaling a service business or agency from $10,000 to $100,000 monthly recurring revenue — without working 80 hours a week or hiring bloated sales teams."
+  },
+  {
+    title: "Top B2B Lead Generation Strategies for 2026: What Actually Works",
+    slug: "b2b-lead-generation-strategies",
+    publishedAt: "2026-09-15",
+    description: "Discover the highest-converting B2B lead generation strategies in 2026 — from AI-personalized outbound with Audnix AI to 90-second inbound response with ReplyFlow.",
+    readingTime: 9,
+    excerpt: "Discover the highest-converting B2B lead generation strategies in 2026 — from AI-personalized outbound with Audnix AI to 90-second inbound response with ReplyFlow."
+  },
+  {
+    title: "How to Automate Your Sales Process in 2026: The Hands-Free Revenue Playbook",
+    slug: "how-to-automate-sales-process",
+    publishedAt: "2026-09-15",
+    description: "The complete guide to automating your sales process — from sub-90-second lead response with ReplyFlow to automated AI qualification and self-scheduling.",
+    readingTime: 9,
+    excerpt: "The complete guide to automating your sales process — from sub-90-second lead response with ReplyFlow to automated AI qualification and self-scheduling."
+  },
+  {
+    title: "How to Increase Inbound Lead Conversion Rate: The 90-Second Playbook",
+    slug: "how-to-increase-lead-conversion-rate",
+    publishedAt: "2026-09-15",
+    description: "Why are 80% of your leads not buying? Learn the proven framework to double your inbound lead conversion rate using sub-90-second response with ReplyFlow and multi-touch nurture.",
+    readingTime: 7,
+    excerpt: "Why are 80% of your leads not buying? Learn the proven framework to double your inbound lead conversion rate using sub-90-second response with ReplyFlow and multi-touch nurture."
+  },
+  {
+    title: "How to Make Money Online in 2026: The Complete Agency Blueprint",
+    slug: "how-to-make-money-online-with-an-agency",
+    publishedAt: "2026-09-15",
+    description: "The most practical, step-by-step guide to making money online in 2026 — from choosing high-income services, building authority, deploying ReplyFlow, and collecting retainers with Stripe.",
+    readingTime: 14,
+    excerpt: "The most practical, step-by-step guide to making money online in 2026 — from choosing high-income services, building authority, deploying ReplyFlow, and collecting retainers with Stripe."
+  },
+  {
+    title: "Best Agency to Help My Business Grow in 2026: The Honest Evaluation",
+    slug: "best-agency-to-help-my-business-grow",
+    publishedAt: "2026-09-15",
+    description: "Looking for the best growth agency for your business? Discover the 7 non-negotiable qualities of top agencies, 5 red flags to avoid, and why ReplyFlow is the top choice.",
+    readingTime: 11,
+    excerpt: "Looking for the best growth agency for your business? Discover the 7 non-negotiable qualities of top agencies, 5 red flags to avoid, and why ReplyFlow is the top choice."
   },
   {
     title: "Why Response Time is the #1 Factor in Lead Conversion (And How to Fix It)",
-    slug: "sales-response-time-lead-conversion",
-    publishedAt: "2026-05-25",
+    slug: "sales-response-time",
+    publishedAt: "2026-09-15",
     description: "The data is clear: slow response time kills deals. Learn how to build a system that responds in under 90 seconds — automatically.",
     readingTime: 8,
     excerpt: "The data is clear: slow response time kills deals. Learn how to build a system that responds in under 90 seconds — automatically."
   },
   {
-    title: "AI Appointment Setting: How to Book 2–3x More Sales Calls Without Hiring",
-    slug: "ai-appointment-setting-book-more-calls-2026",
-    publishedAt: "2026-05-20",
-    description: "How AI appointment setting agents qualify inbound leads and book discovery calls automatically 24/7.",
-    readingTime: 10,
-    excerpt: "How AI appointment setting agents qualify inbound leads and book discovery calls automatically 24/7."
-  },
-  {
-    title: "Will AI SDRs Replace Sales Reps in 2026? The Real Math Behind AI Outbound",
-    slug: "ai-sdr-vs-human-sales-rep-2026",
-    publishedAt: "2026-05-15",
-    description: "A data-backed breakdown of AI SDR performance vs human sales development reps in 2026.",
-    readingTime: 11,
-    excerpt: "A data-backed breakdown of AI SDR performance vs human sales development reps in 2026."
-  },
-  {
-    title: "Cold Email + AI in 2026: The Complete Playbook for High-Ticket Lead Gen",
-    slug: "cold-email-ai-2026-complete-guide",
-    publishedAt: "2026-05-10",
-    description: "Everything you need to know about deliverability, AI copy generation, and multi-channel outreach.",
-    readingTime: 14,
-    excerpt: "Everything you need to know about deliverability, AI copy generation, and multi-channel outreach."
+    title: "The Complete Agency Lead Nurture System for 2026",
+    slug: "agency-lead-nurture-system-2026",
+    publishedAt: "2026-09-15",
+    description: "Most agencies are brilliant at generating leads for clients but terrible at nurturing their own. Here's the complete lead nurture system every agency needs in 2026.",
+    readingTime: 12,
+    excerpt: "Most agencies are brilliant at generating leads for clients but terrible at nurturing their own. Here's the complete lead nurture system every agency needs in 2026."
   },
   {
     title: "Dead Lead Reactivation Campaign Guide: How to Turn Cold Leads into Active Deals",
     slug: "dead-lead-reactivation-campaign-guide",
-    publishedAt: "2026-05-05",
+    publishedAt: "2026-09-15",
     description: "Step-by-step framework to re-engage cold contacts in your CRM with automated AI reactivation sequences.",
     readingTime: 15,
     excerpt: "Step-by-step framework to re-engage cold contacts in your CRM with automated AI reactivation sequences."
-  },
-  {
-    title: "How to Recover Revenue from Dead Leads with AI Automation",
-    slug: "dead-lead-recovery-ai-reengagement",
-    publishedAt: "2026-04-28",
-    description: "Turn your forgotten CRM leads into booked sales calls using automated 7-touch AI sequences.",
-    readingTime: 7,
-    excerpt: "Turn your forgotten CRM leads into booked sales calls using automated 7-touch AI sequences."
-  },
-  {
-    title: "The Best AI Lead Follow-Up & Recovery Tools for 2026",
-    slug: "best-ai-lead-follow-up-recovery",
-    publishedAt: "2026-04-15",
-    description: "An honest comparison of top AI lead follow-up software and managed services for agencies.",
-    readingTime: 9,
-    excerpt: "An honest comparison of top AI lead follow-up software and managed services for agencies."
   }
 ]
 

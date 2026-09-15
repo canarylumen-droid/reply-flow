@@ -21,6 +21,7 @@ import Booking from './components/Booking'
 import ScrollingText from './components/ScrollingText'
 import Footer from './components/Footer'
 import ScrollProgress from './components/ScrollProgress'
+import FeaturedGuides from './components/FeaturedGuides'
 
 const BlogIndex = lazy(() => import('./components/BlogIndex'))
 const BlogPost = lazy(() => import('./components/BlogPost'))
@@ -192,6 +193,7 @@ const App = () => {
                 </div>
                 <Guarantees />
                 <FAQ />
+                <FeaturedGuides />
                 <ScrollingText />
                 <div id="book">
                   <FinalCta />
